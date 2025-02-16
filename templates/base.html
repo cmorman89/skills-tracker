@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        
+        {% block head %}
+        <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+        
+        <title>
+            {% block title %}
+            Skills Tracker
+            {% endblock %}
+        </title>
+        {% endblock %}
+    </head>
+
+    <body class="bg-slate-400">
+
+        <div class="flex">
+            <!-- Sidebar -->
+            {% block sidebar %}
+            <div class="bg-gradient-to-b from-teal-950 to-slate-900 min-h-screen text-white w-64">
+                <nav>
+                    <ul>
+                        <li>Home</li>
+                        <hr>
+                        <li>My Skills</li>
+                        <li>Add Skill</li>
+                        <li>Delete Skill</li>
+                        <hr>
+                    </ul>
+                </nav>
+            </div>
+            {% endblock %}
+            
+            <!-- Content -->
+
+            {% block content %}
+            <header>
+                {% block header %}
+                {% endblock %}
+            </header>
+            
+            <main>
+                {% block main %}
+                {% endblock %}
+            </main>
+            
+            <footer>
+                {% block footer %}
+                {% endblock %}
+            </footer>
+            {% endblock %}
+        </div>
+
+    </body>
+
+</html>
