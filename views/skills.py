@@ -1,11 +1,15 @@
 """
 Skills View Module
 """
-from flask import render_template, request, redirect, flash
-from helpers import get_categories, get_skills
-from . import skills_bp
-from models import Skill
+
+from flask import flash, redirect, render_template, request
+
 from app import db
+from helpers import get_categories, get_skills
+from models import Skill
+
+from . import skills_bp
+
 
 @skills_bp.route("/")
 def skills():

@@ -2,9 +2,10 @@
 Main View Module
 """
 
-
 from flask import redirect
+
 from . import main_bp
+
 
 @main_bp.route("/")
 def index():

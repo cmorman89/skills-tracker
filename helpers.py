@@ -1,4 +1,9 @@
+"""
+Helper Functions Module
+"""
+
 from models import Category, Skill
+
 
 def get_skills(id=None, name=None):
     """Get all skills or a specific skill by ID or name."""

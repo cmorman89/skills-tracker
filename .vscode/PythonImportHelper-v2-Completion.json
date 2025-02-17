@@ -1,30 +1,6 @@
 [
     {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
         "label": "flash",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "render_template",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -65,6 +41,30 @@
     },
     {
         "label": "flash",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -77,46 +77,6 @@
         "description": "flask",
         "isExtraImport": true,
         "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "db",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
         "documentation": {}
     },
     {
@@ -160,11 +120,43 @@
         "documentation": {}
     },
     {
-        "label": "Session",
-        "importPath": "flask_session",
-        "description": "flask_session",
+        "label": "Category",
+        "importPath": "models",
+        "description": "models",
         "isExtraImport": true,
-        "detail": "flask_session",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
         "documentation": {}
     },
     {
@@ -173,6 +165,22 @@
         "description": "config",
         "isExtraImport": true,
         "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "flask_session",
+        "description": "flask_session",
+        "isExtraImport": true,
+        "detail": "flask_session",
+        "documentation": {}
+    },
+    {
+        "label": "categories_bp",
+        "importPath": "views.categories",
+        "description": "views.categories",
+        "isExtraImport": true,
+        "detail": "views.categories",
         "documentation": {}
     },
     {
@@ -189,14 +197,6 @@
         "description": "views.skills",
         "isExtraImport": true,
         "detail": "views.skills",
-        "documentation": {}
-    },
-    {
-        "label": "categories_bp",
-        "importPath": "views.categories",
-        "description": "views.categories",
-        "isExtraImport": true,
-        "detail": "views.categories",
         "documentation": {}
     },
     {

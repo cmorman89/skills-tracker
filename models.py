@@ -3,9 +3,11 @@ SQLAlchemy models for the application.
 """
 
 import datetime
+
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
 
 class Category(db.Model):
     __tablename__ = "categories"

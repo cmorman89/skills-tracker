@@ -4,6 +4,7 @@ Flask configuration module.
 
 import os
 
+
 class Config:
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"

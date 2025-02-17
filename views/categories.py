@@ -2,11 +2,14 @@
 Category Blueprint Routes
 """
 
-from flask import request, flash, redirect, render_template
-from . import categories_bp
-from models import Category
+from flask import flash, redirect, render_template, request
+
 from app import db
 from helpers import get_categories
+from models import Category
+
+from . import categories_bp
+
 
 @categories_bp.route("/")
 def categories():
