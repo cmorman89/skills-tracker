@@ -8,7 +8,7 @@
         
         {% block head %}
         <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <title>
             {% block title %}
             Skills Tracker
@@ -22,40 +22,48 @@
         <div class="flex">
             <!-- Sidebar -->
             {% block sidebar %}
-            <div class="bg-gradient-to-b from-teal-950 to-slate-900 min-h-screen text-white w-64">
-                <nav>
-                    <ul>
-                        <li>Home</li>
-                        <hr>
-                        <li>My Skills</li>
-                        <li>Add Skill</li>
-                        <li>Delete Skill</li>
-                        <hr>
-                    </ul>
-                </nav>
+            <div class="w-64 min-h-screen text-white shadow-2xl bg-gradient-to-b from-teal-950 to-slate-900">
+                <div class="flex items-center justify-stretch w-full">
+                    <i class="fa-solid fa-house px-4"></i>
+                    <a href="/">Home</a>
+                </div>
+                <div class="flex items-center justify-stretch w-full">
+                    <i class="fa-solid fa-list px-4"></i>
+                    <a href="/skills">Skills</a>
+                </div>
+                <div class="flex items-center justify-stretch w-full">
+                    <i class="fa-solid fa-layer-group px-4"></i>
+                    <a href="/categories">Categories</a>
+                </div>
             </div>
             {% endblock %}
             
             <!-- Content -->
-
+            <div class="flex-col items-center justify-items-center w-full">
             {% block content %}
-            <header>
-                {% block header %}
-                {% endblock %}
-            </header>
-            
-            <main>
-                {% block main %}
-                {% endblock %}
-            </main>
-            
-            <footer>
-                {% block footer %}
-                {% endblock %}
-            </footer>
+                <header>
+                    {% block header %}
+                    {% if get_flashed_messages() %}
+                    <div class="m-6 border-4 border-purple-900/50 w-fit text-center shadow-xl bg-gradient-to-br from-purple-200/25 to-purple-400/25 text-cyan-950 rounded-xl p-6" role="alert">
+                        {{ get_flashed_messages() | join(" ") }}
+                    </div>
+                    {% endif %}
+                    {% endblock %}
+                </header>
+                
+                <main class="p-12">
+                    {% block main %}
+                    {% endblock %}
+                </main>
+                
+                <footer>
+                    {% block footer %}
+                    {% endblock %}
+                </footer>
             {% endblock %}
+            </div>
         </div>
-
+        
     </body>
-
-</html>
+    
+    </html>

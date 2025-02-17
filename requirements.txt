@@ -1,3 +1,4 @@
 Flask
 Flask-Sessions
 requests
+flask-sqlalchemy
