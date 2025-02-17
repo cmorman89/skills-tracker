@@ -1,0 +1,296 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "flash",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "flask_session",
+        "description": "flask_session",
+        "isExtraImport": true,
+        "detail": "flask_session",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "UserSkill",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "SQLAlchemy",
+        "importPath": "flask_sqlalchemy",
+        "description": "flask_sqlalchemy",
+        "isExtraImport": true,
+        "detail": "flask_sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")\ndef skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@app.route(\"/skills/add\", methods=[\"GET\", \"POST\"])",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "skills",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@app.route(\"/skills/add\", methods=[\"GET\", \"POST\"])\ndef add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "add_skill",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":\n        skill_name = request.form.get(\"skill-name\").lower()\n        category_id = request.form.get(\"category-id\")\n        if skill_name and get_skills(name=skill_name) is None:\n            if category_id and get_categories(id=category_id):\n                new_skill = Skill(name=skill_name, category_id=category_id)\n                db.session.add(new_skill)\n                db.session.commit()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_skill",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def delete_skill(id):\n    \"\"\"Delete a skill by ID.\"\"\"\n    skill = Skill.query.filter_by(id=id).first()\n    if skill:\n        db.session.delete(skill)\n        db.session.commit()\n        flash(f\"Skill {skill.name} deleted successfully!\", \"success\")\n    else:\n        flash(\"Skill not found!\", \"danger\")\n    return redirect(\"/skills\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "categories",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def categories():\n    \"\"\"Display all categories.\"\"\"\n    categories = get_categories()\n    return render_template(\"categories.html\", categories=categories)\n@app.route(\"/categories/add\", methods=[\"POST\"])\ndef add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "add_category",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:\n            new_category = Category(name=category_name)\n            db.session.add(new_category)\n            db.session.commit()\n            flash(f\"Category {category_name} added successfully!\", \"success\")\n        else:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_skills",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_skills(id=None, name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    if id:\n        return Skill.query.filter_by(id=id).first()\n    elif name:\n        return Skill.query.filter_by(name=name).first()\n    return Skill.query.all()\ndef get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:\n        return Category.query.filter_by(id=id).first()\n    elif name:\n        return Category.query.filter_by(name=name).first()\n    return Category.query.all()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\n# Congifure Flask for SQLAlchemy\nbasedir = os.path.abspath(os.path.dirname(__file__))\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "basedir",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "basedir = os.path.abspath(os.path.dirname(__file__))\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config[\"SQLALCHEMY_DATABASE_URI\"]",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"]",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config[\"SQLALCHEMY_ECHO\"]",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config[\"SESSION_PERMANENT\"]",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config[\"SESSION_TYPE\"]",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")\ndef skills():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Category(db.Model):\n    __tablename__ = \"categories\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Category {self.name}>\"\nclass Skill(db.Model):\n    __tablename__ = \"skills\"\n    # Fields",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Skill(db.Model):\n    __tablename__ = \"skills\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    category_id = db.Column(db.Integer, db.ForeignKey(\"categories.id\"), nullable=False)\n    # Relationships\n    category = db.relationship(\"Category\", backref=\"skills\")\n    user_skills = db.relationship(\n        \"UserSkill\", back_populates=\"skill\", cascade=\"all, delete-orphan\"",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class User(db.Model):\n    __tablename__ = \"users\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    username = db.Column(db.Text, nullable=False, unique=True)\n    email = db.Column(db.Text, nullable=False, unique=True)\n    hash = db.Column(db.Text, nullable=False)\n    # Relationships\n    user_skills = db.relationship(\n        \"UserSkill\", back_populates=\"user\", cascade=\"all, delete-orphan\"",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "UserSkill",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class UserSkill(db.Model):\n    __tablename__ = \"user_skills\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    user_id = db.Column(db.Integer, db.ForeignKey(\"users.id\"), nullable=False)\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), nullable=False)\n    date_added = db.Column(db.Date, nullable=False, default=datetime.datetime.utcnow)\n    source = db.Column(db.Text)\n    application = db.Column(db.Text)\n    mastery_level = db.Column(",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "db = SQLAlchemy()\nclass Category(db.Model):\n    __tablename__ = \"categories\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Category {self.name}>\"\nclass Skill(db.Model):\n    __tablename__ = \"skills\"",
+        "detail": "models",
+        "documentation": {}
+    }
+]
