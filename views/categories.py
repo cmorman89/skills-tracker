@@ -33,3 +33,18 @@ def add_category():
     else:
         flash("Invalid request method!", "danger")
     return redirect("/categories")
+
+@categories_bp.route("/delete/<int:category_id>", methods=["GET", "POST"])
+def delete_category(category_id):
+    """Delete a category."""
+    if request.method == "POST":
+        category = Category.query.filter_by(id=category_id).first()
+        if category:
+            db.session.delete(category)
+            db.session.commit()
+            flash(f"Category {category.name} deleted successfully!", "success")
+        else:
+            flash("Category not found!", "danger")
+    else:
+        flash("Invalid request method!", "danger")
+    return redirect("/categories")

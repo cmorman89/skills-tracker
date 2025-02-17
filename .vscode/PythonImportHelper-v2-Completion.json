@@ -244,6 +244,15 @@
         "documentation": {}
     },
     {
+        "label": "delete_category",
+        "kind": 2,
+        "importPath": "views.categories",
+        "description": "views.categories",
+        "peekOfCode": "def delete_category(category_id):\n    \"\"\"Delete a category.\"\"\"\n    if request.method == \"POST\":\n        category = Category.query.filter_by(id=category_id).first()\n        if category:\n            db.session.delete(category)\n            db.session.commit()\n            flash(f\"Category {category.name} deleted successfully!\", \"success\")\n        else:\n            flash(\"Category not found!\", \"danger\")",
+        "detail": "views.categories",
+        "documentation": {}
+    },
+    {
         "label": "index",
         "kind": 2,
         "importPath": "views.main",
@@ -275,7 +284,7 @@
         "kind": 2,
         "importPath": "views.skills",
         "description": "views.skills",
-        "peekOfCode": "def delete_skill(id):\n    \"\"\"Delete a skill by ID.\"\"\"\n    skill = Skill.query.filter_by(id=id).first()\n    if skill:\n        db.session.delete(skill)\n        db.session.commit()\n        flash(f\"Skill {skill.name} deleted successfully!\", \"success\")\n    else:\n        flash(\"Skill not found!\", \"danger\")\n    return redirect(\"/skills\")",
+        "peekOfCode": "def delete_skill(id):\n    \"\"\"Delete a skill by ID.\"\"\"\n    if request.method == \"POST\":\n        skill = Skill.query.filter_by(id=id).first()\n        if skill:\n            db.session.delete(skill)\n            db.session.commit()\n            flash(f\"Skill {skill.name} deleted successfully!\", \"success\")\n        else:\n            flash(\"Skill not found!\", \"danger\")",
         "detail": "views.skills",
         "documentation": {}
     },
