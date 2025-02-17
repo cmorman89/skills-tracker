@@ -97,6 +97,14 @@
         "documentation": {}
     },
     {
+        "label": "Config",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "kind": 6,
         "isExtraImport": true,
@@ -190,62 +198,17 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\n# Congifure Flask for SQLAlchemy\nbasedir = os.path.abspath(os.path.dirname(__file__))\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False",
+        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")",
         "detail": "app",
         "documentation": {}
     },
     {
-        "label": "basedir",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "basedir = os.path.abspath(os.path.dirname(__file__))\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app.config[\"SQLALCHEMY_DATABASE_URI\"]",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app.config[\"SQLALCHEMY_DATABASE_URI\"] = (\n    f\"sqlite:///{os.path.join(basedir, 'skills.db')}\"\n)\napp.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"]",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app.config[\"SQLALCHEMY_TRACK_MODIFICATIONS\"] = False\napp.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app.config[\"SQLALCHEMY_ECHO\"]",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app.config[\"SQLALCHEMY_ECHO\"] = True\n# Configure session to use filesystem (instead of signed cookies)\napp.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app.config[\"SESSION_PERMANENT\"]",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app.config[\"SESSION_PERMANENT\"] = False\napp.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app.config[\"SESSION_TYPE\"]",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app.config[\"SESSION_TYPE\"] = \"filesystem\"\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")\ndef skills():",
-        "detail": "app",
+        "label": "Config",
+        "kind": 6,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "class Config:\n    SESSION_PERMANENT = False\n    SESSION_TYPE = \"filesystem\"\n    SQLALCHEMY_ECHO = True\n    SQLALCHEMY_DATABASE_URI = f\"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'skills.db')}\"\n    SQLALCHEMY_TRACK_MODIFICATIONS = False",
+        "detail": "config",
         "documentation": {}
     },
     {

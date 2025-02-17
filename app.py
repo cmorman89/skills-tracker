@@ -4,20 +4,11 @@ from flask import Flask, flash, render_template, redirect, request
 from flask_session import Session
 
 from models import db, Category, Skill, User, UserSkill
+from config import Config
 
 # Create Flask app
 app = Flask(__name__)
-# Congifure Flask for SQLAlchemy
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    f"sqlite:///{os.path.join(basedir, 'skills.db')}"
-)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-
+app.config.from_object(Config)
 # Initialize Session
 Session(app)
 # Initialize SQLAlchemy with app
