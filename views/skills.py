@@ -36,6 +36,8 @@ def add_skill():
                 flash("Invalid category!", "danger")
         else:
             flash("Skill name is required!", "danger")
+    else:
+        flash("Invalid request method!", "danger")
     return redirect("/skills")
 
 
