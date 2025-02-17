@@ -1,14 +1,5 @@
 [
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -81,27 +72,20 @@
         "documentation": {}
     },
     {
-        "label": "User",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "UserSkill",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
         "label": "Config",
         "importPath": "config",
         "description": "config",
         "isExtraImport": true,
         "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {

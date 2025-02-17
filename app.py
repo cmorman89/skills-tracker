@@ -1,9 +1,7 @@
-import os
-
 from flask import Flask, flash, render_template, redirect, request
 from flask_session import Session
 
-from models import db, Category, Skill, User, UserSkill
+from models import db, Category, Skill
 from config import Config
 
 # Create Flask app
@@ -13,6 +11,7 @@ app.config.from_object(Config)
 Session(app)
 # Initialize SQLAlchemy with app
 db.init_app(app)
+
 
 @app.route("/")
 def index():
