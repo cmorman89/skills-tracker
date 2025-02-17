@@ -41,14 +41,17 @@ def add_skill():
     return redirect("/skills")
 
 
-@skills_bp.route("delete/<int:id>")
+@skills_bp.route("delete/<int:id>", methods=["GET", "POST"])
 def delete_skill(id):
     """Delete a skill by ID."""
-    skill = Skill.query.filter_by(id=id).first()
-    if skill:
-        db.session.delete(skill)
-        db.session.commit()
-        flash(f"Skill {skill.name} deleted successfully!", "success")
+    if request.method == "POST":
+        skill = Skill.query.filter_by(id=id).first()
+        if skill:
+            db.session.delete(skill)
+            db.session.commit()
+            flash(f"Skill {skill.name} deleted successfully!", "success")
+        else:
+            flash("Skill not found!", "danger")
     else:
-        flash("Skill not found!", "danger")
+        flash("Invalid request method!", "danger")
     return redirect("/skills")
