@@ -1,5 +1,45 @@
 [
     {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "flash",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -40,15 +80,47 @@
         "documentation": {}
     },
     {
-        "label": "Session",
-        "importPath": "flask_session",
-        "description": "flask_session",
+        "label": "get_categories",
+        "importPath": "helpers",
+        "description": "helpers",
         "isExtraImport": true,
-        "detail": "flask_session",
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "get_skills",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
         "documentation": {}
     },
     {
         "label": "db",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
         "importPath": "models",
         "description": "models",
         "isExtraImport": true,
@@ -72,11 +144,43 @@
         "documentation": {}
     },
     {
+        "label": "db",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "flask_session",
+        "description": "flask_session",
+        "isExtraImport": true,
+        "detail": "flask_session",
+        "documentation": {}
+    },
+    {
         "label": "Config",
         "importPath": "config",
         "description": "config",
         "isExtraImport": true,
         "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "main_bp",
+        "importPath": "views.main",
+        "description": "views.main",
+        "isExtraImport": true,
+        "detail": "views.main",
+        "documentation": {}
+    },
+    {
+        "label": "skills_bp",
+        "importPath": "views.skills",
+        "description": "views.skills",
+        "isExtraImport": true,
+        "detail": "views.skills",
         "documentation": {}
     },
     {
@@ -108,37 +212,37 @@
     {
         "label": "index",
         "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")\ndef skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@app.route(\"/skills/add\", methods=[\"GET\", \"POST\"])",
-        "detail": "app",
+        "importPath": "views.main",
+        "description": "views.main",
+        "peekOfCode": "def index():\n    return redirect(\"/skills\")",
+        "detail": "views.main",
         "documentation": {}
     },
     {
         "label": "skills",
         "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@app.route(\"/skills/add\", methods=[\"GET\", \"POST\"])\ndef add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":",
-        "detail": "app",
+        "importPath": "views.skills",
+        "description": "views.skills",
+        "peekOfCode": "def skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@skills_bp.route(\"/add\", methods=[\"GET\", \"POST\"])\ndef add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":",
+        "detail": "views.skills",
         "documentation": {}
     },
     {
         "label": "add_skill",
         "kind": 2,
-        "importPath": "app",
-        "description": "app",
+        "importPath": "views.skills",
+        "description": "views.skills",
         "peekOfCode": "def add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":\n        skill_name = request.form.get(\"skill-name\").lower()\n        category_id = request.form.get(\"category-id\")\n        if skill_name and get_skills(name=skill_name) is None:\n            if category_id and get_categories(id=category_id):\n                new_skill = Skill(name=skill_name, category_id=category_id)\n                db.session.add(new_skill)\n                db.session.commit()",
-        "detail": "app",
+        "detail": "views.skills",
         "documentation": {}
     },
     {
         "label": "delete_skill",
         "kind": 2,
-        "importPath": "app",
-        "description": "app",
+        "importPath": "views.skills",
+        "description": "views.skills",
         "peekOfCode": "def delete_skill(id):\n    \"\"\"Delete a skill by ID.\"\"\"\n    skill = Skill.query.filter_by(id=id).first()\n    if skill:\n        db.session.delete(skill)\n        db.session.commit()\n        flash(f\"Skill {skill.name} deleted successfully!\", \"success\")\n    else:\n        flash(\"Skill not found!\", \"danger\")\n    return redirect(\"/skills\")",
-        "detail": "app",
+        "detail": "views.skills",
         "documentation": {}
     },
     {
@@ -160,29 +264,11 @@
         "documentation": {}
     },
     {
-        "label": "get_skills",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def get_skills(id=None, name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    if id:\n        return Skill.query.filter_by(id=id).first()\n    elif name:\n        return Skill.query.filter_by(name=name).first()\n    return Skill.query.all()\ndef get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "get_categories",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:\n        return Category.query.filter_by(id=id).first()\n    elif name:\n        return Category.query.filter_by(name=name).first()\n    return Category.query.all()",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
         "label": "app",
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n@app.route(\"/\")\ndef index():\n    return redirect(\"/skills\")\n@app.route(\"/skills\")",
+        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n# Blueprints\napp.register_blueprint(main_bp)\napp.register_blueprint(skills_bp)\n@app.route(\"/categories\")",
         "detail": "app",
         "documentation": {}
     },
@@ -193,6 +279,24 @@
         "description": "config",
         "peekOfCode": "class Config:\n    SESSION_PERMANENT = False\n    SESSION_TYPE = \"filesystem\"\n    SQLALCHEMY_ECHO = True\n    SQLALCHEMY_DATABASE_URI = f\"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'skills.db')}\"\n    SQLALCHEMY_TRACK_MODIFICATIONS = False",
         "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "get_skills",
+        "kind": 2,
+        "importPath": "helpers",
+        "description": "helpers",
+        "peekOfCode": "def get_skills(id=None, name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    if id:\n        return Skill.query.filter_by(id=id).first()\n    elif name:\n        return Skill.query.filter_by(name=name).first()\n    return Skill.query.all()\ndef get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:",
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "kind": 2,
+        "importPath": "helpers",
+        "description": "helpers",
+        "peekOfCode": "def get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:\n        return Category.query.filter_by(id=id).first()\n    elif name:\n        return Category.query.filter_by(name=name).first()\n    return Category.query.all()",
+        "detail": "helpers",
         "documentation": {}
     },
     {
