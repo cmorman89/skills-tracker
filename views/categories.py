@@ -30,4 +30,6 @@ def add_category():
             flash(f"Category {category_name} added successfully!", "success")
         else:
             flash("Category name is required!", "danger")
+    else:
+        flash("Invalid request method!", "danger")
     return redirect("/categories")
