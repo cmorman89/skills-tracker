@@ -24,51 +24,55 @@
     <div class="flex">
         <!-- Sidebar -->
         {% block sidebar %}
-        <aside class="fixed left-0 top-0 h-full w-64 bg-indigo-800 text-white p-6 shadow-lg">
+        <aside class="fixed flex flex-col left-0 top-0 h-full w-64 bg-indigo-800 text-white p-6 shadow-lg">
             <div class="flex items-center justify-center mb-8">
                 <span class="text-3xl font-bold text-white">SkillTrack</span>
             </div>
-            <nav>
-                <a href="/"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-home px-4"></i>
-                    Home
-                </a>
-                <a href="/skills"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/skills' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-list px-4"></i>
-                    Skills
-                </a>
-                <a href="/categories"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/categories' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-layer-group px-4"></i>
-                    Categories
-                </a>
-                <a href="/projects"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/projects' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-bars-progress px-4"></i>
-                    Projects
-                </a>
-                <a href="/about"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/about' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-circle-info px-4"></i>
-                    About
-                </a>
-                <a href="/faq"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/faq' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-circle-question px-4"></i>
-                    FAQ
-                </a>
-                <a href="/settings"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/settings' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-gear px-4"></i>
-                    Settings
-                </a>
-                <a href="/export"
-                    class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/export' %}bg-indigo-700{% endif %}">
-                    <i class="fa-solid fa-download px-4"></i>
-                    Export
-                </a>
+            <nav class="flex flex-col flex-grow">
+                <div>
+                    <a href="/"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-home px-4"></i>
+                        Home
+                    </a>
+                    <a href="/skills"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/skills' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-list px-4"></i>
+                        Skills
+                    </a>
+                    <a href="/categories"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/categories' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-layer-group px-4"></i>
+                        Categories
+                    </a>
+                    <a href="/projects"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/projects' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-bars-progress px-4"></i>
+                        Projects
+                    </a>
+                </div>
+                <div class="mt-auto">
+                    <a href="/about"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/about' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-circle-info px-4"></i>
+                        About
+                    </a>
+                    <a href="/faq"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/faq' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-circle-question px-4"></i>
+                        FAQ
+                    </a>
+                    <a href="/settings"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/settings' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-gear px-4"></i>
+                        Settings
+                    </a>
+                    <a href="/export"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/export' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-download px-4"></i>
+                        Export
+                    </a>
+                </div>
             </nav>
         </aside>
         {% endblock %}

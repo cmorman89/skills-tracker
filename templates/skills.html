@@ -1,32 +1,32 @@
-{% extends "base.html" %} {% block title %} Replace the title {% endblock %} {%
-block main %}
+{% extends "base.html" %}
+{% block title %} Replace the title {% endblock %}
+{% block main %}
 <div class="grid grid-cols-2 gap-4 items-start justify-items-center mx-auto">
     <div class="bg-white shadow rounded-lg p-6 mb-8">
         <h2 class="text-xl font-semibold mb-4">Add New Skill</h2>
         <form action="/skills/add" method="post">
             <div class="mb-4">
-                <label for="skill-name"
-                    class="block text-gray-700 text-sm font-bold mb-2">Skill
-                    Name:</label>
+                <label for="skill-name" class="block text-gray-700 text-sm font-bold mb-2">
+                    Skill Name:
+                </label>
                 <input type="text" id="skill-name" name="skill-name"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="e.g., JavaScript" />
             </div>
             <div class="mb-4">
-                <label for="category"
-                    class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
                 <select id="category" name="category-id"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    {% if categories %} {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name
-                        }}</option>
-                    {% endfor %} {% else %}
+                    {% if categories %}
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name}}</option>
+                    {% endfor %}
+                    {% else %}
                     <option value="0">Uncategorized</option>
                     {% endif %}
                 </select>
             </div>
-            <button type="submit"
-                class="bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" class="bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                 Add Skill
             </button>
         </form>
@@ -37,20 +37,16 @@ block main %}
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
                 <tr>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         ID
                     </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Skill
                     </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Category
                     </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                     </th>
                 </tr>
@@ -58,22 +54,17 @@ block main %}
             <tbody>
                 {% for skill in skills %}
                 <tr class="bg-white">
-                    <td
-                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ skill.id }}
                     </td>
-                    <td
-                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {{ skill.name}}
                     </td>
-                    <td
-                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
                         {{ skill.category.name}}
                     </td>
-                    <td
-                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <form action="/skills/delete/{{ skill.id }}"
-                            method="post">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <form action="/skills/delete/{{ skill.id }}" method="post">
                             <button type="submit"
                                 class="bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
                                 Delete
