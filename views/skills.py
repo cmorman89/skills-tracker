@@ -1,4 +1,6 @@
-
+"""
+Skills View Module
+"""
 from flask import render_template, request, redirect, flash
 from helpers import get_categories, get_skills
 from . import skills_bp

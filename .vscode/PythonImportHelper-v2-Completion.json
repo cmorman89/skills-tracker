@@ -1,5 +1,37 @@
 [
     {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "flash",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "redirect",
         "importPath": "flask",
         "description": "flask",
@@ -48,59 +80,11 @@
         "documentation": {}
     },
     {
-        "label": "flash",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "Category",
+        "importPath": "models",
+        "description": "models",
         "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "render_template",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "get_categories",
-        "importPath": "helpers",
-        "description": "helpers",
-        "isExtraImport": true,
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "get_skills",
-        "importPath": "helpers",
-        "description": "helpers",
-        "isExtraImport": true,
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "get_categories",
-        "importPath": "helpers",
-        "description": "helpers",
-        "isExtraImport": true,
-        "detail": "helpers",
+        "detail": "models",
         "documentation": {}
     },
     {
@@ -113,14 +97,6 @@
     },
     {
         "label": "db",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
         "importPath": "models",
         "description": "models",
         "isExtraImport": true,
@@ -149,6 +125,38 @@
         "description": "app",
         "isExtraImport": true,
         "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "get_skills",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
         "documentation": {}
     },
     {
@@ -184,6 +192,14 @@
         "documentation": {}
     },
     {
+        "label": "categories_bp",
+        "importPath": "views.categories",
+        "description": "views.categories",
+        "isExtraImport": true,
+        "detail": "views.categories",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -207,6 +223,24 @@
         "description": "flask_sqlalchemy",
         "isExtraImport": true,
         "detail": "flask_sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "categories",
+        "kind": 2,
+        "importPath": "views.categories",
+        "description": "views.categories",
+        "peekOfCode": "def categories():\n    \"\"\"Display all categories.\"\"\"\n    categories = get_categories()\n    return render_template(\"categories.html\", categories=categories)\n@categories_bp.route(\"/add\", methods=[\"POST\"])\ndef add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:",
+        "detail": "views.categories",
+        "documentation": {}
+    },
+    {
+        "label": "add_category",
+        "kind": 2,
+        "importPath": "views.categories",
+        "description": "views.categories",
+        "peekOfCode": "def add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:\n            new_category = Category(name=category_name)\n            db.session.add(new_category)\n            db.session.commit()\n            flash(f\"Category {category_name} added successfully!\", \"success\")\n        else:",
+        "detail": "views.categories",
         "documentation": {}
     },
     {
@@ -246,29 +280,11 @@
         "documentation": {}
     },
     {
-        "label": "categories",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def categories():\n    \"\"\"Display all categories.\"\"\"\n    categories = get_categories()\n    return render_template(\"categories.html\", categories=categories)\n@app.route(\"/categories/add\", methods=[\"POST\"])\ndef add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "add_category",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:\n            new_category = Category(name=category_name)\n            db.session.add(new_category)\n            db.session.commit()\n            flash(f\"Category {category_name} added successfully!\", \"success\")\n        else:",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
         "label": "app",
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n# Blueprints\napp.register_blueprint(main_bp)\napp.register_blueprint(skills_bp)\n@app.route(\"/categories\")",
+        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n# Blueprints\napp.register_blueprint(main_bp)\napp.register_blueprint(skills_bp)\napp.register_blueprint(categories_bp)",
         "detail": "app",
         "documentation": {}
     },
