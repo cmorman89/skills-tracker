@@ -9,6 +9,7 @@
         {% block head %}
         <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">  </head>
         <title>
             {% block title %}
             Skills Tracker
@@ -17,41 +18,68 @@
         {% endblock %}
     </head>
 
-    <body class="bg-slate-400">
+    <body class="bg-gray-100 font-inter">
 
         <div class="flex">
             <!-- Sidebar -->
             {% block sidebar %}
-            <div class="w-64 min-h-screen text-white shadow-2xl bg-gradient-to-b from-teal-950 to-slate-900">
-                <div class="flex items-center justify-stretch w-full">
-                    <i class="fa-solid fa-house px-4"></i>
-                    <a href="/">Home</a>
+            <aside class="fixed left-0 top-0 h-full w-64 bg-indigo-800 text-white p-6 shadow-lg">
+                <div class="flex items-center justify-center mb-8">
+                    <span class="text-3xl font-bold text-white">SkillTrack</span>
                 </div>
-                <div class="flex items-center justify-stretch w-full">
-                    <i class="fa-solid fa-list px-4"></i>
-                    <a href="/skills">Skills</a>
-                </div>
-                <div class="flex items-center justify-stretch w-full">
-                    <i class="fa-solid fa-layer-group px-4"></i>
-                    <a href="/categories">Categories</a>
-                </div>
-            </div>
+                <nav>
+                    <a href="/" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-home px-4"></i>
+                        Home
+                    </a>
+                    <a href="/skills" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/skills' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-list px-4"></i>
+                        Skills
+                    </a>
+                    <a href="/categories" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/categories' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-layer-group px-4"></i>
+                        Categories
+                    </a>
+                    <a href="/projects" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/projects' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-bars-progress px-4"></i>
+                        Projects
+                    </a>
+                    <a href="/about" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/about' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-circle-info px-4"></i>
+                        About
+                    </a>
+                    <a href="/faq" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/faq' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-circle-question px-4"></i>
+                        FAQ
+                    </a>
+                    <a href="/settings" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/settings' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-gear px-4"></i>
+                        Settings
+                    </a>
+                    <a href="/export" class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/export' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-download px-4"></i>
+                        Export
+                    </a>
+                </nav>
+            </aside>
             {% endblock %}
             
             <!-- Content -->
-            <div class="flex-col items-center justify-items-center w-full">
+            <div class="flex-grow flex-col ml-64 items-center justify-items-center">
             {% block content %}
                 <header>
-                    {% block header %}
                     {% if get_flashed_messages() %}
                     <div class="m-6 border-4 border-purple-900/50 w-fit text-center shadow-xl bg-gradient-to-br from-purple-200/25 to-purple-400/25 text-cyan-950 rounded-xl p-6" role="alert">
                         {{ get_flashed_messages() | join(" ") }}
                     </div>
                     {% endif %}
+                    {% block header %}
+                    <h1 class="text-3xl font-bold mb-4">Welcome to SkillTrack</h1>
+                    <h2 class="text-xl font-semibold mb-4">Overview</h2>
                     {% endblock %}
                 </header>
                 
-                <main class="p-12">
+                <main class="items-center justify-items-center">
                     {% block main %}
                     {% endblock %}
                 </main>
