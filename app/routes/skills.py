@@ -82,6 +82,18 @@ def list_children_skills(skill_id):
     return jsonify({"error": "Skill not found"}), 404
 
 
+@skills_bp.route("/<int:skill_id>/parents", methods=["GET"])
+def list_parent_skills(skill_id):
+    """List all parent skills of a skill by ID"""
+
+    # Check if skill exists
+    if skill := get_skill(skill_id=skill_id):
+        # Get all parent skills
+        parents = (
+            [parent.to_json() for parent in skill.parents] if skill.parents else []
+        )
+        return jsonify(parents), 200
+    # If skill does not exist, return an error
     return jsonify({"error": "Skill not found"}), 404
 
 
