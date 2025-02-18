@@ -97,6 +97,38 @@ def list_parent_skills(skill_id):
     return jsonify({"error": "Skill not found"}), 404
 
 
+@skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
+def add_parent_skill(skill_id):
+    """Add a parent skill to a skill by ID"""
+
+    # Validate if child skill exists
+    if not (child := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Child skill not found"}), 404
+
+    # Validate the parent skill ID
+    parent_id = request.json.get("parent_id")
+    try:
+        parent_id = int(parent_id)
+        if parent_id <= 0:
+            raise ValueError
+    except ValueError:
+        return jsonify({"error": "Invalid parent ID"}), 400
+
+    # Check if the parent skill exists
+    if not (parent := get_skill(skill_id=parent_id)):
+        return jsonify({"error": "Parent skill not found"}), 404
+
+    # Check if the parent skill is already a parent of the child skill
+    if parent in child.parents:
+        return jsonify({"error": "Parent skill already exists in list"}), 400
+
+    # Add the parent skill to the child skill
+    child.parents.append(parent)
+    db.session.commit()
+    return jsonify({"message": "Parent skill added to list successfully"}), 200
+
+
+
 def get_skill(skill_id=None, skill_name=None):
     """Get all skills or a specific skill by ID or name."""
 
