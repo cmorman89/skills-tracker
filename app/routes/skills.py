@@ -66,6 +66,22 @@ def delete_skill(skill_id):
         db.session.delete(skill)
         db.session.commit()
         return jsonify({"message": "Skill deleted successfully"}), 200
+
+@skills_bp.route("/<int:skill_id>/children", methods=["GET"])
+def list_children_skills(skill_id):
+    """List all children skills of a skill by ID"""
+
+    # Check if skill exists
+    if skill := get_skill(skill_id=skill_id):
+        # Get all children skills
+        children = (
+            [child.to_json() for child in skill.children] if skill.children else []
+        )
+        return jsonify(children), 200
+    # If skill does not exist, return an error
+    return jsonify({"error": "Skill not found"}), 404
+
+
     return jsonify({"error": "Skill not found"}), 404
 
 
