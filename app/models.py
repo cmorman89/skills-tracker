@@ -43,6 +43,7 @@ class BaseModelMixin:
 
 
 class Skill(db.Model, BaseModelMixin):
+    """Database model for a skill."""
     __tablename__ = "skills"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
@@ -65,18 +66,21 @@ class Skill(db.Model, BaseModelMixin):
 
 
 class Keyword(db.Model, BaseModelMixin):
+    """Database model for a keyword."""
     __tablename__ = "keywords"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
 
 
 class SkillKeyword(db.Model, BaseModelMixin):
+    """Association table for the many-to-many relationship between skills and keywords."""
     __tablename__ = "skill_keyword"
     skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)
     keyword_id = db.Column(db.Integer, db.ForeignKey("keywords.id"), primary_key=True)
 
 
 class SkillRelationship(db.Model, BaseModelMixin):
+    """Association table for the self-referential many-to-many relationship between skills."""
     __tablename__ = "skill_relationship"
     parent_skill_id = db.Column(
         db.Integer, db.ForeignKey("skills.id"), primary_key=True
