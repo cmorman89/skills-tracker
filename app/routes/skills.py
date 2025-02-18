@@ -14,7 +14,7 @@ def list_all_skills():
 def list_skill_by_id(skill_id):
     """Get a skill by ID."""
     skill = get_skill(skill_id=skill_id)
-    return jsonify(skill.to_json())
+    return jsonify(skill.to_json_with_relationships())
 
 
 @skills_bp.route("/", methods=["POST"])
@@ -94,12 +94,19 @@ def update_skill(skill_id):
 @skills_bp.route("/<int:skill_id>", methods=["DELETE"])
 def delete_skill(skill_id):
     """Delete a skill by ID"""
-    skill = get_skill(skill_id=skill_id)
-
-    if skill:
+    # Check if skill exists
+    if skill := get_skill(skill_id=skill_id):
+        # Remove the skill from any parent skills lists that reference it as a parent
+        if skill.children:
+            remove_as_parent_skill(skill)
+            
+        # Delete the skill
         db.session.delete(skill)
         db.session.commit()
         return jsonify({"message": "Skill deleted successfully"}), 200
+    # If skill does not exist, return an error
+    return jsonify({"error": "Skill not found"}), 404
+
 
 @skills_bp.route("/<int:skill_id>/children", methods=["GET"])
 def list_children_skills(skill_id):
