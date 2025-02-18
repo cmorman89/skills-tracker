@@ -54,7 +54,41 @@ def create_skill():
 
 @skills_bp.route("/<int:skill_id>", methods=["PUT"])
 def update_skill(skill_id):
-    pass
+    """Update a skill by ID"""
+
+    # Get the current skill
+    skill = get_skill(skill_id=skill_id)
+    if not skill:
+        return jsonify({"error": "Skill not found"}), 404
+
+    # Get the data from the request
+    data = request.json
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    # Check skill name
+    name = data.get("name")
+    if name and isinstance(name, str):
+        name = name.strip().lower()
+
+    # Check for duplicate skill name
+    if name is not skill.name:
+        if get_skill(skill_name=name):
+            return jsonify({"error": "Skill name already exists"}), 400
+        skill.name = name
+
+    # Check if description is provided
+    description = data.get("description")
+
+    # Check if description is empty
+    if description == "" or data.get("description") is None:
+        skill.description = None
+    else:
+        skill.description = description.strip()
+
+    # Update the skill in the database
+    db.session.commit()
+    return jsonify(skill.to_json()), 200
 
 
 @skills_bp.route("/<int:skill_id>", methods=["DELETE"])
