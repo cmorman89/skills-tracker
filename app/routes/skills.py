@@ -1,29 +1,68 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify
 from ..models import db, Skill
 
 skills_bp = Blueprint("skills", __name__)
 
 
 @skills_bp.route("/", methods=["GET"])
-def list_skills():
+def list_all_skills():
     """List all skills."""
-    return jsonify([skill.to_dict() for skill in Skill.query.all()])
+    return jsonify([skill.to_json() for skill in get_skill()])
 
+# @skills_bp.route("/<int:skill_id>", methods=["GET"])
+# def list_skill_by_id(skill_id):
+#     """Get a skill by ID."""
+#     skill = get_skill(skill_id=skill_id)
+#     return jsonify(skill.to_json())
 
 @skills_bp.route("/", methods=["POST"])
 def create_skill():
     """Create a new skill."""
+    
+    # Get the data from the request
     data = request.json
-
-    if data.get("name") == "":
+    
+    # Check if data is provided
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    # Check skill name is provided
+    if not data.get("name").strip():
         return jsonify({"error": "Skill name cannot be empty"}), 400
-    if data.get("description") == "":
+    name = data.get("name").lower().strip()
+    
+    # Check for duplicate skill name
+    if get_skill(skill_name=name):
+        return jsonify({"error": "Skill name already exists"}), 400
+    
+    # Check if description is provided
+    if data.get("description") == "" or data.get("description") is None:
         description = None
     else:
-        description = data.get("description")
-    skill = Skill(name=data["name"], description=description)
+        description = data.get("description").strip()
+        
+    # Add the new skill to the database
+    skill = Skill(name=name, description=description)
     db.session.add(skill)
     db.session.commit()
+    
+    # Return the created skill
     return jsonify(
-        {"id": skill.id, "name": skill.name, "description": skill.description}
+        skill.to_json()
     ), 201
+
+def get_skill(skill_id=None, skill_name=None):
+    """Get all skills or a specific skill by ID or name."""
+    
+    # Return an error if both skill_id and skill_name are provided
+    if skill_id and skill_name:
+        return jsonify({"error": "Please provide either a skill ID or a skill name, not both"}), 400
+    # Get skill by ID if provided
+    elif skill_id:
+        return Skill.query.get(skill_id)
+    # Get skill by name if provided
+    elif skill_name:
+        return Skill.query.filter_by(name=skill_name).first()
+    # Get all skills if no ID or name is provided
+    return Skill.query.all()
+
