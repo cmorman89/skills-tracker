@@ -171,3 +171,20 @@ def get_skill(skill_id=None, skill_name=None):
         return Skill.query.filter_by(name=skill_name).first()
     # Get all skills if no ID or name is provided
     return Skill.query.all()
+
+def remove_as_parent_skill(parent_skill):
+    # Check if skill has children
+    if parent_skill.children:
+        for child in parent_skill.children:
+            # Remove the parent from the child's parents list
+            child.parents.remove(parent_skill)
+
+        # Commit the changes to the database
+        db.session.commit()
+        return jsonify(
+            {"message": "Parent skill removed from child skills successfully"}
+        ), 200
+    # If no children, return an error
+    return jsonify(
+        {"error": "Skill has no children to remove"}
+    ), 400
