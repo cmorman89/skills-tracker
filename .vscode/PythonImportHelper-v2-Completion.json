@@ -1,22 +1,6 @@
 [
     {
-        "label": "flash",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "render_template",
+        "label": "Blueprint",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -32,23 +16,7 @@
         "documentation": {}
     },
     {
-        "label": "redirect",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "flash",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
+        "label": "jsonify",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -64,7 +32,7 @@
         "documentation": {}
     },
     {
-        "label": "request",
+        "label": "current_app",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -72,131 +40,45 @@
         "documentation": {}
     },
     {
-        "label": "Flask",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "op",
+        "importPath": "alembic",
+        "description": "alembic",
         "isExtraImport": true,
-        "detail": "flask",
+        "detail": "alembic",
         "documentation": {}
     },
     {
-        "label": "db",
-        "importPath": "app",
-        "description": "app",
+        "label": "context",
+        "importPath": "alembic",
+        "description": "alembic",
         "isExtraImport": true,
-        "detail": "app",
+        "detail": "alembic",
         "documentation": {}
     },
     {
-        "label": "db",
-        "importPath": "app",
-        "description": "app",
+        "label": "sqlalchemy",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "app",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "detail": "sqlalchemy",
         "documentation": {}
     },
     {
-        "label": "get_categories",
-        "importPath": "helpers",
-        "description": "helpers",
+        "label": "logging",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "helpers",
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
         "documentation": {}
     },
     {
-        "label": "get_categories",
-        "importPath": "helpers",
-        "description": "helpers",
+        "label": "fileConfig",
+        "importPath": "logging.config",
+        "description": "logging.config",
         "isExtraImport": true,
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "get_skills",
-        "importPath": "helpers",
-        "description": "helpers",
-        "isExtraImport": true,
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "db",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Config",
-        "importPath": "config",
-        "description": "config",
-        "isExtraImport": true,
-        "detail": "config",
-        "documentation": {}
-    },
-    {
-        "label": "Session",
-        "importPath": "flask_session",
-        "description": "flask_session",
-        "isExtraImport": true,
-        "detail": "flask_session",
-        "documentation": {}
-    },
-    {
-        "label": "categories_bp",
-        "importPath": "views.categories",
-        "description": "views.categories",
-        "isExtraImport": true,
-        "detail": "views.categories",
-        "documentation": {}
-    },
-    {
-        "label": "main_bp",
-        "importPath": "views.main",
-        "description": "views.main",
-        "isExtraImport": true,
-        "detail": "views.main",
-        "documentation": {}
-    },
-    {
-        "label": "skills_bp",
-        "importPath": "views.skills",
-        "description": "views.skills",
-        "isExtraImport": true,
-        "detail": "views.skills",
+        "detail": "logging.config",
         "documentation": {}
     },
     {
@@ -209,92 +91,200 @@
         "documentation": {}
     },
     {
-        "label": "datetime",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "SQLAlchemy",
-        "importPath": "flask_sqlalchemy",
-        "description": "flask_sqlalchemy",
-        "isExtraImport": true,
-        "detail": "flask_sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "categories",
-        "kind": 2,
-        "importPath": "views.categories",
-        "description": "views.categories",
-        "peekOfCode": "def categories():\n    \"\"\"Display all categories.\"\"\"\n    categories = get_categories()\n    return render_template(\"categories.html\", categories=categories)\n@categories_bp.route(\"/add\", methods=[\"POST\"])\ndef add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:",
-        "detail": "views.categories",
-        "documentation": {}
-    },
-    {
-        "label": "add_category",
-        "kind": 2,
-        "importPath": "views.categories",
-        "description": "views.categories",
-        "peekOfCode": "def add_category():\n    \"\"\"Add a new category.\"\"\"\n    if request.method == \"POST\":\n        category_name = request.form.get(\"category-name\").lower()\n        if category_name and get_categories(name=category_name) is None:\n            new_category = Category(name=category_name)\n            db.session.add(new_category)\n            db.session.commit()\n            flash(f\"Category {category_name} added successfully!\", \"success\")\n        else:",
-        "detail": "views.categories",
-        "documentation": {}
-    },
-    {
-        "label": "delete_category",
-        "kind": 2,
-        "importPath": "views.categories",
-        "description": "views.categories",
-        "peekOfCode": "def delete_category(category_id):\n    \"\"\"Delete a category.\"\"\"\n    if request.method == \"POST\":\n        category = Category.query.filter_by(id=category_id).first()\n        if category:\n            db.session.delete(category)\n            db.session.commit()\n            flash(f\"Category {category.name} deleted successfully!\", \"success\")\n        else:\n            flash(\"Category not found!\", \"danger\")",
-        "detail": "views.categories",
-        "documentation": {}
-    },
-    {
-        "label": "index",
-        "kind": 2,
-        "importPath": "views.main",
-        "description": "views.main",
-        "peekOfCode": "def index():\n    return redirect(\"/skills\")",
-        "detail": "views.main",
-        "documentation": {}
-    },
-    {
-        "label": "skills",
-        "kind": 2,
-        "importPath": "views.skills",
-        "description": "views.skills",
-        "peekOfCode": "def skills():\n    \"\"\"Display all skills.\"\"\"\n    skills = get_skills()\n    categories = get_categories()\n    print(skills)\n    return render_template(\"skills.html\", skills=skills, categories=categories)\n@skills_bp.route(\"/add\", methods=[\"GET\", \"POST\"])\ndef add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":",
-        "detail": "views.skills",
-        "documentation": {}
-    },
-    {
-        "label": "add_skill",
-        "kind": 2,
-        "importPath": "views.skills",
-        "description": "views.skills",
-        "peekOfCode": "def add_skill():\n    \"\"\"Add a new skill.\"\"\"\n    if request.method == \"POST\":\n        skill_name = request.form.get(\"skill-name\").lower()\n        category_id = request.form.get(\"category-id\")\n        if skill_name and get_skills(name=skill_name) is None:\n            if category_id and get_categories(id=category_id):\n                new_skill = Skill(name=skill_name, category_id=category_id)\n                db.session.add(new_skill)\n                db.session.commit()",
-        "detail": "views.skills",
-        "documentation": {}
-    },
-    {
-        "label": "delete_skill",
-        "kind": 2,
-        "importPath": "views.skills",
-        "description": "views.skills",
-        "peekOfCode": "def delete_skill(id):\n    \"\"\"Delete a skill by ID.\"\"\"\n    if request.method == \"POST\":\n        skill = Skill.query.filter_by(id=id).first()\n        if skill:\n            db.session.delete(skill)\n            db.session.commit()\n            flash(f\"Skill {skill.name} deleted successfully!\", \"success\")\n        else:\n            flash(\"Skill not found!\", \"danger\")",
-        "detail": "views.skills",
-        "documentation": {}
-    },
-    {
-        "label": "app",
-        "kind": 5,
+        "label": "create_app",
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\napp.config.from_object(Config)\n# Initialize Session\nSession(app)\n# Initialize SQLAlchemy with app\ndb.init_app(app)\n# Blueprints\napp.register_blueprint(main_bp)\napp.register_blueprint(skills_bp)\napp.register_blueprint(categories_bp)",
+        "isExtraImport": true,
         "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "list_skills",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_dict() for skill in Skill.query.all()])\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400\n    if data.get(\"description\") == \"\":",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "create_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400\n    if data.get(\"description\") == \"\":\n        description = None\n    else:\n        description = data.get(\"description\")\n    skill = Skill(name=data[\"name\"], description=description)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "skills_bp",
+        "kind": 5,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_dict() for skill in Skill.query.all()])\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Skill(db.Model):\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords\n    keywords = db.relationship(\n        \"Keyword\",\n        secondary=\"skill_keyword\",\n        backref=db.backref(\"skills\", lazy=\"dynamic\"),",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Keyword",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Keyword(db.Model):\n    __tablename__ = \"keywords\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Keyword {self.name}>\"\nclass SkillKeyword(db.Model):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SkillKeyword",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class SkillKeyword(db.Model):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SkillRelationship",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class SkillRelationship(db.Model):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "upgrade",
+        "kind": 2,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "def upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )\n    op.create_table('skills',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "downgrade",
+        "kind": 2,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "def downgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.drop_table('skill_relationship')\n    op.drop_table('skill_keyword')\n    op.drop_table('skills')\n    op.drop_table('keywords')\n    # ### end Alembic commands ###",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "revision",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "revision = '0a2ed017fa27'\ndown_revision = None\nbranch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "down_revision",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "down_revision = None\nbranch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "branch_labels",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "branch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "depends_on",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "depends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )\n    op.create_table('skills',",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "get_engine",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):\n        # this works with Flask-SQLAlchemy>=3\n        return current_app.extensions['migrate'].db.engine\ndef get_engine_url():\n    try:\n        return get_engine().url.render_as_string(hide_password=False).replace(",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "get_engine_url",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_engine_url():\n    try:\n        return get_engine().url.render_as_string(hide_password=False).replace(\n            '%', '%%')\n    except AttributeError:\n        return str(get_engine().url).replace('%', '%%')\n# add your model's MetaData object here\n# for 'autogenerate' support\n# from myapp import mymodel\n# target_metadata = mymodel.Base.metadata",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "get_metadata",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_metadata():\n    if hasattr(target_db, 'metadatas'):\n        return target_db.metadatas[None]\n    return target_db.metadata\ndef run_migrations_offline():\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations_offline",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def run_migrations_offline():\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.\n    Calls to context.execute() here emit the given string to the\n    script output.\n    \"\"\"\n    url = config.get_main_option(\"sqlalchemy.url\")",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations_online",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def run_migrations_online():\n    \"\"\"Run migrations in 'online' mode.\n    In this scenario we need to create an Engine\n    and associate a connection with the context.\n    \"\"\"\n    # this callback is used to prevent an auto-migration from being generated\n    # when there are no changes to the schema\n    # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html\n    def process_revision_directives(context, revision, directives):\n        if getattr(config.cmd_opts, 'autogenerate', False):",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "config = context.config\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nfileConfig(config.config_file_name)\nlogger = logging.getLogger('alembic.env')\ndef get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "logger = logging.getLogger('alembic.env')\ndef get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):\n        # this works with Flask-SQLAlchemy>=3\n        return current_app.extensions['migrate'].db.engine\ndef get_engine_url():\n    try:",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "target_db",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "target_db = current_app.extensions['migrate'].db\n# other values from the config, defined by the needs of env.py,\n# can be acquired:\n# my_important_option = config.get_main_option(\"my_important_option\")\n# ... etc.\ndef get_metadata():\n    if hasattr(target_db, 'metadatas'):\n        return target_db.metadatas[None]\n    return target_db.metadata\ndef run_migrations_offline():",
+        "detail": "migrations.env",
         "documentation": {}
     },
     {
@@ -307,66 +297,12 @@
         "documentation": {}
     },
     {
-        "label": "get_skills",
-        "kind": 2,
-        "importPath": "helpers",
-        "description": "helpers",
-        "peekOfCode": "def get_skills(id=None, name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    if id:\n        return Skill.query.filter_by(id=id).first()\n    elif name:\n        return Skill.query.filter_by(name=name).first()\n    return Skill.query.all()\ndef get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:",
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "get_categories",
-        "kind": 2,
-        "importPath": "helpers",
-        "description": "helpers",
-        "peekOfCode": "def get_categories(id=None, name=None):\n    \"\"\"Get all categories or a specific category by ID or name.\"\"\"\n    if id:\n        return Category.query.filter_by(id=id).first()\n    elif name:\n        return Category.query.filter_by(name=name).first()\n    return Category.query.all()",
-        "detail": "helpers",
-        "documentation": {}
-    },
-    {
-        "label": "Category",
-        "kind": 6,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "class Category(db.Model):\n    __tablename__ = \"categories\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Category {self.name}>\"\nclass Skill(db.Model):\n    __tablename__ = \"skills\"\n    # Fields",
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "kind": 6,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "class Skill(db.Model):\n    __tablename__ = \"skills\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    category_id = db.Column(db.Integer, db.ForeignKey(\"categories.id\"), nullable=False)\n    # Relationships\n    category = db.relationship(\"Category\", backref=\"skills\")\n    user_skills = db.relationship(\n        \"UserSkill\", back_populates=\"skill\", cascade=\"all, delete-orphan\"",
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "kind": 6,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "class User(db.Model):\n    __tablename__ = \"users\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    username = db.Column(db.Text, nullable=False, unique=True)\n    email = db.Column(db.Text, nullable=False, unique=True)\n    hash = db.Column(db.Text, nullable=False)\n    # Relationships\n    user_skills = db.relationship(\n        \"UserSkill\", back_populates=\"user\", cascade=\"all, delete-orphan\"",
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "UserSkill",
-        "kind": 6,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "class UserSkill(db.Model):\n    __tablename__ = \"user_skills\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    user_id = db.Column(db.Integer, db.ForeignKey(\"users.id\"), nullable=False)\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), nullable=False)\n    date_added = db.Column(db.Date, nullable=False, default=datetime.datetime.utcnow)\n    source = db.Column(db.Text)\n    application = db.Column(db.Text)\n    mastery_level = db.Column(",
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "db",
+        "label": "app",
         "kind": 5,
-        "importPath": "models",
-        "description": "models",
-        "peekOfCode": "db = SQLAlchemy()\nclass Category(db.Model):\n    __tablename__ = \"categories\"\n    # Fields\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Category {self.name}>\"\nclass Skill(db.Model):\n    __tablename__ = \"skills\"",
-        "detail": "models",
+        "importPath": "run",
+        "description": "run",
+        "peekOfCode": "app = create_app()\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "detail": "run",
         "documentation": {}
     }
 ]
