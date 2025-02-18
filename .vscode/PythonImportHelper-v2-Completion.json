@@ -24,14 +24,6 @@
         "documentation": {}
     },
     {
-        "label": "render_template",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
         "label": "current_app",
         "importPath": "flask",
         "description": "flask",
@@ -99,11 +91,11 @@
         "documentation": {}
     },
     {
-        "label": "list_skills",
+        "label": "list_all_skills",
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_dict() for skill in Skill.query.all()])\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400\n    if data.get(\"description\") == \"\":",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\n# def list_skill_by_id(skill_id):\n#     \"\"\"Get a skill by ID.\"\"\"\n#     skill = get_skill(skill_id=skill_id)\n#     return jsonify(skill.to_json())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -112,7 +104,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400\n    if data.get(\"description\") == \"\":\n        description = None\n    else:\n        description = data.get(\"description\")\n    skill = Skill(name=data[\"name\"], description=description)",
+        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Get the data from the request\n    data = request.json\n    # Check if data is provided\n    if not data:\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Check skill name is provided\n    if not data.get(\"name\").strip():\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "get_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def get_skill(skill_id=None, skill_name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    # Return an error if both skill_id and skill_name are provided\n    if skill_id and skill_name:\n        return jsonify({\"error\": \"Please provide either a skill ID or a skill name, not both\"}), 400\n    # Get skill by ID if provided\n    elif skill_id:\n        return Skill.query.get(skill_id)\n    # Get skill by name if provided\n    elif skill_name:",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -121,8 +122,17 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_dict() for skill in Skill.query.all()])\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    data = request.json\n    if data.get(\"name\") == \"\":",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\n# def list_skill_by_id(skill_id):\n#     \"\"\"Get a skill by ID.\"\"\"\n#     skill = get_skill(skill_id=skill_id)\n#     return jsonify(skill.to_json())",
         "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModelMixin",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class BaseModelMixin:\n    \"\"\"Base model for all database models.\"\"\"\n    def to_dict(self):\n        \"\"\"Convert model instance to dictionary.\"\"\"\n        return {\n            column.name: getattr(self, column.name) for column in self.__table__.columns\n        }\n    def to_dict_with_relationships(self):\n        data = self.to_dict()\n        for relationship in self.__mapper__.relationships:",
+        "detail": "app.models",
         "documentation": {}
     },
     {
@@ -130,7 +140,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Skill(db.Model):\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords\n    keywords = db.relationship(\n        \"Keyword\",\n        secondary=\"skill_keyword\",\n        backref=db.backref(\"skills\", lazy=\"dynamic\"),",
+        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords\n    keywords = db.relationship(\n        \"Keyword\",\n        secondary=\"skill_keyword\",\n        backref=db.backref(\"skills\", lazy=\"dynamic\"),",
         "detail": "app.models",
         "documentation": {}
     },
@@ -139,7 +149,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Keyword(db.Model):\n    __tablename__ = \"keywords\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    def __repr__(self):\n        return f\"<Keyword {self.name}>\"\nclass SkillKeyword(db.Model):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)",
+        "peekOfCode": "class Keyword(db.Model, BaseModelMixin):\n    __tablename__ = \"keywords\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\nclass SkillKeyword(db.Model, BaseModelMixin):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model, BaseModelMixin):\n    __tablename__ = \"skill_relationship\"",
         "detail": "app.models",
         "documentation": {}
     },
@@ -148,7 +158,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class SkillKeyword(db.Model):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "peekOfCode": "class SkillKeyword(db.Model, BaseModelMixin):\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model, BaseModelMixin):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True\n    )\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
         "detail": "app.models",
         "documentation": {}
     },
@@ -157,7 +167,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class SkillRelationship(db.Model):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "peekOfCode": "class SkillRelationship(db.Model, BaseModelMixin):\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True\n    )\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
         "detail": "app.models",
         "documentation": {}
     },
