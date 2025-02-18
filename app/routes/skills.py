@@ -128,6 +128,32 @@ def add_parent_skill(skill_id):
     return jsonify({"message": "Parent skill added to list successfully"}), 200
 
 
+@skills_bp.route("/<int:skill_id>/parents", methods=["DELETE"])
+def remove_parent_skill(skill_id):
+    """Remove a parent skill from a skill by IDs"""
+
+    # Validate if child skill exists
+    if not (child := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Child skill not found"}), 404
+
+    # Validate the parent ID
+    parent_id = request.json.get("parent_id")
+    try:
+        parent_id = int(parent_id)
+        if parent_id <= 0:
+            raise ValueError
+    except ValueError:
+        return jsonify({"error": "Invalid parent ID"}), 400
+    parent = get_skill(skill_id=parent_id)
+    # Check if the parent skill is in parents list
+    if parent not in child.parents:
+        return jsonify({"error": "Parent skill not in parents list."}), 400
+
+    # Remove the parent skill from the child skill
+    child.parents.remove(parent)
+    db.session.commit()
+    return jsonify({"message": "Parent skill removed from successfully"}), 200
+
 
 def get_skill(skill_id=None, skill_name=None):
     """Get all skills or a specific skill by ID or name."""
