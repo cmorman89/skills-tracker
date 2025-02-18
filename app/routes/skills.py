@@ -9,11 +9,11 @@ def list_all_skills():
     """List all skills."""
     return jsonify([skill.to_json() for skill in get_skill()])
 
-# @skills_bp.route("/<int:skill_id>", methods=["GET"])
-# def list_skill_by_id(skill_id):
-#     """Get a skill by ID."""
-#     skill = get_skill(skill_id=skill_id)
-#     return jsonify(skill.to_json())
+@skills_bp.route("/<int:skill_id>", methods=["GET"])
+def list_skill_by_id(skill_id):
+    """Get a skill by ID."""
+    skill = get_skill(skill_id=skill_id)
+    return jsonify(skill.to_json())
 
 @skills_bp.route("/", methods=["POST"])
 def create_skill():

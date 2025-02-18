@@ -95,7 +95,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\n# def list_skill_by_id(skill_id):\n#     \"\"\"Get a skill by ID.\"\"\"\n#     skill = get_skill(skill_id=skill_id)\n#     return jsonify(skill.to_json())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_skill_by_id",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Get the data from the request\n    data = request.json\n    # Check if data is provided",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -122,7 +131,7 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\n# def list_skill_by_id(skill_id):\n#     \"\"\"Get a skill by ID.\"\"\"\n#     skill = get_skill(skill_id=skill_id)\n#     return jsonify(skill.to_json())",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json())",
         "detail": "app.routes.skills",
         "documentation": {}
     },
