@@ -1,5 +1,8 @@
 """
-SQLAlchemy models for the application.
+SQLAlchemy Models Module
+
+This module contains the SQLAlchemy models for the application, which define the database schema and
+relationships between different entities.
 """
 
 from . import db
@@ -15,6 +18,7 @@ class BaseModelMixin:
         }
 
     def to_dict_with_relationships(self):
+        """Convert model instance to dictionary with relationships."""
         data = self.to_dict()
         for relationship in self.__mapper__.relationships:
             related_data = getattr(self, relationship.key)

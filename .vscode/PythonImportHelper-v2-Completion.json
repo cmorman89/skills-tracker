@@ -131,7 +131,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def delete_skill(skill_id):\n    \"\"\"Delete a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Remove the skill from any parent skills lists that reference it as a parent\n        if skill.children:\n            remove_as_parent_skill(skill)\n        # Delete the skill\n        db.session.delete(skill)\n        db.session.commit()",
+        "peekOfCode": "def delete_skill(skill_id):\n    \"\"\"Delete a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Remove the skill from any parent skills lists that reference it as a parent\n        if skill.children:\n            remove_skill_from_all_children(skill)\n        # Delete the skill\n        db.session.delete(skill)\n        db.session.commit()",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -181,11 +181,11 @@
         "documentation": {}
     },
     {
-        "label": "remove_as_parent_skill",
+        "label": "remove_skill_from_all_children",
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def remove_as_parent_skill(parent_skill):\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(\n            {\"message\": \"Parent skill removed from child skills successfully\"}",
+        "peekOfCode": "def remove_skill_from_all_children(parent_skill):\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(\n            {\"message\": \"Parent skill removed from child skills successfully\"}",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -203,7 +203,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class BaseModelMixin:\n    \"\"\"Base model for all database models.\"\"\"\n    def to_dict(self):\n        \"\"\"Convert model instance to dictionary.\"\"\"\n        return {\n            column.name: getattr(self, column.name) for column in self.__table__.columns\n        }\n    def to_dict_with_relationships(self):\n        data = self.to_dict()\n        for relationship in self.__mapper__.relationships:",
+        "peekOfCode": "class BaseModelMixin:\n    \"\"\"Base model for all database models.\"\"\"\n    def to_dict(self):\n        \"\"\"Convert model instance to dictionary.\"\"\"\n        return {\n            column.name: getattr(self, column.name) for column in self.__table__.columns\n        }\n    def to_dict_with_relationships(self):\n        \"\"\"Convert model instance to dictionary with relationships.\"\"\"\n        data = self.to_dict()",
         "detail": "app.models",
         "documentation": {}
     },

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from ..models import db, Skill
 
+# Define the blueprint for skills
 skills_bp = Blueprint("skills", __name__)
 
 
@@ -98,7 +99,7 @@ def delete_skill(skill_id):
     if skill := get_skill(skill_id=skill_id):
         # Remove the skill from any parent skills lists that reference it as a parent
         if skill.children:
-            remove_as_parent_skill(skill)
+            remove_skill_from_all_children(skill)
             
         # Delete the skill
         db.session.delete(skill)
@@ -213,7 +214,7 @@ def get_skill(skill_id=None, skill_name=None):
     # Get all skills if no ID or name is provided
     return Skill.query.all()
 
-def remove_as_parent_skill(parent_skill):
+def remove_skill_from_all_children(parent_skill):
     # Check if skill has children
     if parent_skill.children:
         for child in parent_skill.children:
