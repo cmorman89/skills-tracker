@@ -197,6 +197,60 @@ def remove_parent_skill(skill_id):
     return jsonify({"message": "Parent skill removed from successfully"}), 200
 
 
+@skills_bp.route("/<int:skill_id>/children", methods=["POST"])
+def add_child_skill(skill_id):
+    """Add a child skill to a skill by ID"""
+    # Validate if parent skill exists
+    if not (parent := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Parent skill not found"}), 404
+
+    # Validate the child skill ID
+    child_id = request.json.get("child_id")
+    try:
+        child_id = int(child_id)
+        if child_id <= 0:
+            raise ValueError
+    except ValueError:
+        return jsonify({"error": "Invalid child ID"}), 400
+
+    # Check if the child skill exists
+    if not (child := get_skill(skill_id=child_id)):
+        return jsonify({"error": "Child skill not found"}), 404
+
+    # Check if the child skill is already a child of the parent skill
+    if child in parent.children:
+        return jsonify({"error": "Child skill already exists in list"}), 400
+
+    # Add the child skill to the parent skill
+    parent.children.append(child)
+    db.session.commit()
+    return jsonify({"message": "Child skill added to list successfully"}), 200
+
+@skills_bp.route("/<int:skill_id>/children", methods=["DELETE"])
+def remove_child_skill(skill_id):
+    """Remove a child skill from a skill by IDs"""
+    # Validate if parent skill exists
+    if not (parent := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Parent skill not found"}), 404
+
+    # Validate the child ID
+    child_id = request.json.get("child_id")
+    try:
+        child_id = int(child_id)
+        if child_id <= 0:
+            raise ValueError
+    except ValueError:
+        return jsonify({"error": "Invalid child ID"}), 400
+    child = get_skill(skill_id=child_id)
+    # Check if the child skill is in children list
+    if child not in parent.children:
+        return jsonify({"error": "Child skill not in children list."}), 400
+
+    # Remove the child skill from the parent skill
+    parent.children.remove(child)
+    db.session.commit()
+    return jsonify({"message": "Child skill removed from successfully"}), 200
+
 def get_skill(skill_id=None, skill_name=None):
     """Get all skills or a specific skill by ID or name."""
 
