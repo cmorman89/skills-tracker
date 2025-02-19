@@ -120,7 +120,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]\n    return render_template(\"skills_tree.html\", skills=skills_tree)\n@skills_bp.route(\"/\", methods=[\"POST\"])",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if skill := get_skill(skill_id=skill_id):\n        skill = skill.to_json_with_relationships()\n    return jsonify(skill), 200\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]",
         "detail": "app.routes.skills",
         "documentation": {}
     },
