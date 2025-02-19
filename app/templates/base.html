@@ -40,8 +40,13 @@
                         <i class="fa-solid fa-list px-4"></i>
                         Skills
                     </a>
+                    <a href="/skills/add"
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/skills/add' %}bg-indigo-700{% endif %}">
+                        <i class="fa-solid fa-list px-4"></i>
+                        Add a Skill
+                    </a>
                     <a href="/skills/tree"
-                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/categories' %}bg-indigo-700{% endif %}">
+                        class="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300 {% if request.path == '/skills/tree' %}bg-indigo-700{% endif %}">
                         <i class="fa-solid fa-indent px-4"></i>
                         Skill Tree
                     </a>
