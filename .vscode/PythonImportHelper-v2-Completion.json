@@ -112,7 +112,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Get the data from the request\n    data = request.json\n    # Check if data is provided",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -121,7 +121,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Get the data from the request\n    data = request.json\n    # Check if data is provided\n    if not data:\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Check skill name is provided\n    if not data.get(\"name\").strip():\n        return jsonify({\"error\": \"Skill name cannot be empty\"}), 400",
+        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    if name := data.get(\"name\"):\n        if not isinstance(name, str):\n            return jsonify({\"error\": \"Skill name must be a string\"}), 400\n        if not (name := name.strip().lower()):",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -130,7 +130,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def update_skill(skill_id):\n    \"\"\"Update a skill by ID\"\"\"\n    # Get the current skill\n    skill = get_skill(skill_id=skill_id)\n    if not skill:\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Get the data from the request\n    data = request.json\n    if not data:\n        return jsonify({\"error\": \"No data provided\"}), 400",
+        "peekOfCode": "def update_skill(skill_id):\n    \"\"\"Update a skill by ID\"\"\"\n    # Get the current skill\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Get the data from the request\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    name = data.get(\"name\")",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -211,7 +211,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def remove_skill_from_all_children(parent_skill):\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(\n            {\"message\": \"Parent skill removed from child skills successfully\"}",
+        "peekOfCode": "def remove_skill_from_all_children(parent_skill):\n    \"\"\"Remove a skill from all its children to prevent stale references.\"\"\"\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -220,7 +220,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    tree = recurse_tree(skill)\n    print(tree)\n    return Response(tree, mimetype=\"text/plain\"), 200\ndef recurse_tree(skill, indent=0, tree=\"\"):\n    # Add the skill to the tree",
+        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Build the tree structure\n    return Response(recurse_tree(skill), mimetype=\"text/plain\"), 200\ndef recurse_tree(skill, indent=0, tree=\"\"):\n    \"\"\"Helper function to recursively build the skill tree.\"\"\"\n    # Add the skill to the tree",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -229,7 +229,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def recurse_tree(skill, indent=0, tree=\"\"):\n    # Add the skill to the tree\n    tree += \" \" * indent + f\"- {skill.name}\\n\"\n    # Increase the indent for children\n    indent += 2\n    # Get all children skills    \n    if children := skill.children:\n        # Recursively call the function for each child\n        for child in children:\n            tree = recurse_tree(child, indent, tree)",
+        "peekOfCode": "def recurse_tree(skill, indent=0, tree=\"\"):\n    \"\"\"Helper function to recursively build the skill tree.\"\"\"\n    # Add the skill to the tree\n    tree += \" \" * indent + f\"- {skill.name} ({skill.description})\\n\"\n    # Increase the indent for children\n    indent += 2\n    # Get all children skills\n    if children := skill.children:\n        # Recursively call the function for each child\n        for child in children:",
         "detail": "app.routes.skills",
         "documentation": {}
     },

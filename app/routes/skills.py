@@ -62,37 +62,42 @@ def update_skill(skill_id):
     """Update a skill by ID"""
 
     # Get the current skill
-    skill = get_skill(skill_id=skill_id)
-    if not skill:
+    if not (skill := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Skill not found"}), 404
 
     # Get the data from the request
-    data = request.json
-    if not data:
+    if not (data := request.json):
         return jsonify({"error": "No data provided"}), 400
 
-    # Check skill name
+    # Validate the skill name
     name = data.get("name")
-    if name and isinstance(name, str):
-        name = name.strip().lower()
+    if name or name == "":
+        if not isinstance(name, str):
+            name = skill.name
+        if not (name := name.strip().lower()):
+            return jsonify({"error": "Skill name cannot be empty"}), 400
+    else:
+        name = skill.name
 
     # Check for duplicate skill name
-    if name is not skill.name:
-        if get_skill(skill_name=name):
-            return jsonify({"error": "Skill name already exists"}), 400
-        skill.name = name
+    if name != skill.name and get_skill(skill_name=name):
+        return jsonify({"error": "Skill name already exists"}), 400
 
     # Check if description is provided
-    description = data.get("description")
-
-    # Check if description is empty
-    if description == "" or data.get("description") is None:
-        skill.description = None
-    else:
-        skill.description = description.strip()
+    if description := data.get("description"):
+        if isinstance(description, str):
+            description = description.strip()
+            if description == "":
+                description = None
+        else:
+            description = skill.description
 
     # Update the skill in the database
+    skill.name = name
+    skill.description = description
     db.session.commit()
+
+    # Return the updated skill
     return jsonify(skill.to_json()), 200
 
 
