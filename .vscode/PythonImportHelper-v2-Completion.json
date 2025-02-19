@@ -24,6 +24,14 @@
         "documentation": {}
     },
     {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "current_app",
         "importPath": "flask",
         "description": "flask",
@@ -95,7 +103,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -172,6 +180,24 @@
         "documentation": {}
     },
     {
+        "label": "add_child_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def add_child_skill(skill_id):\n    \"\"\"Add a child skill to a skill by ID\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child skill ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "remove_child_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def remove_child_skill(skill_id):\n    \"\"\"Remove a child skill from a skill by IDs\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "get_skill",
         "kind": 2,
         "importPath": "app.routes.skills",
@@ -190,11 +216,29 @@
         "documentation": {}
     },
     {
+        "label": "view_as_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    tree = recurse_tree(skill)\n    print(tree)\n    return Response(tree, mimetype=\"text/plain\"), 200\ndef recurse_tree(skill, indent=0, tree=\"\"):\n    # Add the skill to the tree",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "recurse_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def recurse_tree(skill, indent=0, tree=\"\"):\n    # Add the skill to the tree\n    tree += \" \" * indent + f\"- {skill.name}\\n\"\n    # Increase the indent for children\n    indent += 2\n    # Get all children skills    \n    if children := skill.children:\n        # Recursively call the function for each child\n        for child in children:\n            tree = recurse_tree(child, indent, tree)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "skills_bp",
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    skill = get_skill(skill_id=skill_id)\n    return jsonify(skill.to_json_with_relationships())",
         "detail": "app.routes.skills",
         "documentation": {}
     },

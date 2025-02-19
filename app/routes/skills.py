@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from ..models import db, Skill
 
 # Define the blueprint for skills
@@ -284,3 +284,27 @@ def remove_skill_from_all_children(parent_skill):
     return jsonify(
         {"error": "Skill has no children to remove"}
     ), 400
+    
+@skills_bp.route("/<int:skill_id>/tree", methods=["GET"])
+def view_as_tree(skill_id):
+    """Recursively view a skill and its children as a text-based tree."""
+    
+    # Check if skill exists
+    if not (skill := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Skill not found"}), 404
+    
+    tree = recurse_tree(skill)
+    print(tree)
+    return Response(tree, mimetype="text/plain"), 200
+    
+def recurse_tree(skill, indent=0, tree=""):
+    # Add the skill to the tree
+    tree += " " * indent + f"- {skill.name}\n"
+    # Increase the indent for children
+    indent += 2
+    # Get all children skills    
+    if children := skill.children:
+        # Recursively call the function for each child
+        for child in children:
+            tree = recurse_tree(child, indent, tree)
+    return tree
