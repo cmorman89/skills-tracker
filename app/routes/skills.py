@@ -299,7 +299,7 @@ def view_as_tree(skill_id):
     
 def recurse_tree(skill, indent=0, tree=""):
     # Add the skill to the tree
-    tree += " " * indent + f"- {skill.name}\n"
+    tree += " " * indent + f"- {skill.name} ({skill.description})\n"
     # Increase the indent for children
     indent += 2
     # Get all children skills    
