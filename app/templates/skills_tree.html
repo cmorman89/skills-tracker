@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Skills Tree{% endblock %}
+{% block main %}
+<div class="p-6 bg-gray-100 min-h-screen">
+    <h1 class="text-2xl font-semibold text-indigo-800 mb-4">Skills Hierarchy</h1>
+
+    <div id="skills-tree" class="bg-white rounded-lg shadow p-4">
+        <ul class="space-y-2">
+            {% for skill in skills %}
+            <li>
+                {{ render_skill(skill) }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<script>
+    function toggleChildNodes(button) {
+            const childNodes = button.closest('.tree-node').querySelector('ul');
+            if (childNodes) {
+                childNodes.classList.toggle('hidden');
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-caret-right');
+                    icon.classList.toggle('fa-caret-down');
+                }
+            }
+        }
+
+</script>
+{% endblock %}
+{% macro render_skill(skill) %}
+<div class="tree-node">
+    <div class="flex items-center space-x-2">
+        {% if skill.children|length > 0 %}
+        <button class="toggle-btn bg-gray-200 rounded-full w-5 h-5 flex items-center justify-center"
+            onclick="toggleChildNodes(this)" title="+">
+            <i class="fa-solid fa-caret-down"></i>
+        </button>
+        {% endif %}
+        <span class="font-medium text-gray-700">{{ skill.name }}</span>
+    </div>
+
+    {% if skill.children|length > 0 %}
+    <ul class="ml-6 mt-2 space-y-2">
+        {% for child in skill.children %}
+        <li>
+            {{ render_skill(child) }}
+        </li>
+        {% endfor %}
+        <li><input class="bg-transparent" placeholder="Add new skill" type="text"></li>
+    </ul>
+    {% endif %}
+
+
+
+</div>
+{% endmacro %}

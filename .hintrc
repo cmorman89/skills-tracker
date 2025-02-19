@@ -10,6 +10,12 @@
           "-webkit-text-size-adjust"
         ]
       }
+    ],
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
     ]
   }
 }

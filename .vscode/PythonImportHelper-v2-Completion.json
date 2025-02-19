@@ -32,6 +32,14 @@
         "documentation": {}
     },
     {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "current_app",
         "importPath": "flask",
         "description": "flask",
@@ -103,7 +111,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    # return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    return render_template(\n        \"skills.html\",\n        skills=get_skill(),\n    )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -112,7 +120,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]\n    return render_template(\"skills_tree.html\", skills=skills_tree)\n@skills_bp.route(\"/\", methods=[\"POST\"])",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "skills_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]\n    return render_template(\"skills_tree.html\", skills=skills_tree)\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -225,6 +242,15 @@
         "documentation": {}
     },
     {
+        "label": "make_skill_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def make_skill_tree(skill):\n    \"\"\"Convert a skill and its children into a tree structure.\"\"\"\n    # Initialize the tree with the skill itself\n    tree = {\n        \"id\": skill.id,\n        \"name\": skill.name.title(),\n        \"description\": skill.description,\n        \"children\": [],\n    }\n    # Recursively add children to the tree",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "creates_cycle",
         "kind": 2,
         "importPath": "app.routes.skills",
@@ -238,7 +264,7 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__)\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())\n@skills_bp.route(\"/\", methods=[\"POST\"])",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    # return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    return render_template(\n        \"skills.html\",\n        skills=get_skill(),\n    )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
         "detail": "app.routes.skills",
         "documentation": {}
     },
