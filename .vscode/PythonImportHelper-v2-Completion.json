@@ -220,16 +220,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Build the tree structure\n    return Response(recurse_tree(skill), mimetype=\"text/plain\"), 200\ndef recurse_tree(skill, indent=0, tree=\"\"):\n    \"\"\"Helper function to recursively build the skill tree.\"\"\"\n    # Add the skill to the tree",
+        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    def recurse_tree(skill, indent=0, tree=\"\"):\n        \"\"\"Helper function to recursively build the skill tree.\"\"\"\n        # Add the skill to the tree\n        tree += \" \" * indent + f\"- {skill.name} ({skill.description})\\n\"\n        # Increase the indent for children",
         "detail": "app.routes.skills",
         "documentation": {}
     },
     {
-        "label": "recurse_tree",
+        "label": "creates_cycle",
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def recurse_tree(skill, indent=0, tree=\"\"):\n    \"\"\"Helper function to recursively build the skill tree.\"\"\"\n    # Add the skill to the tree\n    tree += \" \" * indent + f\"- {skill.name} ({skill.description})\\n\"\n    # Increase the indent for children\n    indent += 2\n    # Get all children skills\n    if children := skill.children:\n        # Recursively call the function for each child\n        for child in children:",
+        "peekOfCode": "def creates_cycle(parent_skill, child_skill):\n    \"\"\"Check if adding a parent-child relationship creates a cycle.\"\"\"\n    # Track visited nodes\n    visited = set()\n    # Add the parent skill to the visited set to simulate the cycle check\n    visited.add(parent_skill.id)\n    def dfs(skill):\n        if skill.id in visited:\n            return True\n        visited.add(skill.id)",
         "detail": "app.routes.skills",
         "documentation": {}
     },

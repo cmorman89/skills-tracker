@@ -169,6 +169,10 @@ def add_parent_skill(skill_id):
     except ValueError:
         return jsonify({"error": "Invalid parent ID"}), 400
 
+    # Prevent self-referencing parent-child relationship
+    if parent_id == skill_id:
+        return jsonify({"error": "Skill cannot be its own parent"}), 400
+
     # Check if the parent skill exists
     if not (parent := get_skill(skill_id=parent_id)):
         return jsonify({"error": "Parent skill not found"}), 404
@@ -177,9 +181,15 @@ def add_parent_skill(skill_id):
     if parent in child.parents:
         return jsonify({"error": "Parent skill already exists in list"}), 400
 
+    # Prevent cyclic relationships
+    if creates_cycle(parent_skill=parent, child_skill=child):
+        return jsonify({"error": "Adding this parent skill creates a cycle"}), 400
+
     # Add the parent skill to the child skill
     child.parents.append(parent)
     db.session.commit()
+
+    # Prevent cyclic relationships
     return jsonify({"message": "Parent skill added to list successfully"}), 200
 
 
@@ -200,6 +210,7 @@ def remove_parent_skill(skill_id):
     except ValueError:
         return jsonify({"error": "Invalid parent ID"}), 400
     parent = get_skill(skill_id=parent_id)
+
     # Check if the parent skill is in parents list
     if parent not in child.parents:
         return jsonify({"error": "Parent skill not in parents list."}), 400
@@ -207,6 +218,8 @@ def remove_parent_skill(skill_id):
     # Remove the parent skill from the child skill
     child.parents.remove(parent)
     db.session.commit()
+
+    # Remove the child skill from the parent skill
     return jsonify({"message": "Parent skill removed from successfully"}), 200
 
 
@@ -227,6 +240,10 @@ def add_child_skill(skill_id):
     except ValueError:
         return jsonify({"error": "Invalid child ID"}), 400
 
+    # Prevent self-referencing parent
+    if child_id == skill_id:
+        return jsonify({"error": "Skill cannot be its own child"}), 400
+
     # Check if the child skill exists
     if not (child := get_skill(skill_id=child_id)):
         return jsonify({"error": "Child skill not found"}), 404
@@ -234,6 +251,10 @@ def add_child_skill(skill_id):
     # Check if the child skill is already a child of the parent skill
     if child in parent.children:
         return jsonify({"error": "Child skill already exists in list"}), 400
+
+    # Prevent cyclic relationships
+    if creates_cycle(parent_skill=parent, child_skill=child):
+        return jsonify({"error": "Adding this child skill creates a cycle"}), 400
 
     # Add the child skill to the parent skill
     parent.children.append(child)
@@ -317,24 +338,44 @@ def view_as_tree(skill_id):
     if not (skill := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Skill not found"}), 404
 
+    def recurse_tree(skill, indent=0, tree=""):
+        """Helper function to recursively build the skill tree."""
+
+        # Add the skill to the tree
+        tree += " " * indent + f"- {skill.name} ({skill.description})\n"
+
+        # Increase the indent for children
+        indent += 2
+
+        # Get all children skills
+        if children := skill.children:
+            # Recursively call the function for each child
+            for child in children:
+                tree = recurse_tree(child, indent, tree)
+
+        # Return the tree as of this node
+        return tree
+
     # Build the tree structure
     return Response(recurse_tree(skill), mimetype="text/plain"), 200
 
 
-def recurse_tree(skill, indent=0, tree=""):
-    """Helper function to recursively build the skill tree."""
+def creates_cycle(parent_skill, child_skill):
+    """Check if adding a parent-child relationship creates a cycle."""
 
-    # Add the skill to the tree
-    tree += " " * indent + f"- {skill.name} ({skill.description})\n"
+    # Track visited nodes
+    visited = set()
 
-    # Increase the indent for children
-    indent += 2
+    # Add the parent skill to the visited set to simulate the cycle check
+    visited.add(parent_skill.id)
 
-    # Get all children skills
-    if children := skill.children:
-        # Recursively call the function for each child
-        for child in children:
-            tree = recurse_tree(child, indent, tree)
+    def dfs(skill):
+        if skill.id in visited:
+            return True
+        visited.add(skill.id)
+        for parent in skill.parents:
+            if dfs(parent):
+                return True
+        return False
 
-    # Return the tree as of this node
-    return tree
+    return dfs(child_skill)
