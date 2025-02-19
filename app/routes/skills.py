@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify, Response
-from ..models import db, Skill
+from flask import Blueprint, Response, jsonify, request
+
+from ..models import Skill, db
 
 # Define the blueprint for skills
 skills_bp = Blueprint("skills", __name__)
@@ -14,8 +15,7 @@ def list_all_skills():
 @skills_bp.route("/<int:skill_id>", methods=["GET"])
 def list_skill_by_id(skill_id):
     """Get a skill by ID."""
-    skill = get_skill(skill_id=skill_id)
-    return jsonify(skill.to_json_with_relationships())
+    return jsonify(get_skill(skill_id=skill_id).to_json_with_relationships())
 
 
 @skills_bp.route("/", methods=["POST"])
@@ -104,6 +104,7 @@ def update_skill(skill_id):
 @skills_bp.route("/<int:skill_id>", methods=["DELETE"])
 def delete_skill(skill_id):
     """Delete a skill by ID"""
+
     # Check if skill exists
     if skill := get_skill(skill_id=skill_id):
         # Remove the skill from any parent skills lists that reference it as a parent
@@ -114,6 +115,7 @@ def delete_skill(skill_id):
         db.session.delete(skill)
         db.session.commit()
         return jsonify({"message": "Skill deleted successfully"}), 200
+
     # If skill does not exist, return an error
     return jsonify({"error": "Skill not found"}), 404
 
@@ -129,6 +131,7 @@ def list_children_skills(skill_id):
             [child.to_json() for child in skill.children] if skill.children else []
         )
         return jsonify(children), 200
+
     # If skill does not exist, return an error
     return jsonify({"error": "Skill not found"}), 404
 
@@ -144,6 +147,7 @@ def list_parent_skills(skill_id):
             [parent.to_json() for parent in skill.parents] if skill.parents else []
         )
         return jsonify(parents), 200
+
     # If skill does not exist, return an error
     return jsonify({"error": "Skill not found"}), 404
 
@@ -240,6 +244,7 @@ def add_child_skill(skill_id):
 @skills_bp.route("/<int:skill_id>/children", methods=["DELETE"])
 def remove_child_skill(skill_id):
     """Remove a child skill from a skill by IDs"""
+
     # Validate if parent skill exists
     if not (parent := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Parent skill not found"}), 404
@@ -266,23 +271,28 @@ def remove_child_skill(skill_id):
 
 def get_skill(skill_id=None, skill_name=None):
     """Get all skills or a specific skill by ID or name."""
+
     # Return an error if both skill_id and skill_name are provided
     if skill_id and skill_name:
         return jsonify(
             {"error": "Please provide either a skill ID or a skill name, not both"}
         ), 400
+
     # Get skill by ID if provided
     elif skill_id:
         return Skill.query.get(skill_id)
+
     # Get skill by name if provided
     elif skill_name:
         return Skill.query.filter_by(name=skill_name).first()
+
     # Get all skills if no ID or name is provided
     return Skill.query.all()
 
 
 def remove_skill_from_all_children(parent_skill):
     """Remove a skill from all its children to prevent stale references."""
+
     # Check if skill has children
     if parent_skill.children:
         for child in parent_skill.children:
@@ -294,6 +304,7 @@ def remove_skill_from_all_children(parent_skill):
         return jsonify(
             {"message": "Parent skill removed from child skills successfully"}
         ), 200
+
     # If no children, return an error
     return jsonify({"error": "Skill has no children to remove"}), 400
 
@@ -301,22 +312,29 @@ def remove_skill_from_all_children(parent_skill):
 @skills_bp.route("/<int:skill_id>/tree", methods=["GET"])
 def view_as_tree(skill_id):
     """Recursively view a skill and its children as a text-based tree."""
+
     # Check if skill exists
     if not (skill := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Skill not found"}), 404
+
     # Build the tree structure
     return Response(recurse_tree(skill), mimetype="text/plain"), 200
 
 
 def recurse_tree(skill, indent=0, tree=""):
     """Helper function to recursively build the skill tree."""
+
     # Add the skill to the tree
     tree += " " * indent + f"- {skill.name} ({skill.description})\n"
+
     # Increase the indent for children
     indent += 2
+
     # Get all children skills
     if children := skill.children:
         # Recursively call the function for each child
         for child in children:
             tree = recurse_tree(child, indent, tree)
+
+    # Return the tree as of this node
     return tree
