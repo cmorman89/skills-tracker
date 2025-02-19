@@ -22,27 +22,31 @@ def list_skill_by_id(skill_id):
 def create_skill():
     """Create a new skill."""
 
-    # Get the data from the request
-    data = request.json
-
     # Check if data is provided
-    if not data:
+    if not (data := request.json):
         return jsonify({"error": "No data provided"}), 400
 
-    # Check skill name is provided
-    if not data.get("name").strip():
-        return jsonify({"error": "Skill name cannot be empty"}), 400
-    name = data.get("name").lower().strip()
+    # Validate the skill name
+    if name := data.get("name"):
+        if not isinstance(name, str):
+            return jsonify({"error": "Skill name must be a string"}), 400
+        if not (name := name.strip().lower()):
+            return jsonify({"error": "Skill name cannot be empty"}), 400
+    else:
+        return jsonify({"error": "Skill name is required"}), 400
 
     # Check for duplicate skill name
     if get_skill(skill_name=name):
         return jsonify({"error": "Skill name already exists"}), 400
 
     # Check if description is provided
-    if data.get("description") == "" or data.get("description") is None:
-        description = None
-    else:
-        description = data.get("description").strip()
+    if description := data.get("description"):
+        if isinstance(description, str):
+            description = description.strip()
+            if description == "":
+                description = None
+        else:
+            description = None
 
     # Add the new skill to the database
     skill = Skill(name=name, description=description)
@@ -100,7 +104,7 @@ def delete_skill(skill_id):
         # Remove the skill from any parent skills lists that reference it as a parent
         if skill.children:
             remove_skill_from_all_children(skill)
-            
+
         # Delete the skill
         db.session.delete(skill)
         db.session.commit()
@@ -200,6 +204,7 @@ def remove_parent_skill(skill_id):
 @skills_bp.route("/<int:skill_id>/children", methods=["POST"])
 def add_child_skill(skill_id):
     """Add a child skill to a skill by ID"""
+
     # Validate if parent skill exists
     if not (parent := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Parent skill not found"}), 404
@@ -226,6 +231,7 @@ def add_child_skill(skill_id):
     db.session.commit()
     return jsonify({"message": "Child skill added to list successfully"}), 200
 
+
 @skills_bp.route("/<int:skill_id>/children", methods=["DELETE"])
 def remove_child_skill(skill_id):
     """Remove a child skill from a skill by IDs"""
@@ -242,6 +248,7 @@ def remove_child_skill(skill_id):
     except ValueError:
         return jsonify({"error": "Invalid child ID"}), 400
     child = get_skill(skill_id=child_id)
+
     # Check if the child skill is in children list
     if child not in parent.children:
         return jsonify({"error": "Child skill not in children list."}), 400
@@ -251,9 +258,9 @@ def remove_child_skill(skill_id):
     db.session.commit()
     return jsonify({"message": "Child skill removed from successfully"}), 200
 
+
 def get_skill(skill_id=None, skill_name=None):
     """Get all skills or a specific skill by ID or name."""
-
     # Return an error if both skill_id and skill_name are provided
     if skill_id and skill_name:
         return jsonify(
@@ -268,7 +275,9 @@ def get_skill(skill_id=None, skill_name=None):
     # Get all skills if no ID or name is provided
     return Skill.query.all()
 
+
 def remove_skill_from_all_children(parent_skill):
+    """Remove a skill from all its children to prevent stale references."""
     # Check if skill has children
     if parent_skill.children:
         for child in parent_skill.children:
@@ -281,28 +290,26 @@ def remove_skill_from_all_children(parent_skill):
             {"message": "Parent skill removed from child skills successfully"}
         ), 200
     # If no children, return an error
-    return jsonify(
-        {"error": "Skill has no children to remove"}
-    ), 400
-    
+    return jsonify({"error": "Skill has no children to remove"}), 400
+
+
 @skills_bp.route("/<int:skill_id>/tree", methods=["GET"])
 def view_as_tree(skill_id):
     """Recursively view a skill and its children as a text-based tree."""
-    
     # Check if skill exists
     if not (skill := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Skill not found"}), 404
-    
-    tree = recurse_tree(skill)
-    print(tree)
-    return Response(tree, mimetype="text/plain"), 200
-    
+    # Build the tree structure
+    return Response(recurse_tree(skill), mimetype="text/plain"), 200
+
+
 def recurse_tree(skill, indent=0, tree=""):
+    """Helper function to recursively build the skill tree."""
     # Add the skill to the tree
     tree += " " * indent + f"- {skill.name} ({skill.description})\n"
     # Increase the indent for children
     indent += 2
-    # Get all children skills    
+    # Get all children skills
     if children := skill.children:
         # Recursively call the function for each child
         for child in children:
