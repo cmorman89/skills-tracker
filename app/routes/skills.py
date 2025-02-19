@@ -8,7 +8,7 @@ skills_bp = Blueprint("skills", __name__)
 @skills_bp.route("/", methods=["GET"])
 def list_all_skills():
     """List all skills."""
-    return jsonify([skill.to_json() for skill in get_skill()])
+    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
 
 
 @skills_bp.route("/<int:skill_id>", methods=["GET"])
