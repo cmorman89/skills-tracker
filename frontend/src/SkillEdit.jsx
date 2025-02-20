@@ -16,7 +16,6 @@ const SkillEdit = () => {
                 const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${id}`);
                 setSkills(response.data);
                 setLoading(false);
-                console.log("Success - Skills: ", response.data);
             } catch (error) {
                 console.error("Error fetching skills: ", error);
                 setLoading(false);
@@ -27,7 +26,6 @@ const SkillEdit = () => {
                 const response = await axios.get('http://127.0.0.1:5000/api/v1/skills');
                 setList(response.data);
                 setListLoading(false);
-                console.log("Success - Skills: ", response.data);
             } catch (error) {
                 console.error("Error fetching skills: ", error);
                 setListLoading(false);

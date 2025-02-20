@@ -3,24 +3,8 @@ import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
 
 const SkillAdd = () => {
-    const [skillName, setSkillName] = useState('');
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
-    const checkSkillName = async (value) => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/name/${skillName}`);
-            console.log("Success - Skill Name: ", response.data);
-        } catch (error) {
-            console.error("Error fetching skill name: ", error);
-        }
-    };
-    const handleSkillNameInput = (value) => {
-        if (value) {
-            checkSkillName(value)
-        }
-        setSkillName(value);
-        console.log("Skill Name: ", skillName);
-    };
 
     useEffect(() => {
         const fetchSkills = async () => {
@@ -28,7 +12,6 @@ const SkillAdd = () => {
                 const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
                 setSkills(response.data);
                 setLoading(false);
-                console.log("Success - Skills: ", response.data);
             } catch (error) {
                 console.error("Error fetching skills: ", error);
                 setLoading(false);
@@ -39,11 +22,9 @@ const SkillAdd = () => {
 
     return (
         <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">Create a New Skill</h1>
+            <h1 className="text-2xl font-bold mb-4 text-sky-200">Create a New Skill</h1>
             <form>
-                <SkillNameInput
-                    onChange={handleSkillNameInput}
-                />
+                <SkillNameInput />
                 <div className="mb-4">
                     <label
                         htmlFor="description"
