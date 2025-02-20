@@ -1,5 +1,7 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import SkillForm from "./SkillForm";
+import SkillEdit from "./SkillEdit";
 
 
 const MainContent = () => {
@@ -11,7 +13,11 @@ const MainContent = () => {
           Welcome to the dashboard! This is where your main content will appear.
         </p>
       </div>
-      <SkillForm />
+      <Routes>
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/skills/new" element={<SkillForm />} />
+        <Route path="/skills/edit/:id" element={<SkillEdit />} />
+      </Routes>
     </div>
   );
 };

@@ -3,17 +3,17 @@ from flask import Blueprint, Response, jsonify, request, render_template
 from ..models import Skill, db
 
 # Define the blueprint for skills
-skills_bp = Blueprint("skills", __name__, url_prefix="/skills")
+skills_bp = Blueprint("skills", __name__, url_prefix="/api/v1/skills")
 
 
 @skills_bp.route("/", methods=["GET"])
 def list_all_skills():
     """List all skills."""
-    # return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
-    return render_template(
-        "skills.html",
-        skills=get_skill(),
-    )
+    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
+    # return render_template(
+    #     "skills.html",
+    #     skills=get_skill(),
+    # )
 
 
 @skills_bp.route("/<int:skill_id>", methods=["GET"])
@@ -373,9 +373,10 @@ def view_as_tree(skill_id):
     # Build the tree structure
     return Response(recurse_tree(skill), mimetype="text/plain"), 200
 
+
 def make_skill_tree(skill):
     """Convert a skill and its children into a tree structure."""
-    
+
     # Initialize the tree with the skill itself
     tree = {
         "id": skill.id,
@@ -387,6 +388,7 @@ def make_skill_tree(skill):
     for child in skill.children:
         tree["children"].append(make_skill_tree(child))
     return tree
+
 
 def creates_cycle(parent_skill, child_skill):
     """Check if adding a parent-child relationship creates a cycle."""
@@ -407,5 +409,3 @@ def creates_cycle(parent_skill, child_skill):
         return False
 
     return dfs(child_skill)
-
-

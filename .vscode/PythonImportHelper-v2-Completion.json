@@ -120,7 +120,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    # return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    return render_template(\n        \"skills.html\",\n        skills=get_skill(),\n    )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -273,7 +273,7 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    # return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    return render_template(\n        \"skills.html\",\n        skills=get_skill(),\n    )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
         "detail": "app.routes.skills",
         "documentation": {}
     },
