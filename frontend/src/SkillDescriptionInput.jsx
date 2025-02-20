@@ -11,14 +11,15 @@ const SkillDescriptionInput = ({ value }) => {
         name="skillDescription"
         placeholder="Enter a brief description of the skill (optional)."
         value={value}
-        onChange=''
       />
     </div>
   );
 };
 SkillDescriptionInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+};
+SkillDescriptionInput.defaultProps = {
+  value: '',
 };
 
 export default SkillDescriptionInput;

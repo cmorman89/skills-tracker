@@ -29,9 +29,10 @@ TextArea.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 TextArea.defaultProps = {
+  onChange: () => {},
   placeholder: '',
   value: '',
 };
