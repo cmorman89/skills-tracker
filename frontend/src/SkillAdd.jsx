@@ -2,6 +2,8 @@ import  { useState, useEffect } from "react";
 import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
+import TextInput from "./TextInput";
+import ItemsList from "./ItemsList";
 
 const SkillAdd = () => {
     const [skills, setSkills] = useState([]);
@@ -50,6 +52,13 @@ const SkillAdd = () => {
                             ))
                         )}
                     </select>
+                    <TextInput
+                        label="Add a Parent"
+                    />
+
+                    <ItemsList
+                        texts={["CSS", "JavaScript", "React"]}
+                    />
                     <p className="text-xs text-slate-500 mt-1">
                         Hold Ctrl to select multiple parents.
                     </p>
@@ -58,7 +67,7 @@ const SkillAdd = () => {
                     <label
                         htmlFor="examples"
                         className="block text-sm font-medium text-slate-300"
-                    >
+                        >
                         Examples
                     </label>
                     <div className="flex items-center justify-center">
