@@ -10,7 +10,7 @@ const TextWithX = ({ text, onClick }) => {
             <small className="mr-2">
                 {text}
             </small>
-            <a onClick={onClick}>
+            <a onClick={() => onClick(text)}>
                 <FontAwesomeIcon
                     icon={faCircleXmark}
                     className="text-orange-300/50 hover:text-orange-400"

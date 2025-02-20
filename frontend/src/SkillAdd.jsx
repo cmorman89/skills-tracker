@@ -4,6 +4,7 @@ import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
 import TextInput from "./TextInput";
 import ItemsList from "./ItemsList";
+import SkillParents from "./SkillParents";
 
 const SkillAdd = () => {
     const [skills, setSkills] = useState([]);
@@ -29,40 +30,9 @@ const SkillAdd = () => {
             <form>
                 <SkillNameInput />
                 <SkillDescriptionInput />
-                <div className="mb-4">
-                    <label
-                        htmlFor="parentSkills"
-                        className="block text-sm font-medium text-slate-00"
-                    >
-                        Parent Skills    
-                    </label>
-                    <select
-                        id="parentSkills"
-                        name="parentSkills"
-                        multiple
-                        className="mt-1 block w-full p-2 border border-slate-600 bg-slate-900/40 rounded-md shadow-sm"
-                    >
-                        {loading ? (
-                            <option>Loading...</option>
-                        ) : (
-                            skills.map((skill) => (
-                                <option key={skill.id} value={skill.id}>
-                                    {(skill.name).toUpperCase()}
-                                </option>
-                            ))
-                        )}
-                    </select>
-                    <TextInput
-                        label="Add a Parent"
-                    />
-
-                    <ItemsList
-                        texts={["CSS", "JavaScript", "React"]}
-                    />
-                    <p className="text-xs text-slate-500 mt-1">
-                        Hold Ctrl to select multiple parents.
-                    </p>
-                </div>
+                <SkillParents
+                    parents={loading ? [] : skills.map((skill) => skill.name)}
+                />
                 <div className="mb-4 flex flex-col flex-grow">
                     <label
                         htmlFor="examples"
