@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
 
 const SkillForm = () => {
 
     const [skills, setSkills] = useState([]);
-    const [parents, setParents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

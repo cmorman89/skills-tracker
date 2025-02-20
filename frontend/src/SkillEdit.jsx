@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import  { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const SkillEdit = () => {
@@ -35,7 +35,7 @@ const SkillEdit = () => {
         };
         fetchSkill();
         fetchAllSkills();
-    }, []);
+    }, [id]);
 
     return (
         <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">

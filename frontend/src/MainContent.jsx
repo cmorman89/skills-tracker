@@ -1,4 +1,4 @@
-import React from "react";
+import "react";
 import { Routes, Route } from "react-router-dom";
 import SkillForm from "./SkillForm";
 import SkillEdit from "./SkillEdit";
