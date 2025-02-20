@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const SkillForm = () => {
+const SkillEdit = () => {
 
+    const { id } = useParams();
     const [skills, setSkills] = useState([]);
-    const [parents, setParents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [skillList, setList] = useState([]);
+    const [listLoading, setListLoading] = useState(true);
 
     useEffect(() => {
-        const fetchSkills = async () => {
+        const fetchSkill = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
+                const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${id}`);
                 setSkills(response.data);
                 setLoading(false);
                 console.log("Success - Skills: ", response.data);
@@ -19,8 +22,19 @@ const SkillForm = () => {
                 setLoading(false);
             }
         };
-
-        fetchSkills();
+        const fetchAllSkills = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:5000/api/v1/skills');
+                setList(response.data);
+                setListLoading(false);
+                console.log("Success - Skills: ", response.data);
+            } catch (error) {
+                console.error("Error fetching skills: ", error);
+                setListLoading(false);
+            }
+        };
+        fetchSkill();
+        fetchAllSkills();
     }, []);
 
     return (
@@ -40,6 +54,7 @@ const SkillForm = () => {
                         name="skillName"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter skill name"
+                        value={skills.name}
                     />
 
                 </div>
@@ -57,6 +72,7 @@ const SkillForm = () => {
                         rows="4"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
                         placeholder="Enter a description of the skill (optional)."
+                        value={skills.description}
                     ></textarea>
                 </div>
                 <div className="mb-4">
@@ -72,10 +88,10 @@ const SkillForm = () => {
                         multiple
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
                     >
-                        {loading ? (
+                        {listLoading ? (
                             <option>Loading...</option>
                         ) : (
-                            skills.map((skill) => (
+                            skillList.map((skill) => (
                                 <option key={skill.id} value={skill.id}>
                                     {(skill.name).toUpperCase()}
                                 </option>
@@ -85,6 +101,15 @@ const SkillForm = () => {
                     <p className="text-xs text-gray-500 mt-1">
                         Hold Ctrl to select multiple parents.
                     </p>
+                        {loading ? (
+                            <option>Loading...</option>
+                        ) : (
+                            skills.parents.map((skill) => (
+                                <option key={skill.id} value={skill.id}>
+                                    {(skill.name).toUpperCase()}
+                                </option>
+                            ))
+                        )}
                 </div>
                 <div className="mb-4 flex flex-col flex-grow">
                     <label
@@ -164,4 +189,4 @@ const SkillForm = () => {
     )
 }
 
-export default SkillForm;
+export default SkillEdit;
