@@ -1,6 +1,7 @@
 import  { useState, useEffect } from "react";
 import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
+import SkillDescriptionInput from "./SkillDescriptionInput";
 
 const SkillAdd = () => {
     const [skills, setSkills] = useState([]);
@@ -25,22 +26,7 @@ const SkillAdd = () => {
             <h1 className="text-2xl font-bold mb-4 text-sky-200">Create a New Skill</h1>
             <form>
                 <SkillNameInput />
-                <div className="mb-4">
-                    <label
-                        htmlFor="description"
-                        className="block text-sm font-medium text-slate-300"
-                    >
-                        Skill Description
-                    </label>
-                    
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="4"
-                        className="mt-1 block w-full p-2 border border-slate-600 bg-slate-900/40 rounded-md shadow-sm"
-                        placeholder="Enter a description of the skill (optional)."
-                    ></textarea>
-                </div>
+                <SkillDescriptionInput />
                 <div className="mb-4">
                     <label
                         htmlFor="parentSkills"
