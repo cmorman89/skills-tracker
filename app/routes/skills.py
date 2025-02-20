@@ -24,6 +24,14 @@ def list_skill_by_id(skill_id):
     return jsonify(skill), 200
 
 
+@skills_bp.route("/name/<string:skill_name>", methods=["GET"])
+def list_skill_by_name(skill_name):
+    """Get a skill by name."""
+    if skill := get_skill(skill_name=skill_name):
+        skill = skill.to_json()
+    return jsonify(skill), 200
+
+
 @skills_bp.route("/tree", methods=["GET"])
 def skills_tree():
     skills = Skill.query.all()

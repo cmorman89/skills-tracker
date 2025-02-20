@@ -3,7 +3,7 @@ import "react"
 
 const Sidebar = () => {
     return (
-        <aside className="fixed flex flex-col left-0 top-0 h-full w-64 bg-indigo-800 text-white p-6">
+        <aside className="fixed flex flex-col left-0 top-0 h-full w-64 bg-transparent text-white p-6">
             <div className="flex items-center justify-center mb-8">
                 <span 
                 className="text-3xl font-bold text-white">SkillTrack</span>

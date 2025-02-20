@@ -129,7 +129,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if skill := get_skill(skill_id=skill_id):\n        skill = skill.to_json_with_relationships()\n    return jsonify(skill), 200\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if skill := get_skill(skill_id=skill_id):\n        skill = skill.to_json_with_relationships()\n    return jsonify(skill), 200\n@skills_bp.route(\"/name/<string:skill_name>\", methods=[\"GET\"])\ndef list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_skill_by_name",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()\n    return jsonify(skill), 200\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]",
         "detail": "app.routes.skills",
         "documentation": {}
     },
