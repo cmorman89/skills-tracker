@@ -1,5 +1,1 @@
-Flask
-Flask-Sessions
-requests
-flask-sqlalchemy
 flask-cors
