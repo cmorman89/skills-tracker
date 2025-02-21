@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
+import TextWithPlus from './TextWithPlus';
 import TextWithX from './TextWithX';
 
-const ItemsList = ({ texts, onClick }) => {
+const ItemList = ({ texts, onClick, variant }) => {
+    const ListVariant = variant === 'add' ? TextWithPlus : TextWithX;
     return (
         <div className="flex flex-wrap flex-grow justify-center">
             {texts.map((text) => (
-                <TextWithX
+                <ListVariant
                     key={text}
                     text={text}
                     onClick={onClick}
@@ -15,14 +17,16 @@ const ItemsList = ({ texts, onClick }) => {
     );
 }
 
-ItemsList.propTypes = {
+ItemList.propTypes = {
     texts: PropTypes.arrayOf(PropTypes.string),
     onClick: PropTypes.func,
+    variant: PropTypes.oneOf(['add', 'remove']),
 };
 
-ItemsList.defaultProps = {
-    onClick: () => {},
+ItemList.defaultProps = {
+    onClick: () => { },
     texts: [],
+    variant: 'add',
 };
 
-export default ItemsList;
+export default ItemList;

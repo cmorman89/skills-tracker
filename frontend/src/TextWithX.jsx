@@ -5,7 +5,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 const TextWithX = ({ text, onClick }) => {
     return (
         <div
-            className="flex border border-slate-600 flex-wrap items-center w-fit m-2 px-2 py-1 bg-slate-700 rounded-md shadow-lg justify-between hover:border-orange-400/50"
+            className="flex border border-amber-700/50 flex-wrap items-center w-fit m-2 px-2 py-1 bg-slate-700 rounded-md shadow-lg justify-between hover:border-orange-400/60"
             >
             <small className="mr-2">
                 {text}
