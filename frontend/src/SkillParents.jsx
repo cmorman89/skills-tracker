@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import ItemsList from "./ItemsList";
+import ItemListWithX from "./ItemListWithX";
 import PropTypes from 'prop-types';
 import TextInput from "./TextInput";
+import ItemList from "./ItemList";
+import FilterItemList from "./FilterItemList";
 
 const SkillParents = ({ parents }) => {
     const [skillParents, setSkillParents] = useState(parents);
@@ -18,25 +20,35 @@ const SkillParents = ({ parents }) => {
         console.log(parent);
         setSkillParents(skillParents.filter((p) => p !== parent));
     };
-    
+
     return (
         <div className="mb-4">
-            {/* Text Field for Search */}
-            <TextInput
-                label="Search for a Skill Parent"
-                id="searchSkillParent"
-                name="searchSkillParent"
-                placeholder="Search for a Skill Parent"
-            />
-            {/* // Dropdown for Filter */}
+            <hr className="my-8 border-1 border-slate-700 shadow-lg" />
+            <FilterItemList
+                texts={skillParents}
+                onClick={handleAddParent}
 
-            {/* // OnClick of Parent in Dropdown, add to List */}
-            {/* // List of Skill Parents */}
-            <ItemsList
+            />
+            <ItemList
                 texts={skillParents}
                 onClick={handleRemoveParent}
+                variant="add"
             />
-            {/* // OnClick of Parent in List, remove from List */}
+            <div className="mb-4">
+                <TextInput
+                    label="Remove a Parent Skill"
+                    id="skillParents"
+                    name="skillParents"
+                    placeholder="Search..."
+                    value=""
+                />
+            <ItemList
+                texts={skillParents}
+                onClick={handleRemoveParent}
+                variant="remove"
+            />
+            </div>
+
         </div>
     );
 

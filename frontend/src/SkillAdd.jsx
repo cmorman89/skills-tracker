@@ -1,10 +1,12 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
 import TextInput from "./TextInput";
-import ItemsList from "./ItemsList";
+import ItemListWithX from "./ItemListWithX";
 import SkillParents from "./SkillParents";
+import FilterItemList from "./FilterItemList";
+import Divider from "./Divider";
 
 const SkillAdd = () => {
     const [skills, setSkills] = useState([]);
@@ -33,11 +35,12 @@ const SkillAdd = () => {
                 <SkillParents
                     parents={loading ? [] : skills.map((skill) => skill.name)}
                 />
+                <Divider />
                 <div className="mb-4 flex flex-col flex-grow">
                     <label
                         htmlFor="examples"
                         className="block text-sm font-medium text-slate-300"
-                        >
+                    >
                         Examples
                     </label>
                     <div className="flex items-center justify-center">
@@ -61,10 +64,10 @@ const SkillAdd = () => {
                         </button>
                     </div>
                     <button
-                            type="button"
-                            className="block mt-2 px-4 py-2 bg-slate-700 text-white rounded-md shadow hover:bg-slate-500 focus:outline-none justify-self-right"
-                        >
-                            Add another source [+]
+                        type="button"
+                        className="block mt-2 px-4 py-2 bg-slate-700 text-white rounded-md shadow hover:bg-slate-500 focus:outline-none justify-self-right"
+                    >
+                        Add another source [+]
                     </button>
                 </div>
                 <div className="mb-4">
@@ -100,10 +103,10 @@ const SkillAdd = () => {
                 </div>
                 <div className="pt-4 mb-4 flex flex-col flex-grow">
                     <button
-                    type="submit"
-                    className="w-full px-4 py-2 bg-teal-500/20 text-white rounded-md shadow hover:bg-teal-500/30 focus:outline-none"
+                        type="submit"
+                        className="w-full px-4 py-2 bg-teal-500/20 text-white rounded-md shadow hover:bg-teal-500/30 focus:outline-none"
                     >
-                    Save Skill
+                        Save Skill
                     </button>
                 </div>
             </form>
