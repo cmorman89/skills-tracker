@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
-import TextInput from "./TextInput";
-import ItemListWithX from "./ItemListWithX";
 import SkillParents from "./SkillParents";
-import FilterItemList from "./FilterItemList";
 import Divider from "./Divider";
 
 const SkillAdd = () => {
@@ -28,10 +25,12 @@ const SkillAdd = () => {
 
     return (
         <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
-            <h1 className="text-2xl font-bold mb-4 text-sky-200">Create a New Skill</h1>
+            <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
+            <Divider />
             <form>
                 <SkillNameInput />
                 <SkillDescriptionInput />
+                <Divider />
                 <SkillParents
                     parents={loading ? [] : skills.map((skill) => skill.name)}
                 />

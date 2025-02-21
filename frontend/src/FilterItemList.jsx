@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import TextInput from './TextInput';
+import { useState } from 'react';
 import ItemList from './ItemList';
+import PropTypes from 'prop-types';
+import TextInput from './TextInput';
 
-const FilterItemList = ({ onClick }) => {
+const FilterItemList = ({ texts, id, name = id, label, onClick, variant, results, resultsOnEmpty }) => {
     const [filterText, setFilterText] = useState('');
 
-    const items = [
+    // Default items to show in the list
+    const items = texts && texts.length > 0 ? texts : [
         'Apple',
         'Banana',
         'Orange',
@@ -20,7 +22,6 @@ const FilterItemList = ({ onClick }) => {
         'Papaya',
         'Pawpaw',
         'Pine',
-        'Pineapple',
         'Pork',
         'Pasta',
         'Pizza',
@@ -30,22 +31,28 @@ const FilterItemList = ({ onClick }) => {
         'Peanut Butter',
         'Peanut Brittle'
     ];
-
-    const filteredItems = filterText
-        ? items.filter(item =>
-            item.toLowerCase().includes(filterText.toLowerCase())
-        )
-        : [];
-
-    const topItems = filteredItems.slice(0, 10);
+    const filterResults = () => {
+        const filtered = filterText
+            ? items.filter((item) => item.toLowerCase().includes(filterText.toLowerCase()))
+            : items;
+        
+        // Populate the list only if search term is present or resultsOnEmpty is true
+        if (resultsOnEmpty || filterText) {
+            // If results is greater than 0, return only the first n results
+            // Otherwise, return the entire filtered list
+            return results > 0 ? filtered.slice(0, results) : filtered;
+        }
+        // Return an empty array for a blank list
+        return [];
+    }   
 
     return (
         <div className="mb-4">
             <div className="mb-4">
                 <TextInput
-                    label="Add a Parent Skill"
-                    id="searchSkillParent"
-                    name="searchSkillParent"
+                    label={label}
+                    id={id}
+                    name={name}
                     onChange={(e) => setFilterText(e.target.value)}
                     placeholder="Search..."
                     value={filterText}
@@ -53,12 +60,31 @@ const FilterItemList = ({ onClick }) => {
             </div>
 
             <ItemList
-                texts={topItems}
+                texts={filterResults()}
                 onClick={onClick}
+                variant={variant}
             />
-
         </div>
     );
+};
+
+FilterItemList.propTypes = {
+    id: PropTypes.string,
+    label: PropTypes.string,
+    name: PropTypes.string,
+    onClick: PropTypes.func,
+    results: PropTypes.number,
+    resultsOnEmpty: PropTypes.bool,
+    texts: PropTypes.arrayOf(PropTypes.string),
+    variant: PropTypes.oneOf(['add', 'remove']),
+};
+
+FilterItemList.defaultProps = {
+    onClick: (value) => { console.log(value); },
+    results: 0,
+    resultsOnEmpty: false,
+    texts: [],
+    variant: 'add',
 };
 
 export default FilterItemList;

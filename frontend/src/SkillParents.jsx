@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import ItemListWithX from "./ItemListWithX";
 import PropTypes from 'prop-types';
-import TextInput from "./TextInput";
-import ItemList from "./ItemList";
 import FilterItemList from "./FilterItemList";
 
 const SkillParents = ({ parents }) => {
@@ -23,32 +20,26 @@ const SkillParents = ({ parents }) => {
 
     return (
         <div className="mb-4">
-            <hr className="my-8 border-1 border-slate-700 shadow-lg" />
             <FilterItemList
+                label="Add a Parent Skill"
+                id="addParent"
+                name="addParent"
                 texts={skillParents}
                 onClick={handleAddParent}
-
-            />
-            <ItemList
-                texts={skillParents}
-                onClick={handleRemoveParent}
                 variant="add"
+                results="10"
+                resultsOnEmpty={false}
             />
-            <div className="mb-4">
-                <TextInput
-                    label="Remove a Parent Skill"
-                    id="skillParents"
-                    name="skillParents"
-                    placeholder="Search..."
-                    value=""
-                />
-            <ItemList
+            <FilterItemList
+                label="Remove a Parent Skill"
+                id="removeParent"
+                name="removeParent"
                 texts={skillParents}
                 onClick={handleRemoveParent}
                 variant="remove"
+                results="10"
+                resultsOnEmpty={true}
             />
-            </div>
-
         </div>
     );
 
