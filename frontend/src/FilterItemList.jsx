@@ -6,6 +6,8 @@ import TextInput from './TextInput';
 const FilterItemList = ({ texts, id, name = id, label, onClick, variant, results, resultsOnEmpty }) => {
     const [filterText, setFilterText] = useState('');
 
+    // Get all safe parents from the API
+
     // Default items to show in the list
     const items = texts && texts.length > 0 ? texts : [
         'Apple',
@@ -47,7 +49,7 @@ const FilterItemList = ({ texts, id, name = id, label, onClick, variant, results
     }   
 
     return (
-        <div className="mb-4">
+        <div className="mb-2">
             <div className="mb-4">
                 <TextInput
                     label={label}

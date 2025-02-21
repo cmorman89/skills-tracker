@@ -24,7 +24,8 @@ const SkillAdd = () => {
     }, []);
 
     return (
-        <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
+        <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
+         <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
             <Divider />
             <form>
@@ -32,7 +33,7 @@ const SkillAdd = () => {
                 <SkillDescriptionInput />
                 <Divider />
                 <SkillParents
-                    parents={loading ? [] : skills.map((skill) => skill.name)}
+                    skill_id="9"
                 />
                 <Divider />
                 <div className="mb-4 flex flex-col flex-grow">
@@ -86,7 +87,7 @@ const SkillAdd = () => {
                         min="1"
                         max="5"
                         step="1"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full accent-sky-800 bg-transparent border border-yellow-400 shadow-lg curs"
                     >
                     </input>
                     <div className="flex mt-1 mx-1 justify-between text-slate-500">
@@ -109,6 +110,7 @@ const SkillAdd = () => {
                     </button>
                 </div>
             </form>
+            </div>
         </div>
     )
 }
