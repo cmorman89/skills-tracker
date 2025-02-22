@@ -16,7 +16,7 @@ const MainContent = () => {
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
         <Route path="/skills/add" element={<SkillAdd />} />
-        <Route path="/skills/edit/:id" element={<SkillEdit />} />
+        <Route path="/skills/edit/:skill_id" element={<SkillAdd />} />
       </Routes>
     </div>
   );

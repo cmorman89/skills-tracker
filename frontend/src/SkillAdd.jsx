@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
@@ -6,6 +7,7 @@ import SkillParents from "./SkillParents";
 import Divider from "./Divider";
 
 const SkillAdd = () => {
+    const { skill_id } = useParams();
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -33,7 +35,7 @@ const SkillAdd = () => {
                 <SkillDescriptionInput />
                 <Divider />
                 <SkillParents
-                    skill_id="9"
+                    skill_id={skill_id}
                 />
                 <Divider />
                 <div className="mb-4 flex flex-col flex-grow">

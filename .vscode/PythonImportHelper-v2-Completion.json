@@ -197,6 +197,15 @@
         "documentation": {}
     },
     {
+        "label": "list_available_parents",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_available_parents(skill_id):\n    \"\"\"List all available parent skills of a skill by ID\"\"\"\n    # Make an array of all available parents\n    availableParents = [parent.id for parent in get_skill()]\n    # Sort the array\n    availableParents.sort()\n    # Track visited nodes\n    visited_nodes = set()\n    # Get the skill by ID\n    skill = get_skill(skill_id=skill_id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "add_parent_skill",
         "kind": 2,
         "importPath": "app.routes.skills",
