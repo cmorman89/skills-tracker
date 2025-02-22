@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import FilterItemList from "./FilterItemList";
+
 const SkillParents = ({ skill_id }) => {
     const [actualParents, setActualParents] = useState([]);
     const [actualParentsLoading, setActualParentsLoadings] = useState(true);
@@ -36,20 +37,73 @@ const SkillParents = ({ skill_id }) => {
         setActualParents(actualParents.filter((p) => p !== parentName));
     };
 
+    // useEffect(() => {
+    //     const fetchSkills = async () => {
+    //         try {
+    //             const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
+    //             setAvailableParents(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching skills: ", error);
+    //         } finally {
+    //             SetAvailableParentsLoading(false);
+    //         }
+    //     };
+
+    //     fetchSkills();
+    // }, []);
+
+    const getParents = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/parents`);
+            return response.data;
+        }
+        catch (error) {
+            console.error("Error fetching parents: ", error);
+        }
+    };
+
+    const getAllSkills = async () => {
+        try {
+            const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
+            return response.data;
+        }
+        catch (error) {
+            console.error("Error fetching skills: ", error);
+        }
+    };
+
+    const removeIneligibleParents = () => {
+        const potentialParents = getAllSkills();
+        if (potentialParents) {
+        }
+
+        const traverseParents = (skill) => {
+            if (skill.parents) {
+                skill.parents.forEach((parent) => {
+                    if (parent in potentialParents) {
+                     
+                        .0
+                    }
+                });
+            }
+        }
+    };
     useEffect(() => {
-        const fetchSkills = async () => {
+        const fetchAvailableParents = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
+                const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/available_parents`);
                 setAvailableParents(response.data);
-            } catch (error) {
-                console.error("Error fetching skills: ", error);
-            } finally {
+                console.log("Available Parents: ", response.data);
+            }
+            catch (error) {
+                console.error("Error fetching available parents: ", error);
+            }
+            finally {
                 SetAvailableParentsLoading(false);
             }
-        };
-
-        fetchSkills();
-    }, []);
+        }
+        fetchAvailableParents();
+    }, [skill_id]);
 
     return (
         <div className="mb-4">
@@ -61,7 +115,7 @@ const SkillParents = ({ skill_id }) => {
                 onClick={handleAddParent}
                 variant="add"
                 results="10"
-                resultsOnEmpty={false}
+                resultsOnEmpty={true}
             />
             <FilterItemList
                 label="Remove a Parent Skill"
