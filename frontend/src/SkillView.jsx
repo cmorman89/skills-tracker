@@ -1,6 +1,4 @@
 import Divider from "./Divider";
-import TextInput from "./TextInput";
-import SkillTree from "./SkillTree";
 import SkillList from "./SkillList";
 
 const SkillView = () => {
@@ -10,11 +8,9 @@ const SkillView = () => {
                 <h1 className="text-2xl font-bold text-sky-200">Skills View</h1>
                 <Divider />
                 <div className="mb-4">
-                    <TextInput
-                        label="Search"
-                        placeholder="Search..."
+                    <SkillList
+                        items={["One", "One.5", ["Two", ["Three", "Four"], "Five", "Six"], "Seven"]}
                     />
-                    
                 </div>
             </div>
         </div>
