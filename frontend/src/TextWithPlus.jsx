@@ -14,7 +14,7 @@ const TextWithPlus = ({ text, onClick }) => {
                 <a onClick={() => onClick(text)}>
                     <FontAwesomeIcon
                         icon={faPlusCircle}
-                        className="text-teal-300/50 hover:text-teal-400"
+                        className="text-white/50 hover:text-white/80"
                     />
                 </a>    
             </div>
