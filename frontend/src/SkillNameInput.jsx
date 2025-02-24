@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
 
-const SkillNameInput = ({ value }) => {
+const SkillNameInput = ({ value, parentOnChange }) => {
   const [error, setError] = useState('');
 
   const querySkillName = async (value) => {
@@ -39,6 +39,7 @@ const SkillNameInput = ({ value }) => {
       console.error('Error fetching skill name: ', error);
       setError('Error checking skill name.');
     }
+    parentOnChange(newValue);
   };
   
 
@@ -58,7 +59,7 @@ const SkillNameInput = ({ value }) => {
 };
 SkillNameInput.propTypes = {
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  parentOnChange: PropTypes.func.isRequired,
 };
 
 export default SkillNameInput;

@@ -8,8 +8,34 @@ import Divider from "./Divider";
 
 const SkillAdd = () => {
     const { skill_id } = useParams();
-    const [skills, setSkills] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [, setSkills] = useState([]);
+    const [, setLoading] = useState(true);
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        parent: "[0]",
+    });
+
+    const handleNameChange = (value) => {
+        setFormData({ ...formData, name: value });
+        console.log("SkillNameInput value: ", value);
+    }
+
+    const handleDescriptionChange = (value) => {
+        setFormData({ ...formData, description: value });
+        console.log("SkillDescriptionInput value: ", value);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/api/v1/skills/", formData)
+            console.log("Form data: ", formData);
+            console.log("Response: ", response);
+        } catch (error) {
+            console.error("Error submitting skill: ", error);
+        }
+    }
 
     useEffect(() => {
         const fetchSkills = async () => {
@@ -25,14 +51,21 @@ const SkillAdd = () => {
         fetchSkills();
     }, []);
 
+    
     return (
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
          <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
             <Divider />
-            <form>
-                <SkillNameInput />
-                <SkillDescriptionInput />
+            <form onSubmit={handleSubmit}>
+                <SkillNameInput 
+                    value={formData.name}
+                    parentOnChange={handleNameChange}
+                />
+                <SkillDescriptionInput
+                    value={formData.description}
+                    parentOnChange={handleDescriptionChange}
+                />
                 <Divider />
                 <SkillParents
                     skill_id={skill_id}
