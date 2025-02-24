@@ -2,9 +2,13 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const TextWithIcon = ({ icon, text, onClick }) => {
+    const titleCase = (str) => {
+        return str.replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+
     return (
         <div
-            className="flex border border-pink-800 flex-wrap items-center w-fit m-2 bg-slate-700 rounded-md shadow-lg justify-between hover:border-pink-600/80 h-10"
+            className="flex flex-nowrap text-nowrap border border-pink-800 items-center w-fit m-2 bg-slate-700 rounded-md shadow-lg justify-between hover:border-pink-600/80 h-10"
         >
             <div className="bg-pink-800/50 flex items-center justify-center h-full p-2 mr-3">
                 <a onClick={() => onClick(text)}>
@@ -14,8 +18,8 @@ const TextWithIcon = ({ icon, text, onClick }) => {
                     />
                 </a>    
             </div>
-            <small className="pr-3">
-                {text}
+            <small className="pr-3 ">
+                {titleCase(text)}
             </small>
         </div>
     );

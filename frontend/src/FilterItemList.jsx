@@ -10,28 +10,7 @@ const FilterItemList = ({ texts, id, name = id, label, onClick, variant, results
 
     // Default items to show in the list
     const items = texts && texts.length > 0 ? texts : [
-        'Apple',
-        'Banana',
-        'Orange',
-        'Grapes',
-        'Pineapple',
-        'Mango',
-        'Peach',
-        'P',
-        'Plum',
-        'Pomegranate',
-        'Pear',
-        'Papaya',
-        'Pawpaw',
-        'Pine',
-        'Pork',
-        'Pasta',
-        'Pizza',
-        'Pancake',
-        'Pudding',
-        'Peanut',
-        'Peanut Butter',
-        'Peanut Brittle'
+        'No Items'
     ];
     const filterResults = () => {
         const filtered = filterText

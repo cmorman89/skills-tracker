@@ -3,7 +3,15 @@ import Divider from "./Divider";
 import SkillList from "./SkillList";
 
 const SkillView = () => {
-    const { skill_id } = useParams();
+    let { skill_id } = useParams();
+    if (!skill_id) {
+        skill_id = 16
+        console.log(`Skill ID: ${skill_id}`);
+    }
+
+    
+
+    console.log(skill_id);
     return (
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
             <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
