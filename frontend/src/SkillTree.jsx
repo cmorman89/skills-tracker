@@ -27,9 +27,11 @@ const SkillTree = ({ skillList }) => {
                     {/* Child Element */}
                     <div className="flex flex-col">
                         {/* Insert Child or Nested Tree Here */}
-                        <TextWithPlus text={skill.root.name} />
-                        {/* If the child has more children, recursively render SkillTree */}
-                        {skill.children.length > 0 && <SkillTree skillList={skill} />}
+                        {skill.children.length > 0 ?
+                            <SkillTree skillList={skill} />
+                        :
+                            <TextWithPlus text={skill.root.name} />
+                        }
                     </div>
                 </div>
             ))}
