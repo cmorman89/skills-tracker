@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import TextWithIcon from "./TextWithIcon";
-import { faCaretDown, faCode } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+
 
 const SkillTree = ({ skillList }) => {
     if (!skillList) return null;
@@ -13,12 +13,6 @@ const SkillTree = ({ skillList }) => {
         <div className="flex flex-col">
             {/* Root Node */}
             <div className="flex">
-                <div className="w-8 h-8 mt-3 ml-3 shadow-lg flex">
-                    <FontAwesomeIcon
-                        icon={faCaretDown}
-                        className="text-slate-200 m-auto text-xl"
-                    />
-                </div>
                 <TextWithIcon
                     icon={faCode}
                     text={root_node.name}
