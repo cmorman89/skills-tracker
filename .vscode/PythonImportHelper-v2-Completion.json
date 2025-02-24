@@ -260,7 +260,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parent_id = request.json.get(\"parent_id\")\n    try:\n        parent_id = int(parent_id)\n        if parent_id <= 0:",
+        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parents = request.json.get(\"parent_id\")\n    if isinstance(parents, list):\n        for parent in parents:\n            msg = add_parent_to_child(child, parent)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "add_parent_to_child",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400\n    # Prevent self-referencing parent-child relationship\n    if parent_id == child.id:\n        return jsonify({\"error\": \"Skill cannot be its own parent\"}), 400",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -575,7 +584,7 @@
         "kind": 2,
         "importPath": "setup",
         "description": "setup",
-        "peekOfCode": "def setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=0, name=\"Root\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()\n    print(\"Database setup complete.\")",
+        "peekOfCode": "def setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()\n    print(\"Database setup complete.\")",
         "detail": "setup",
         "documentation": {}
     },
@@ -584,7 +593,7 @@
         "kind": 5,
         "importPath": "setup",
         "description": "setup",
-        "peekOfCode": "DATABASE_URL = \"sqlite:///skills.db\"\ndef setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=0, name=\"Root\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()",
+        "peekOfCode": "DATABASE_URL = \"sqlite:///skills.db\"\ndef setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()",
         "detail": "setup",
         "documentation": {}
     }

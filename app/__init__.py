@@ -32,5 +32,5 @@ def create_app():
     from .routes import skills_bp
     app.register_blueprint(skills_bp, url_prefix="/api/v1/skills")
     # Enable CORS
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    CORS(app, origins=CORS_ORIGINS)
     return app

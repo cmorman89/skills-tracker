@@ -13,7 +13,7 @@ def setup_database():
     db.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    root_skill = Skill(id=0, name="Root", description="Root skill",)
+    root_skill = Skill(id=1, name="all skills", description="Root skill",)
     session.add(root_skill)
     session.commit()
     print("Database setup complete.")

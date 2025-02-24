@@ -92,8 +92,19 @@ def create_skill():
 
     # Add the new skill to the database
     skill = Skill(name=name, description=description)
-    db.session.add(skill)
+    db.session.add(skill)    
     db.session.commit()
+    # Get the new skill from the database
+    skill = get_skill(skill_id=skill.id)
+    print(f"New Skill {skill.id} created")
+    # Add the skill to the root skill if no parents are provided
+    if parents := data.get("parents"):
+        for parent_id in parents:
+            add_parent_to_child(skill, parent_id)
+            print(f"Appended Parent Skill {parent_id}")
+    else:
+        add_parent_to_child(skill, 1)
+        print("Appended Root Skill 1")
 
     # Return the created skill
     return jsonify(skill.to_json()), 201
@@ -245,13 +256,26 @@ def list_available_parents(skill_id):
 @skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
 def add_parent_skill(skill_id):
     """Add a parent skill to a skill by ID"""
-
+    
+    
     # Validate if child skill exists
     if not (child := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Child skill not found"}), 404
 
     # Validate the parent skill ID
-    parent_id = request.json.get("parent_id")
+    parents = request.json.get("parent_id")
+    
+    if isinstance(parents, list):
+        for parent in parents:
+            msg = add_parent_to_child(child, parent)
+            print(msg)
+    else:
+        msg = add_parent_to_child(child, parents)
+        print(msg)
+        
+    return jsonify({"message": "Parent skill added to list successfully"}), 200
+
+def add_parent_to_child(child, parent_id):
     try:
         parent_id = int(parent_id)
         if parent_id <= 0:
@@ -260,7 +284,7 @@ def add_parent_skill(skill_id):
         return jsonify({"error": "Invalid parent ID"}), 400
 
     # Prevent self-referencing parent-child relationship
-    if parent_id == skill_id:
+    if parent_id == child.id:
         return jsonify({"error": "Skill cannot be its own parent"}), 400
 
     # Check if the parent skill exists
@@ -278,9 +302,6 @@ def add_parent_skill(skill_id):
     # Add the parent skill to the child skill
     child.parents.append(parent)
     db.session.commit()
-
-    # Prevent cyclic relationships
-    return jsonify({"message": "Parent skill added to list successfully"}), 200
 
 
 @skills_bp.route("/<int:skill_id>/parents", methods=["DELETE"])

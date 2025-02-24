@@ -4,9 +4,10 @@ import SkillList from "./SkillList";
 
 const SkillView = () => {
     let { skill_id } = useParams();
+
+    // Use skill_id 1 if not provided
     if (!skill_id) {
-        skill_id = 16
-        console.log(`Skill ID: ${skill_id}`);
+        skill_id = 1
     }
 
     

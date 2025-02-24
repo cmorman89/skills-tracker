@@ -8,12 +8,12 @@ import Divider from "./Divider";
 
 const SkillAdd = () => {
     const { skill_id } = useParams();
-    const [, setSkills] = useState([]);
-    const [, setLoading] = useState(true);
+    const [skills, setSkills] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        parent: "[0]",
+        parents: [],
     });
 
     const handleNameChange = (value) => {
