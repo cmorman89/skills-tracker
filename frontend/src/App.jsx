@@ -5,7 +5,7 @@ import MainContent from "./MainContent";
 const App = () => {
   return (
     <Router>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <Sidebar />
         <MainContent />
       </div>
