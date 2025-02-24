@@ -21,7 +21,31 @@ const SkillParents = ({ skill_id }) => {
             }
         };
 
+        const fetchAvailableParents = async () => {
+            try {
+                console.log("SKILL ID IS ", skill_id);
+                if (skill_id == undefined) {
+                    console.log("SKILL ID IS UNDEFINED - detected");
+                    const response = await axios.get('http://127.0.0.1:5000/api/v1/skills/');
+                    const legal_nodes = response.data.filter((skill) => skill.id !== 1);
+                    setAvailableParents(legal_nodes);
+                    console.log("AVAILABLE PARENTS ARE ", response.data);
+                    console.log("LEGAL NODES ARE ", legal_nodes);
+                } else {
+                    const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/available_parents`);
+                    setAvailableParents(response.data);
+                }
+            }
+            catch (error) {
+                console.error("Error fetching available parents: ", error);
+            }
+            finally {
+                SetAvailableParentsLoading(false);
+            }
+        }
+
         fetchParents();
+        fetchAvailableParents();
     }, [skill_id]);
 
     const handleAddParent = (parentName) => {
@@ -36,74 +60,6 @@ const SkillParents = ({ skill_id }) => {
         setAvailableParents([...availableParents, { name: parentName }]);
         setActualParents(actualParents.filter((p) => p !== parentName));
     };
-
-    // useEffect(() => {
-    //     const fetchSkills = async () => {
-    //         try {
-    //             const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
-    //             setAvailableParents(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching skills: ", error);
-    //         } finally {
-    //             SetAvailableParentsLoading(false);
-    //         }
-    //     };
-
-    //     fetchSkills();
-    // }, []);
-
-    const getParents = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/parents`);
-            return response.data;
-        }
-        catch (error) {
-            console.error("Error fetching parents: ", error);
-        }
-    };
-
-    const getAllSkills = async () => {
-        try {
-            const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
-            return response.data;
-        }
-        catch (error) {
-            console.error("Error fetching skills: ", error);
-        }
-    };
-
-    const removeIneligibleParents = () => {
-        const potentialParents = getAllSkills();
-        if (potentialParents) {
-        }
-
-        const traverseParents = (skill) => {
-            if (skill.parents) {
-                skill.parents.forEach((parent) => {
-                    if (parent in potentialParents) {
-                     
-                        .0
-                    }
-                });
-            }
-        }
-    };
-    useEffect(() => {
-        const fetchAvailableParents = async () => {
-            try {
-                const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/available_parents`);
-                setAvailableParents(response.data);
-                console.log("Available Parents: ", response.data);
-            }
-            catch (error) {
-                console.error("Error fetching available parents: ", error);
-            }
-            finally {
-                SetAvailableParentsLoading(false);
-            }
-        }
-        fetchAvailableParents();
-    }, [skill_id]);
 
     return (
         <div className="mb-4">

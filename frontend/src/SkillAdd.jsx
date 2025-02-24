@@ -67,9 +67,7 @@ const SkillAdd = () => {
                     parentOnChange={handleDescriptionChange}
                 />
                 <Divider />
-                <SkillParents
-                    skill_id={skill_id}
-                />
+                <SkillParents/>
                 <Divider />
                 <div className="mb-4 flex flex-col flex-grow">
                     <label
