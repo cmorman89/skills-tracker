@@ -1,0 +1,31 @@
+CREATE TABLE alembic_version (
+	version_num VARCHAR(32) NOT NULL, 
+	CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num)
+);
+CREATE TABLE keywords (
+	id INTEGER NOT NULL, 
+	name TEXT NOT NULL, 
+	PRIMARY KEY (id), 
+	UNIQUE (name)
+);
+CREATE TABLE skills (
+	id INTEGER NOT NULL, 
+	name TEXT NOT NULL, 
+	description TEXT, 
+	PRIMARY KEY (id), 
+	UNIQUE (name)
+);
+CREATE TABLE skill_keyword (
+	skill_id INTEGER NOT NULL, 
+	keyword_id INTEGER NOT NULL, 
+	PRIMARY KEY (skill_id, keyword_id), 
+	FOREIGN KEY(keyword_id) REFERENCES keywords (id), 
+	FOREIGN KEY(skill_id) REFERENCES skills (id)
+);
+CREATE TABLE skill_relationship (
+	parent_skill_id INTEGER NOT NULL, 
+	child_skill_id INTEGER NOT NULL, 
+	PRIMARY KEY (parent_skill_id, child_skill_id), 
+	FOREIGN KEY(child_skill_id) REFERENCES skills (id), 
+	FOREIGN KEY(parent_skill_id) REFERENCES skills (id)
+);
