@@ -19,7 +19,7 @@ const MainContent = () => {
         <Route path="/skills/add" element={<SkillAdd />} />
         <Route path="/skills/edit/:skill_id" element={<SkillAdd />} />
         <Route path="/skills" element={<SkillView />} />
-        <Route path="/skills/view/:skill_id" element={<SkillView />} />
+        <Route path="/skills/:skill_id" element={<SkillView />} />
       </Routes>
     </div>
   );
