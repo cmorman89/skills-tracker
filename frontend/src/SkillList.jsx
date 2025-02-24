@@ -25,7 +25,7 @@ const SkillList = ({ skill_id }) => {
             }
         };
         fetchAllChildren();
-    }, []);
+    }, [skill_id]);
 
     return (
         <>

@@ -1,37 +1,34 @@
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
-const TextWithIcon = ({ text, icon, color, onClick }) => {
+const TextWithIcon = ({ icon, text, onClick }) => {
     return (
         <div
-            className={`flex border border-${color}-800 flex-wrap items-center w-fit m-2 pl-3 bg-slate-700 rounded-md shadow-lg justify-between hover:border-${color}-400/50 h-10`}
-            >
-            <small className="pr-3">
-                {text}
-            </small>
-            <div className={`bg-${color}-800/50 flex items-center justify-center h-full p-2`}>
+            className="flex border border-pink-800 flex-wrap items-center w-fit m-2 bg-slate-700 rounded-md shadow-lg justify-between hover:border-pink-600/80 h-10"
+        >
+            <div className="bg-pink-800/50 flex items-center justify-center h-full p-2 mr-3">
                 <a onClick={() => onClick(text)}>
                     <FontAwesomeIcon
                         icon={icon}
-                        className={`text-${color}-300/50 hover:text-${color}-400`}
+                        className="text-white/50 hover:text-white/80"
                     />
                 </a>    
             </div>
+            <small className="pr-3">
+                {text}
+            </small>
         </div>
     );
 }
 
 TextWithIcon.propTypes = {
+    icon: PropTypes.object.isRequired,
     text: PropTypes.string.isRequired,
-    icon: PropTypes.string,
     onClick: PropTypes.func,
 };
 
 TextWithIcon.defaultProps = {
-    onClick: () => { },
-    icon: faPlusCircle,
+    onClick: () => {},
 };
 
 export default TextWithIcon;
