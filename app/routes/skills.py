@@ -15,6 +15,26 @@ def list_all_skills():
     #     skills=get_skill(),
     # )
 
+@skills_bp.route("/<int:id>/all_children", methods=["GET"])
+def list_all_children(id):
+    skill = get_skill(skill_id=id)  # Fetch the root skill from the database
+    if not skill:
+        return {"error": "Skill not found"}, 404
+
+    skill_tree = build_skill_tree(skill)
+    return jsonify(skill_tree)
+            
+def build_skill_tree(skill):
+    """
+    Recursively builds a nested dictionary structure for the skill hierarchy.
+    """
+    skill_tree = {"root": skill.to_json(), "children": []}
+
+    if skill.children:  # Assuming skill.children is an iterable of child Skill objects
+        for child in skill.children:
+            skill_tree["children"].append(build_skill_tree(child))
+
+    return skill_tree
 
 @skills_bp.route("/<int:skill_id>", methods=["GET"])
 def list_skill_by_id(skill_id):

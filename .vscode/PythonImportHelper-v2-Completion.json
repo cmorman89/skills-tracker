@@ -120,7 +120,25 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])\ndef list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_all_children",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)\ndef build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "build_skill_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -291,7 +309,7 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -507,7 +525,7 @@
         "kind": 6,
         "importPath": "config",
         "description": "config",
-        "peekOfCode": "class Config:\n    SESSION_PERMANENT = False\n    SESSION_TYPE = \"filesystem\"\n    SQLALCHEMY_ECHO = True\n    SQLALCHEMY_DATABASE_URI = f\"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'skills.db')}\"\n    SQLALCHEMY_TRACK_MODIFICATIONS = False",
+        "peekOfCode": "class Config:\n    SESSION_PERMANENT = False\n    SESSION_TYPE = \"filesystem\"\n    SQLALCHEMY_ECHO = False\n    SQLALCHEMY_DATABASE_URI = f\"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'skills.db')}\"\n    SQLALCHEMY_TRACK_MODIFICATIONS = False",
         "detail": "config",
         "documentation": {}
     },
