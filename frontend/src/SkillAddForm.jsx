@@ -4,14 +4,18 @@ import Divider from "./Divider";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
 import axios from "axios";
+import SkillMastery from "./SkillMastery";
 
 const SkillAddForm = () => {
-
+    const [msgType, setMsgType] = useState("");
+    const [msg, setMsg] = useState("");
     const [formData, setFormData] = useState({
         name: "",
         description: "",
         parents: [],
+        mastery: 1,
     });
+    const [parentKey, setParentKey] = useState(0);
 
     const handleNameOnChange = (value) => {
         setFormData({ ...formData, name: value });
@@ -23,6 +27,10 @@ const SkillAddForm = () => {
 
     const handleParentOnChange = (value) => {
         setFormData({ ...formData, parents: value });
+    }
+
+    const handleMasteryOnChange = (value) => {
+        setFormData({ ...formData, mastery: value });
     }
 
     const handleSubmit = async (e) => {
@@ -40,6 +48,16 @@ const SkillAddForm = () => {
         } catch (error) {
             console.error("Error submitting skill: ", error);
         }
+
+        // Reset form data
+        setFormData({
+            name: "",
+            description: "",
+            parents: [],
+            mastery: 1,
+        });
+        setParentKey(parentKey => parentKey + 1);
+
     }
 
     return (
@@ -78,8 +96,17 @@ const SkillAddForm = () => {
 
                     {/* Skill Parent Manager */}
                     <SkillParentManager
+                        key={parentKey}
                         onChange={handleParentOnChange}
                         parents={formData.parents}
+                    />
+
+                    <Divider />
+
+                    {/*Skill Mastery */}
+                    <SkillMastery
+                        onChange={handleMasteryOnChange}
+                        value={formData.mastery}
                     />
 
                     <Divider />
