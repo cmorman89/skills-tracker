@@ -26,6 +26,11 @@ const SkillAdd = () => {
         console.log("SkillDescriptionInput value: ", value);
     }
 
+    const handleParentChange = (value) => {
+        setFormData({ ...formData, parents: value });
+        // console.log("PARENT: SkillParents value: ", value);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -67,7 +72,9 @@ const SkillAdd = () => {
                     parentOnChange={handleDescriptionChange}
                 />
                 <Divider />
-                <SkillParents/>
+                <SkillParents
+                    parentOnChange={handleParentChange}    
+                />
                 <Divider />
                 <div className="mb-4 flex flex-col flex-grow">
                     <label
