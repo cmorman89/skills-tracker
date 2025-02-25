@@ -14,7 +14,7 @@ const TextArea = ({ label, id, name, placeholder, value, onChange }) => {
       <textarea
         id={id}
         name={name}
-        className="mt-1 block w-full p-2 border border-slate-600 rounded-md shadow-sm bg-slate-900/40"
+        className="mt-1 block w-full p-2 border border-slate-600 rounded-md shadow-lg bg-slate-900/40"
         placeholder={placeholder}
         value={value}
         onChange={onChange}

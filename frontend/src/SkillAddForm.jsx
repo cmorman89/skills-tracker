@@ -38,8 +38,8 @@ const SkillAddForm = () => {
 
     return (
         // Build card structure for the form
-        <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
-            <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
+        <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl inset-shadow-lg inset-shadow-white">
+            <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 inset-shadow-lg inset-shadow-white rounded-lg">
                 {/* Form Heading */}
                 <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
                 <Divider />
@@ -72,7 +72,7 @@ const SkillAddForm = () => {
                     <div className="pt-4 mb-4 flex flex-col flex-grow">
                         <button
                             type="submit"
-                            className="w-full px-4 py-2 bg-teal-500/20 text-white rounded-md shadow hover:bg-teal-500/30 focus:outline-none"
+                            className="w-full px-4 py-2 bg-teal-500/20 text-white rounded-md shadow-lg hover:bg-teal-500/30 focus:outline-none"
                         >
                             Save Skill
                         </button>
