@@ -152,7 +152,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -350,7 +350,7 @@
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n    # return render_template(\n    #     \"skills.html\",\n    #     skills=get_skill(),\n    # )\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -368,7 +368,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords\n    keywords = db.relationship(",
+        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords",
         "detail": "app.models",
         "documentation": {}
     },
