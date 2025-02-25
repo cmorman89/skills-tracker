@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import TextWithPlus from "./TextWithPlus";
 import PropTypes from 'prop-types';
 
-const SkillParentList = ({ Component = TextWithPlus, onClick, skillList}) => {
+const SkillParentList = ({ Component = TextWithPlus, onClick, skillList }) => {
 
     // Rerender the component with the available parents when the available parents change
     useEffect(() => {

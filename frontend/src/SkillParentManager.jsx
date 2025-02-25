@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import SkillParentList from './SkillParentList';
 import TextWithX from './TextWithX';
 import TextInput from './TextInput';
-import TextWithNA from './TextWithNA';
 
 const SkillParentManager = ({ skill, parents, onChange }) => {
 
@@ -41,13 +40,13 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
         /* Filter the available parents based on the search input */
         if (!filterAddSkill) return availableParents;
         return availableParents.filter((skill) => skill.name.toLowerCase().includes(filterRemoveSkill.toLowerCase()));
-    } 
+    }
 
     const filterRemoveResults = () => {
         /* Filter the current parents based on the search input */
         if (!filterRemoveSkill) return parents;
         return parents.filter((skill) => skill.name.toLowerCase().includes(filterRemoveSkill.toLowerCase()));
-    } 
+    }
 
     useEffect(() => {
         // Set the skill ID 
