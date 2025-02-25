@@ -9,8 +9,11 @@ const SkillListView = () => {
     useEffect(() => {
         const fetchSkills = async () => {
             try {
+                // Fetch all skills
                 const response = await axios.get("http://127.0.0.1:5000/api/v1/skills/");
-                const data = response.data;
+                // Filter out the root skill
+                const data = response.data.filter((skill) => skill.id !== 1);
+                // Update the state
                 setSkills(data);
                 setLoading(false);
             } catch (error) {
@@ -25,10 +28,13 @@ const SkillListView = () => {
         // Build card structure for the view
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl inset-shadow-lg inset-shadow-white">
             <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 inset-shadow-lg inset-shadow-white rounded-lg">
+                
+                {/* Title */}
                 <h1 className="text-2xl font-bold text-sky-200">Skill Table</h1>
 
                 <Divider />
 
+                {/* Table */}
                 <div className="">
                     <table className="w-full table-auto">
                         <thead className="table-header-group">
