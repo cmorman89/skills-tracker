@@ -88,14 +88,26 @@ def create_skill():
                 description = None
         else:
             description = None
-
+    # Validate mastery level
+    if mastery := data.get("mastery"):
+        try:
+            mastery = int(mastery)
+            if mastery < 1 or mastery > 5:
+                return jsonify(
+                    {"error": "Mastery level must be an integer between 1 and 5"}
+                ), 400
+        except ValueError:
+            return jsonify({"error": "Mastery level must be an integer"}), 400
+    else:
+        mastery = 1
+    
     # Add the new skill to the database
-    skill = Skill(name=name, description=description)
+    skill = Skill(name=name, description=description, mastery=mastery)
     db.session.add(skill)
     db.session.commit()
-    # Get the new skill from the database
+    
+    # Get the new skill from the database to add parents
     skill = get_skill(skill_id=skill.id)
-    print(f"New Skill {skill.id} created")
     # Add the skill to the root skill if no parents are provided
     if parents := data.get("parents"):
         for parent_id in parents:
