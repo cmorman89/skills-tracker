@@ -15,6 +15,7 @@ def list_all_skills():
     #     skills=get_skill(),
     # )
 
+
 @skills_bp.route("/<int:id>/all_children", methods=["GET"])
 def list_all_children(id):
     skill = get_skill(skill_id=id)  # Fetch the root skill from the database
@@ -23,7 +24,8 @@ def list_all_children(id):
 
     skill_tree = build_skill_tree(skill)
     return jsonify(skill_tree)
-            
+
+
 def build_skill_tree(skill):
     """
     Recursively builds a nested dictionary structure for the skill hierarchy.
@@ -35,6 +37,7 @@ def build_skill_tree(skill):
             skill_tree["children"].append(build_skill_tree(child))
 
     return skill_tree
+
 
 @skills_bp.route("/<int:skill_id>", methods=["GET"])
 def list_skill_by_id(skill_id):
@@ -92,7 +95,7 @@ def create_skill():
 
     # Add the new skill to the database
     skill = Skill(name=name, description=description)
-    db.session.add(skill)    
+    db.session.add(skill)
     db.session.commit()
     # Get the new skill from the database
     skill = get_skill(skill_id=skill.id)
@@ -101,10 +104,9 @@ def create_skill():
     if parents := data.get("parents"):
         for parent_id in parents:
             add_parent_to_child(skill, parent_id)
-            print(f"Appended Parent Skill {parent_id}")
     else:
+        # Add the skill to the root skill if no parents are provided
         add_parent_to_child(skill, 1)
-        print("Appended Root Skill 1")
 
     # Return the created skill
     return jsonify(skill.to_json()), 201
@@ -211,10 +213,10 @@ def list_available_parents(skill_id):
 
     # Make an array of all available parents
     availableParents = [parent.id for parent in get_skill()]
-    
+
     # Sort the array
     availableParents.sort()
-    
+
     # Track visited nodes
     visited_nodes = set()
 
@@ -249,22 +251,20 @@ def list_available_parents(skill_id):
         if skill := get_skill(skill_id=parent_id):
             availParentSkills.append(skill.to_json())
 
-
     return jsonify(availParentSkills), 200
 
 
 @skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
 def add_parent_skill(skill_id):
     """Add a parent skill to a skill by ID"""
-    
-    
+
     # Validate if child skill exists
     if not (child := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Child skill not found"}), 404
 
     # Validate the parent skill ID
     parents = request.json.get("parent_id")
-    
+
     if isinstance(parents, list):
         for parent in parents:
             msg = add_parent_to_child(child, parent)
@@ -272,12 +272,18 @@ def add_parent_skill(skill_id):
     else:
         msg = add_parent_to_child(child, parents)
         print(msg)
-        
+
     return jsonify({"message": "Parent skill added to list successfully"}), 200
+
 
 def add_parent_to_child(child, parent_id):
     try:
-        parent_id = int(parent_id)
+        if isinstance(parent_id, dict):
+            parent_id = parent_id.get("id")
+        else:
+            # Print parent_id with blue background to stand out
+            print(f"\033[44m{parent_id}\033[0m")
+            parent_id = int(parent_id)
         if parent_id <= 0:
             raise ValueError
     except ValueError:

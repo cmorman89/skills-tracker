@@ -269,7 +269,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400\n    # Prevent self-referencing parent-child relationship\n    if parent_id == child.id:\n        return jsonify({\"error\": \"Skill cannot be its own parent\"}), 400",
+        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            # Print parent_id with blue background to stand out\n            print(f\"\\033[44m{parent_id}\\033[0m\")\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError",
         "detail": "app.routes.skills",
         "documentation": {}
     },
