@@ -260,7 +260,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parents = request.json.get(\"parent_id\")\n    if isinstance(parents, list):\n        for parent in parents:\n            msg = add_parent_to_child(child, parent)",
+        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parents = request.json.get(\"parent_id\")\n    if isinstance(parents, list):\n        for parent in parents:\n            add_parent_to_child(child, parent)",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -269,7 +269,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            # Print parent_id with blue background to stand out\n            print(f\"\\033[44m{parent_id}\\033[0m\")\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError",
+        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400",
         "detail": "app.routes.skills",
         "documentation": {}
     },

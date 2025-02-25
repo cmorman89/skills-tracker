@@ -17,8 +17,6 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
         if (!parents.includes(e)) {
             // Add the value to the parents list
             const updatedParents = [...parents, e];
-
-            console.log("Updated parents");
             // Remove the value from the available parents list
             setAvailableParents(availableParents.filter((parent) => parent.id !== e.id));
 
@@ -73,7 +71,6 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
 
         // Trigger fetching available parents
         fetchAvailableParents();
-        console.log("Refetched parents");
     }, [skill]);
 
     return (

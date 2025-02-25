@@ -275,11 +275,9 @@ def add_parent_skill(skill_id):
 
     if isinstance(parents, list):
         for parent in parents:
-            msg = add_parent_to_child(child, parent)
-            print(msg)
+            add_parent_to_child(child, parent)
     else:
-        msg = add_parent_to_child(child, parents)
-        print(msg)
+        add_parent_to_child(child, parents)
 
     return jsonify({"message": "Parent skill added to list successfully"}), 200
 
@@ -289,8 +287,6 @@ def add_parent_to_child(child, parent_id):
         if isinstance(parent_id, dict):
             parent_id = parent_id.get("id")
         else:
-            # Print parent_id with blue background to stand out
-            print(f"\033[44m{parent_id}\033[0m")
             parent_id = int(parent_id)
         if parent_id <= 0:
             raise ValueError

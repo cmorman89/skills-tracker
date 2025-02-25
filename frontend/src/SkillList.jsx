@@ -9,8 +9,6 @@ const SkillList = ({ skill_id }) => {
     const [loading, setLoading] = useState(true);
 
     const handleDelete = async (id) => {
-        console.log(`Deleting skill ID# ${id}`);
-
         try {
             if (!id) {
                 console.error("No ID provided to delete skill");
@@ -55,7 +53,6 @@ const SkillList = ({ skill_id }) => {
                 const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/all_children`);
                 const data = await response.data;
                 setSkillList(data);
-                console.log(data);
             } catch (error) {
                 console.error("Error fetching skills: ", error);
             } finally {

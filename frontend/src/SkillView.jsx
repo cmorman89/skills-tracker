@@ -10,9 +10,6 @@ const SkillView = () => {
         skill_id = 1
     }
 
-    
-
-    console.log(skill_id);
     return (
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
             <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">

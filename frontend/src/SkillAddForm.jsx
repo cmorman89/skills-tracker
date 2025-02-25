@@ -82,14 +82,14 @@ const SkillAddForm = () => {
                 <form onSubmit={handleSubmit}>
                     {/* Skill Name */}
                     <SkillNameInput
+                        onChange={handleNameOnChange}
                         value={formData.name}
-                        parentOnChange={handleNameOnChange}
                     />
 
                     {/* Skill Description */}
                     <SkillDescriptionInput
+                        onChange={handleDescriptionOnChange}
                         value={formData.description}
-                        parentOnChange={handleDescriptionOnChange}
                     />
 
                     <Divider />

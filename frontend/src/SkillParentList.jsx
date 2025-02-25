@@ -6,7 +6,7 @@ const SkillParentList = ({ Component = TextWithPlus, onClick, skillList }) => {
 
     // Rerender the component with the available parents when the available parents change
     useEffect(() => {
-        console.log("Available parents changed: ", skillList);
+        // Nothing here
     }, [skillList]);
 
 
