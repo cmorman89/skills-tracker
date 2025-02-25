@@ -1,5 +1,8 @@
 import { useState } from "react";
 import SkillParentManager from "./SkillParentManager";
+import Divider from "./Divider";
+import SkillNameInput from "./SkillNameInput";
+import SkillDescriptionInput from "./SkillDescriptionInput";
 
 const SkillAddForm = () => {
 
@@ -9,9 +12,16 @@ const SkillAddForm = () => {
         parents: [],
     });
 
+    const handleNameOnChange = (value) => {
+        setFormData({ ...formData, name: value });
+    }
+
+    const handleDescriptionOnChange = (value) => {
+        setFormData({ ...formData, description: value });
+    }
+
     const handleParentOnChange = (value) => {
         setFormData({ ...formData, parents: value });
-        console.log("PARENT: SkillParents value: ", value);
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,14 +32,48 @@ const SkillAddForm = () => {
         }
     }
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <SkillParentManager
-                    onChange={handleParentOnChange}
-                    parents={formData.parents}
-                />
-                <button type="submit" className="btn btn-primary p-2 rounded shadow bg-slate-400 text-slate-700 font-bold">Submit</button>
-            </form>
+        // Build card structure for the form
+        <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
+            <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 shadow-lg rounded-lg">
+                {/* Form Heading */}
+                <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
+                <Divider />
+
+                {/* Form */}
+                <form onSubmit={handleSubmit}>
+                    {/* Skill Name */}
+                    <SkillNameInput
+                        value={formData.name}
+                        parentOnChange={handleNameOnChange}
+                    />
+
+                    {/* Skill Description */}
+                    <SkillDescriptionInput
+                        value={formData.description}
+                        parentOnChange={handleDescriptionOnChange}
+                    />
+                    
+                    <Divider />
+
+                    {/* Skill Parent Manager */}
+                    <SkillParentManager
+                        onChange={handleParentOnChange}
+                        parents={formData.parents}
+                    />
+
+                    <Divider />
+
+                    {/* Submit Button */}
+                    <div className="pt-4 mb-4 flex flex-col flex-grow">
+                        <button
+                            type="submit"
+                            className="w-full px-4 py-2 bg-teal-500/20 text-white rounded-md shadow hover:bg-teal-500/30 focus:outline-none"
+                        >
+                            Save Skill
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

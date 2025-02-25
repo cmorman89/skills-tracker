@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import SkillParentList from './SkillParentList';
 import TextWithX from './TextWithX';
+import TextInput from './TextInput';
 
 const SkillParentManager = ({ skill, parents, onChange }) => {
 
     const [availableParents, setAvailableParents] = useState([]);
     const [availableParentsLoading, setAvailableParentsLoading] = useState(true);
+    const [filterAddSkill, setFilterAddSkill] = useState('');
+    const [filterRemoveSkill, setFilterRemoveSkill] = useState('');
+
 
     const handleAddParent = (e) => {
         // Check if the value is already in the parents list
@@ -68,18 +72,34 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
     }, []);
 
     return (
-        <div>
-            <h2 className='text-2xl text-slate-400 font-bold'>ADD</h2>
+        <div className='flex flex-grow flex-col '>
+            {/* Add Parent Skills Section */}
+            <div className="mb-4">
+                <TextInput
+                    label="Add a Parent Skill"
+                    id="addSkillSearch"
+                    name="addSkillSearch"
+                    onChange={(e) => setFilterAddSkill(e.target.value)}
+                    placeholder="Search..."
+                    value={filterAddSkill}
+                />
+            </div>
             <SkillParentList
                 onClick={handleAddParent}
                 skillList={availableParents}
                 variant='add'
             />
 
-            <div className='h-px w-full border border-slate-400 mx-1/4 my-4'></div>
-
-            <h2 className='text-2xl text-slate-400 font-bold'>REMOVE</h2>
-
+            <div className="mb-4">
+                <TextInput
+                    label="Remove a Parent Skill"
+                    id="removeSkillSearch"
+                    name="removeSkillSearch"
+                    onChange={(e) => setFilterRemoveSkill(e.target.value)}
+                    placeholder="Search..."
+                    value={filterRemoveSkill}
+                />
+            </div>
             <SkillParentList
                 Component={TextWithX}
                 onClick={handleRemoveParent}
