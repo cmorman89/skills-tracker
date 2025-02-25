@@ -29,8 +29,14 @@ const SkillAddForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://127.0.0.1:5000/api/v1/skills/", formData)
-            console.log("Form data: ", formData);
-            console.log("Response: ", response);
+            const data = response.data;
+            if (data.error) {
+                setMsgType("error");
+                setMsg(data.error);
+            } else {
+                setMsgType("success");
+                setMsg("Action completed successfully");
+            }
         } catch (error) {
             console.error("Error submitting skill: ", error);
         }
@@ -40,6 +46,16 @@ const SkillAddForm = () => {
         // Build card structure for the form
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl inset-shadow-lg inset-shadow-white">
             <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 inset-shadow-lg inset-shadow-white rounded-lg">
+                {/* Message */}
+                {msg && (
+                    <div
+                        className={`text-sm p-2 mb-4 rounded-md ${
+                            msgType === "error" ? "bg-red-500/20 text-red-500" : "bg-green-500/20 text-green-500"
+                        }`}
+                    >
+                        {msg}
+                    </div>
+                )}
                 {/* Form Heading */}
                 <h1 className="text-2xl font-bold text-sky-200">Create a New Skill</h1>
                 <Divider />
