@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import TextWithIcon from "./TextWithIcon";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faCode, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-const SkillTree = ({ skillList }) => {
+const SkillTree = ({ skillList, handleDelete }) => {
     if (!skillList) return null;
 
     const root_node = skillList?.root || { name: "Unknown" };
@@ -15,7 +16,7 @@ const SkillTree = ({ skillList }) => {
             <div className="flex">
                 <TextWithIcon
                     icon={faCode}
-                    text={root_node.name}
+                    text={`${root_node.name} (ID: ${root_node.id})`}
                 />
             </div>
 
@@ -35,12 +36,31 @@ const SkillTree = ({ skillList }) => {
                     <div className="flex flex-col">
                         {/* Insert Child or Nested Tree Here */}
                         {skill.children.length > 0 ?
-                            <SkillTree skillList={skill} />
-                            :
-                            <TextWithIcon
-                                icon={faCode}
-                                text={skill.root.name}
+                            <SkillTree
+                                handleDelete={handleDelete}
+                                skillList={skill}
                             />
+                            :
+                            (
+                                <div className="flex flex-grow items-center">
+                                    <TextWithIcon
+                                        icon={faCode}
+                                        text={`${skill.root.name} (ID: ${skill.root.id})`}
+                                    />
+                                    <a href="#" onClick={() => console.log("Edit Skill clicked for ", skill.root.id)}>
+                                        <FontAwesomeIcon
+                                            className="ml-8 text-orange-300/50 hover:text-amber-500/80 text-xl"
+                                            icon={faPencil}
+                                        />
+                                    </a>
+                                    <a href="#" onClick={() => handleDelete(skill.root.id)}>
+                                        <FontAwesomeIcon
+                                            className="ml-6 text-pink-300/50 hover:text-red-500/80 text-xl"
+                                            icon={faCircleXmark}
+                                        />
+                                    </a>
+                                </div>
+                            )
                         }
                     </div>
                 </div>
@@ -51,6 +71,7 @@ const SkillTree = ({ skillList }) => {
 
 SkillTree.propTypes = {
     skillList: PropTypes.object.isRequired,
+    handleDelete: PropTypes.func,
 };
 
 SkillTree.defaultProps = {
@@ -58,6 +79,7 @@ SkillTree.defaultProps = {
         root: { name: "Empty List" },
         children: [],
     },
+    handleDelete: () => { },
 };
 
 export default SkillTree;

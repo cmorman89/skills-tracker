@@ -8,6 +8,44 @@ const SkillList = ({ skill_id }) => {
     const [skillList, setSkillList] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const handleDelete = async (id) => {
+        console.log(`Deleting skill ID# ${id}`);
+
+        try {
+            if (!id) {
+                console.error("No ID provided to delete skill");
+                return;
+            }
+
+            // Send delete request to backend
+            await axios.delete(`http://127.0.0.1:5000/api/v1/skills/${id}`);
+
+            // Update state by removing the deleted skill
+            setSkillList((prev) => {
+                if (!prev || !prev.children) return prev; // Ensure prev state exists
+
+                // Recursively remove the skill from children
+                const removeSkill = (node) => {
+                    if (!node || !node.children) return node;
+
+                    return {
+                        ...node,
+                        children: node.children
+                            .filter((child) => child.root.id !== id)
+                            .map(removeSkill),
+                    };
+                };
+
+                return removeSkill(prev);
+            });
+
+        } catch (error) {
+            console.error("Error deleting skill: ", error);
+        }
+    };
+
+
+
     useEffect(() => {
         const fetchAllChildren = async () => {
             if (!skill_id) {
@@ -36,6 +74,7 @@ const SkillList = ({ skill_id }) => {
                 />
             </div>
             <SkillTree
+                handleDelete={handleDelete}
                 skillList={loading ? [`Loading for skill ID# ${skill_id}...`] : skillList}
             />
         </>
