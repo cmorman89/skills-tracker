@@ -22,35 +22,21 @@ const Sidebar = () => {
                         className="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300"
                     >
                         <i className="fa-solid fa-list px-4"></i>
-                        Skills
-                    </a>
-                    <a
-                        href="/skills/add"
-                        className="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300"
-                    >
-                        <i className="fa-solid fa-list px-4"></i>
-                        Add a Skill
-                    </a>
-                    <a
-                        href="/skills/edit"
-                        className="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300"
-                    >
-                        <i className="fa-solid fa-list px-4"></i>
-                        Edit a Skill
+                        Skill List
                     </a>
                     <a
                         href="/skills/tree"
                         className="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300"
                     >
-                        <i className="fa-solid fa-indent px-4"></i>
+                        <i className="fa-solid fa-sitemap px-4"></i>
                         Skill Tree
                     </a>
                     <a
-                        href="/projects"
+                        href="/skills/add"
                         className="block py-2 px-4 rounded hover:bg-indigo-700 transition duration-300"
                     >
-                        <i className="fa-solid fa-bars-progress px-4"></i>
-                        Projects
+                        <i className="fa-solid fa-plus px-4"></i>
+                        Add a Skill
                     </a>
                 </div>
                 <div 
