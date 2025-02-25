@@ -5,7 +5,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 const TextWithPlus = ({ skill, text, onClick }) => {
     return (
         <div
-            className="flex border border-teal-800 flex-wrap items-center w-fit m-2 pl-3 bg-slate-700 rounded-md shadow-lg justify-between hover:border-teal-400/50 h-10"
+            className="flex border border-teal-800 flex-wrap items-center overflow-hidden w-fit m-2 pl-3 bg-slate-700 rounded-md shadow-lg justify-between hover:border-teal-400/50 h-10"
             onClick={() => onClick(skill)}
             >
             <small className="pr-3">
