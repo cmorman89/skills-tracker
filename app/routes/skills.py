@@ -10,10 +10,6 @@ skills_bp = Blueprint("skills", __name__, url_prefix="/api/v1/skills")
 def list_all_skills():
     """List all skills."""
     return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
-    # return render_template(
-    #     "skills.html",
-    #     skills=get_skill(),
-    # )
 
 
 @skills_bp.route("/<int:id>/all_children", methods=["GET"])
