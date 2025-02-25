@@ -38,6 +38,18 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
         onChange(updatedParents);
     }
 
+    const filterAddResults = () => {
+        if (!filterAddSkill) return availableParents;
+
+        return availableParents.filter((skill) => skill.name.toLowerCase().includes(filterRemoveSkill.toLowerCase()));
+    } 
+
+    const filterRemoveResults = () => {
+        if (!filterRemoveSkill) return parents;
+
+        return parents.filter((skill) => skill.name.toLowerCase().includes(filterRemoveSkill.toLowerCase()));
+    } 
+
     useEffect(() => {
         // Set the skill ID 
         const skillId = skill ? skill.id : undefined;
@@ -86,8 +98,7 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
             </div>
             <SkillParentList
                 onClick={handleAddParent}
-                skillList={availableParents}
-                variant='add'
+                skillList={filterAddResults()}
             />
 
             <div className="mb-4">
@@ -103,7 +114,7 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
             <SkillParentList
                 Component={TextWithX}
                 onClick={handleRemoveParent}
-                skillList={parents}
+                skillList={filterRemoveResults()}
             />
 
         </div>
@@ -113,6 +124,7 @@ const SkillParentManager = ({ skill, parents, onChange }) => {
 SkillParentManager.propTypes = {
     skill: PropTypes.shape({
         id: PropTypes.number,
+        name: PropTypes.string.isRequired,
     }),
     parents: PropTypes.array.isRequired,
     onChange: PropTypes.func,

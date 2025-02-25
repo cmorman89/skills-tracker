@@ -11,7 +11,7 @@ const SkillParentList = ({ Component = TextWithPlus, onClick, skillList}) => {
 
 
     return (
-        <div className='flex flex-row flex-wrap flex-grow text-slate-300 mb-4'>
+        <div className='flex flex-row flex-wrap flex-grow text-slate-300 mb-4 items-center justify-center'>
             {
                 skillList.map(parent => (
                     <Component

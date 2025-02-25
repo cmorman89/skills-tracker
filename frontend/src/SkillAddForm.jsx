@@ -3,6 +3,7 @@ import SkillParentManager from "./SkillParentManager";
 import Divider from "./Divider";
 import SkillNameInput from "./SkillNameInput";
 import SkillDescriptionInput from "./SkillDescriptionInput";
+import axios from "axios";
 
 const SkillAddForm = () => {
 
@@ -23,14 +24,18 @@ const SkillAddForm = () => {
     const handleParentOnChange = (value) => {
         setFormData({ ...formData, parents: value });
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const response = await axios.post("http://127.0.0.1:5000/api/v1/skills/", formData)
             console.log("Form data: ", formData);
+            console.log("Response: ", response);
         } catch (error) {
             console.error("Error submitting skill: ", error);
         }
     }
+
     return (
         // Build card structure for the form
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl">
@@ -52,7 +57,7 @@ const SkillAddForm = () => {
                         value={formData.description}
                         parentOnChange={handleDescriptionOnChange}
                     />
-                    
+
                     <Divider />
 
                     {/* Skill Parent Manager */}
