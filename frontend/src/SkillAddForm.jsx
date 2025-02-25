@@ -1,6 +1,5 @@
 import { useState } from "react";
 import SkillParentManager from "./SkillParentManager";
-import axios from "axios";
 
 const SkillAddForm = () => {
 
@@ -17,7 +16,7 @@ const SkillAddForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://127.0.0.1:5000/api/v1/skills/", formData)
+            console.log("Form data: ", formData);
         } catch (error) {
             console.error("Error submitting skill: ", error);
         }
@@ -29,6 +28,7 @@ const SkillAddForm = () => {
                     onChange={handleParentOnChange}
                     parents={formData.parents}
                 />
+                <button type="submit" className="btn btn-primary p-2 rounded shadow bg-slate-400 text-slate-700 font-bold">Submit</button>
             </form>
         </div>
     );

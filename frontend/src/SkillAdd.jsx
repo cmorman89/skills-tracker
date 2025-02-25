@@ -7,9 +7,9 @@ import SkillParents from "./SkillParents";
 import Divider from "./Divider";
 
 const SkillAdd = () => {
-    const { skill_id } = useParams();
-    const [skills, setSkills] = useState([]);
-    const [loading, setLoading] = useState(true);
+    useParams();
+    const [, setSkills] = useState([]);
+    const [, setLoading] = useState(true);
     const [formData, setFormData] = useState({
         name: "",
         description: "",
