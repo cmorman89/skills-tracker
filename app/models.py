@@ -8,6 +8,7 @@ relationships between different entities.
 from . import db
 
 
+
 class BaseModelMixin:
     """Base model for all database models."""
 
@@ -52,6 +53,10 @@ class Skill(db.Model, BaseModelMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
     description = db.Column(db.Text, nullable=True)
+    mastery = db.Column(db.Integer, nullable=True)
+    color = db.Column(db.Text, nullable=True)
+    icon = db.Column(db.Text, nullable=True)
+    
 
     # Many-to-many relationship with keywords
     keywords = db.relationship(

@@ -5,7 +5,7 @@
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "skills",
-            "database": "${workspaceFolder:skills-tracker}/db/skills.db"
+            "database": "${workspaceFolder:skills-tracker}/skills.db"
         }
     ]
 }
