@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const TextInputWithButton = ({ buttonIcon, label, id, name = id, placeholder, value, onChange, onClick}) => {
   return (
-    <div className='flex flex-col flex-grow'>
+    <div className='flex flex-col flex-grow mb-4'>
       <label htmlFor={id} className="block text-sm font-medium text-slate-300">
         {label}
       </label>

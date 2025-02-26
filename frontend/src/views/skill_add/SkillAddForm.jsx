@@ -6,6 +6,7 @@ import SkillDescriptionInput from "../../form_components/skill_form/SkillDescrip
 import axios from "axios";
 import SkillMastery from "../../form_components/skill_form/SkillMasteryInput";
 import SkillExample from "../../form_components/skill_form/SkillExample";
+import SkillExampleList from "../../form_components/skill_form/SkillExampleList";
 
 const SkillAddForm = () => {
     const [msgType, setMsgType] = useState("");
@@ -41,9 +42,18 @@ const SkillAddForm = () => {
     }
 
     const handleAddExample = () => {
+        if (formData.example.trim() === "") {
+            return;
+        }
         const updatedExampleList = [...formData.exampleList, formData.example];
         setFormData({ ...formData, exampleList: updatedExampleList, example: "" });
         console.log("Example added: ", formData.example);
+    }
+
+    const handleRemoveExample = (index) => {
+        const updatedExampleList = formData.exampleList.filter((_, i) => i !== index);
+        setFormData({ ...formData, exampleList: updatedExampleList });
+        return;
     }
 
     const handleSubmit = async (e) => {
@@ -131,6 +141,10 @@ const SkillAddForm = () => {
                         onChange={handleExampleOnChange}
                         onClick={handleAddExample}
                         value={formData.example}
+                    />
+                    <SkillExampleList
+                        exampleList={formData.exampleList}
+                        onClick={handleRemoveExample}
                     />
                     <Divider />
 
