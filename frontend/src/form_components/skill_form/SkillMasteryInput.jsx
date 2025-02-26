@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import RangeInput from "./RangeInput";
+import RangeInput from "../input/RangeInput";
 
 const SkillMastery = ({ value, onChange }) => {
     return (

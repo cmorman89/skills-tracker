@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import TextWithIcon from "./TextWithIcon";
+import TextWithIcon from "../../form_components/buttons/TextWithIcon";
 import { faCircleXmark, faCode, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

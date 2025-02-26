@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import TextInput from './TextInput';
+import TextInput from '../input/TextInput';
 
 const SkillNameInput = ({ value, onChange }) => {
   const [error, setError] = useState('');
@@ -40,7 +40,7 @@ const SkillNameInput = ({ value, onChange }) => {
     }
     onChange(newValue);
   };
-  
+
 
   return (
     <div className="mb-4">

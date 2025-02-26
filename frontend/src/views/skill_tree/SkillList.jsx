@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import SkillTree from "./SkillTree";
-import TextInput from "./TextInput";
+import TextInput from "../../form_components/input/TextInput";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

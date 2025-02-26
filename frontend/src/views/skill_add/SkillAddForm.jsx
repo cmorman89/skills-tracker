@@ -1,10 +1,10 @@
 import { useState } from "react";
-import SkillParentManager from "./SkillParentManager";
-import Divider from "./Divider";
-import SkillNameInput from "./SkillNameInput";
-import SkillDescriptionInput from "./SkillDescriptionInput";
+import SkillParentManager from "../../form_components/skill_form/SkillParentManager";
+import Divider from "../../form_components/style/Divider";
+import SkillNameInput from "../../form_components/skill_form/SkillNameInput";
+import SkillDescriptionInput from "../../form_components/skill_form/SkillDescriptionInput";
 import axios from "axios";
-import SkillMastery from "./SkillMastery";
+import SkillMastery from "../../form_components/skill_form/SkillMasteryInput";
 
 const SkillAddForm = () => {
     const [msgType, setMsgType] = useState("");
@@ -67,9 +67,8 @@ const SkillAddForm = () => {
                 {/* Message */}
                 {msg && (
                     <div
-                        className={`text-sm p-2 mb-4 rounded-md ${
-                            msgType === "error" ? "bg-red-500/20 text-red-500" : "bg-green-500/20 text-green-500"
-                        }`}
+                        className={`text-sm p-2 mb-4 rounded-md ${msgType === "error" ? "bg-red-500/20 text-red-500" : "bg-green-500/20 text-green-500"
+                            }`}
                     >
                         {msg}
                     </div>

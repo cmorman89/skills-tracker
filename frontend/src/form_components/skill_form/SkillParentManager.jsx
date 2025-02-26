@@ -2,8 +2,8 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import SkillParentList from './SkillParentList';
-import TextWithX from './TextWithX';
-import TextInput from './TextInput';
+import TextWithX from '../buttons/TextWithX';
+import TextInput from '../input/TextInput';
 
 const SkillParentManager = ({ skill, parents, onChange }) => {
 

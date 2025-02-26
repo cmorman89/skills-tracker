@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import TextWithPlus from "./TextWithPlus";
+import TextWithPlus from "../buttons/TextWithPlus";
 import PropTypes from 'prop-types';
 
 const SkillParentList = ({ Component = TextWithPlus, onClick, skillList }) => {

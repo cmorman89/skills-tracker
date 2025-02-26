@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types';
-import TextArea from './TextArea';
+import TextArea from '../input/TextArea';
 
 const SkillDescriptionInput = ({ value, onChange }) => {
   return (
@@ -14,7 +14,7 @@ const SkillDescriptionInput = ({ value, onChange }) => {
         onChange={(e) => onChange(e.target.value)}
       />
     </div>
-  );  
+  );
 };
 SkillDescriptionInput.propTypes = {
   value: PropTypes.string,
@@ -23,7 +23,7 @@ SkillDescriptionInput.propTypes = {
 
 SkillDescriptionInput.defaultProps = {
   value: '',
-  onChange: (value) => {console.log(value);},
+  onChange: (value) => { console.log(value); },
 };
 
 export default SkillDescriptionInput;

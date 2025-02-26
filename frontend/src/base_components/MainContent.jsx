@@ -1,9 +1,8 @@
 import "react";
 import { Routes, Route } from "react-router-dom";
-import SkillView from "./SkillView";
-import SkillEdit from "./SkillEdit";
-import SkillAddForm from "./SkillAddForm";
-import SkillListView from "./SkillListView";
+import SkillView from "../views/skill_tree/SkillView";
+import SkillAddForm from "../views/skill_add/SkillAddForm";
+import SkillListView from "../views/skill_list/SkillListView";
 
 
 const MainContent = () => {
@@ -18,10 +17,8 @@ const MainContent = () => {
       <Routes>
         <Route path="/" element={<SkillView />} />
         <Route path="/skills/add" element={<SkillAddForm />} />
-        <Route path="/skills/edit/:skill_id" element={<SkillEdit />} />
         <Route path="/skills" element={<SkillListView />} />
         <Route path="/skills/tree" element={<SkillView />} />
-        <Route path="/skills/:skill_id" element={<SkillView />} />
       </Routes>
     </div>
   );

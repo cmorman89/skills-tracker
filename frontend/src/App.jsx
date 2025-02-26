@@ -1,6 +1,6 @@
-import { BrowserRouter as Router} from "react-router-dom";
-import Sidebar from "./Sidebar";
-import MainContent from "./MainContent";
+import { BrowserRouter as Router } from "react-router-dom";
+import Sidebar from "./base_components/Sidebar";
+import MainContent from "./base_components/MainContent";
 
 const App = () => {
   return (

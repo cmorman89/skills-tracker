@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Divider from "./Divider";
+import Divider from "../../form_components/style/Divider";
 import axios from "axios";
 
 const SkillListView = () => {
@@ -28,7 +28,7 @@ const SkillListView = () => {
         // Build card structure for the view
         <div className="flex flex-grow w-auto max-w-4xl mx-auto items-center justify-center p-2 bg-slate-400/40 rounded-2xl shadow-xl inset-shadow-lg inset-shadow-white">
             <div className="flex flex-col flex-grow p-6 max-w-4xl mx-auto bg-slate-800/80 text-slate-300 inset-shadow-lg inset-shadow-white rounded-lg">
-                
+
                 {/* Title */}
                 <h1 className="text-2xl font-bold text-sky-200">Skill Table</h1>
 

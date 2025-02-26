@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Divider from "./Divider";
+import Divider from "../../form_components/style/Divider";
 import SkillList from "./SkillList";
 
 const SkillView = () => {
