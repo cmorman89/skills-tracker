@@ -1,0 +1,600 @@
+[
+    {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "current_app",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "op",
+        "importPath": "alembic",
+        "description": "alembic",
+        "isExtraImport": true,
+        "detail": "alembic",
+        "documentation": {}
+    },
+    {
+        "label": "context",
+        "importPath": "alembic",
+        "description": "alembic",
+        "isExtraImport": true,
+        "detail": "alembic",
+        "documentation": {}
+    },
+    {
+        "label": "sqlalchemy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "fileConfig",
+        "importPath": "logging.config",
+        "description": "logging.config",
+        "isExtraImport": true,
+        "detail": "logging.config",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "create_app",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "list_all_skills",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_all_children",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)\ndef build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "build_skill_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_skill_by_id",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if skill := get_skill(skill_id=skill_id):\n        skill = skill.to_json_with_relationships()\n    return jsonify(skill), 200\n@skills_bp.route(\"/name/<string:skill_name>\", methods=[\"GET\"])\ndef list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_skill_by_name",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()\n    return jsonify(skill), 200\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "skills_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]\n    return render_template(\"skills_tree.html\", skills=skills_tree)\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "create_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    if name := data.get(\"name\"):\n        if not isinstance(name, str):\n            return jsonify({\"error\": \"Skill name must be a string\"}), 400\n        if not (name := name.strip().lower()):",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "update_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def update_skill(skill_id):\n    \"\"\"Update a skill by ID\"\"\"\n    # Get the current skill\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Get the data from the request\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    name = data.get(\"name\")",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "delete_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def delete_skill(skill_id):\n    \"\"\"Delete a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Remove the skill from any parent skills lists that reference it as a parent\n        if skill.children:\n            remove_skill_from_all_children(skill)\n        # Delete the skill\n        db.session.delete(skill)\n        db.session.commit()",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_children_skills",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_children_skills(skill_id):\n    \"\"\"List all children skills of a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Get all children skills\n        children = (\n            [child.to_json() for child in skill.children] if skill.children else []\n        )\n        return jsonify(children), 200\n    # If skill does not exist, return an error",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_parent_skills",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_parent_skills(skill_id):\n    \"\"\"List all parent skills of a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Get all parent skills\n        parents = (\n            [parent.to_json() for parent in skill.parents] if skill.parents else []\n        )\n        return jsonify(parents), 200\n    # If skill does not exist, return an error",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_available_parents",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_available_parents(skill_id):\n    \"\"\"List all available parent skills of a skill by ID\"\"\"\n    # Make an array of all available parents\n    availableParents = [parent.id for parent in get_skill()]\n    # Sort the array\n    availableParents.sort()\n    # Track visited nodes\n    visited_nodes = set()\n    # Get the skill by ID\n    skill = get_skill(skill_id=skill_id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "add_parent_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parents = request.json.get(\"parent_id\")\n    if isinstance(parents, list):\n        for parent in parents:\n            add_parent_to_child(child, parent)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "add_parent_to_child",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "remove_parent_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def remove_parent_skill(skill_id):\n    \"\"\"Remove a parent skill from a skill by IDs\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent ID\n    parent_id = request.json.get(\"parent_id\")\n    try:\n        parent_id = int(parent_id)\n        if parent_id <= 0:",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "add_child_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def add_child_skill(skill_id):\n    \"\"\"Add a child skill to a skill by ID\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child skill ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "remove_child_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def remove_child_skill(skill_id):\n    \"\"\"Remove a child skill from a skill by IDs\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "get_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def get_skill(skill_id=None, skill_name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    # Return an error if both skill_id and skill_name are provided\n    if skill_id and skill_name:\n        return jsonify(\n            {\"error\": \"Please provide either a skill ID or a skill name, not both\"}\n        ), 400\n    # Get skill by ID if provided\n    elif skill_id:\n        return Skill.query.get(skill_id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "remove_skill_from_all_children",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def remove_skill_from_all_children(parent_skill):\n    \"\"\"Remove a skill from all its children to prevent stale references.\"\"\"\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "view_as_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    def recurse_tree(skill, indent=0, tree=\"\"):\n        \"\"\"Helper function to recursively build the skill tree.\"\"\"\n        # Add the skill to the tree\n        tree += \" \" * indent + f\"- {skill.name} ({skill.description})\\n\"\n        # Increase the indent for children",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "make_skill_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def make_skill_tree(skill):\n    \"\"\"Convert a skill and its children into a tree structure.\"\"\"\n    # Initialize the tree with the skill itself\n    tree = {\n        \"id\": skill.id,\n        \"name\": skill.name.title(),\n        \"description\": skill.description,\n        \"children\": [],\n    }\n    # Recursively add children to the tree",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "creates_cycle",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def creates_cycle(parent_skill, child_skill):\n    \"\"\"Check if adding a parent-child relationship creates a cycle.\"\"\"\n    # Track visited nodes\n    visited = set()\n    # Add the parent skill to the visited set to simulate the cycle check\n    visited.add(parent_skill.id)\n    def dfs(skill):\n        if skill.id in visited:\n            return True\n        visited.add(skill.id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "skills_bp",
+        "kind": 5,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModelMixin",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class BaseModelMixin:\n    \"\"\"Base model for all database models.\"\"\"\n    def to_dict(self):\n        \"\"\"Convert model instance to dictionary.\"\"\"\n        return {\n            column.name: getattr(self, column.name) for column in self.__table__.columns\n        }\n    def to_dict_with_relationships(self):\n        \"\"\"Convert model instance to dictionary with relationships.\"\"\"\n        data = self.to_dict()",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Keyword",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Keyword(db.Model, BaseModelMixin):\n    \"\"\"Database model for a keyword.\"\"\"\n    __tablename__ = \"keywords\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\nclass SkillKeyword(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between skills and keywords.\"\"\"\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SkillKeyword",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class SkillKeyword(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between skills and keywords.\"\"\"\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model, BaseModelMixin):\n    \"\"\"Association table for the self-referential many-to-many relationship between skills.\"\"\"\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SkillRelationship",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class SkillRelationship(db.Model, BaseModelMixin):\n    \"\"\"Association table for the self-referential many-to-many relationship between skills.\"\"\"\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True\n    )\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "frontend.node_modules.flatted.python.flatted",
+        "description": "frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "upgrade",
+        "kind": 2,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "def upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )\n    op.create_table('skills',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "downgrade",
+        "kind": 2,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "def downgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.drop_table('skill_relationship')\n    op.drop_table('skill_keyword')\n    op.drop_table('skills')\n    op.drop_table('keywords')\n    # ### end Alembic commands ###",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "revision",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "revision = '0a2ed017fa27'\ndown_revision = None\nbranch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "down_revision",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "down_revision = None\nbranch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "branch_labels",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "branch_labels = None\ndepends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "depends_on",
+        "kind": 5,
+        "importPath": "migrations.versions.0a2ed017fa27_",
+        "description": "migrations.versions.0a2ed017fa27_",
+        "peekOfCode": "depends_on = None\ndef upgrade():\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('keywords',\n    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),\n    sa.Column('name', sa.Text(), nullable=False),\n    sa.PrimaryKeyConstraint('id'),\n    sa.UniqueConstraint('name')\n    )\n    op.create_table('skills',",
+        "detail": "migrations.versions.0a2ed017fa27_",
+        "documentation": {}
+    },
+    {
+        "label": "get_engine",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):\n        # this works with Flask-SQLAlchemy>=3\n        return current_app.extensions['migrate'].db.engine\ndef get_engine_url():\n    try:\n        return get_engine().url.render_as_string(hide_password=False).replace(",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "get_engine_url",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_engine_url():\n    try:\n        return get_engine().url.render_as_string(hide_password=False).replace(\n            '%', '%%')\n    except AttributeError:\n        return str(get_engine().url).replace('%', '%%')\n# add your model's MetaData object here\n# for 'autogenerate' support\n# from myapp import mymodel\n# target_metadata = mymodel.Base.metadata",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "get_metadata",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def get_metadata():\n    if hasattr(target_db, 'metadatas'):\n        return target_db.metadatas[None]\n    return target_db.metadata\ndef run_migrations_offline():\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations_offline",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def run_migrations_offline():\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.\n    Calls to context.execute() here emit the given string to the\n    script output.\n    \"\"\"\n    url = config.get_main_option(\"sqlalchemy.url\")",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations_online",
+        "kind": 2,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "def run_migrations_online():\n    \"\"\"Run migrations in 'online' mode.\n    In this scenario we need to create an Engine\n    and associate a connection with the context.\n    \"\"\"\n    # this callback is used to prevent an auto-migration from being generated\n    # when there are no changes to the schema\n    # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html\n    def process_revision_directives(context, revision, directives):\n        if getattr(config.cmd_opts, 'autogenerate', False):",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "config = context.config\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nfileConfig(config.config_file_name)\nlogger = logging.getLogger('alembic.env')\ndef get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "logger = logging.getLogger('alembic.env')\ndef get_engine():\n    try:\n        # this works with Flask-SQLAlchemy<3 and Alchemical\n        return current_app.extensions['migrate'].db.get_engine()\n    except (TypeError, AttributeError):\n        # this works with Flask-SQLAlchemy>=3\n        return current_app.extensions['migrate'].db.engine\ndef get_engine_url():\n    try:",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "target_db",
+        "kind": 5,
+        "importPath": "migrations.env",
+        "description": "migrations.env",
+        "peekOfCode": "target_db = current_app.extensions['migrate'].db\n# other values from the config, defined by the needs of env.py,\n# can be acquired:\n# my_important_option = config.get_main_option(\"my_important_option\")\n# ... etc.\ndef get_metadata():\n    if hasattr(target_db, 'metadatas'):\n        return target_db.metadatas[None]\n    return target_db.metadata\ndef run_migrations_offline():",
+        "detail": "migrations.env",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "class Config:\n    SESSION_PERMANENT = False\n    SESSION_TYPE = \"filesystem\"\n    SQLALCHEMY_ECHO = False\n    SQLALCHEMY_DATABASE_URI = f\"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'skills.db')}\"\n    SQLALCHEMY_TRACK_MODIFICATIONS = False",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "run",
+        "description": "run",
+        "peekOfCode": "app = create_app()\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+        "detail": "run",
+        "documentation": {}
+    },
+    {
+        "label": "setup_database",
+        "kind": 2,
+        "importPath": "setup",
+        "description": "setup",
+        "peekOfCode": "def setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()\n    print(\"Database setup complete.\")",
+        "detail": "setup",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "setup",
+        "description": "setup",
+        "peekOfCode": "DATABASE_URL = \"sqlite:///skills.db\"\ndef setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()",
+        "detail": "setup",
+        "documentation": {}
+    }
+]

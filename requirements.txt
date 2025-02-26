@@ -1,3 +1,5 @@
-Flask
-Flask-Sessions
+flask
+flask-cors
+flask-migrate
+flask-sqlalchemy
 requests
