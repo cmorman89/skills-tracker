@@ -5,6 +5,7 @@ import SkillNameInput from "../../form_components/skill_form/SkillNameInput";
 import SkillDescriptionInput from "../../form_components/skill_form/SkillDescriptionInput";
 import axios from "axios";
 import SkillMastery from "../../form_components/skill_form/SkillMasteryInput";
+import SkillExample from "../../form_components/skill_form/SkillExample";
 
 const SkillAddForm = () => {
     const [msgType, setMsgType] = useState("");
@@ -14,6 +15,8 @@ const SkillAddForm = () => {
         description: "",
         parents: [],
         mastery: 1,
+        example: "",
+        exampleList: [],
     });
     const [parentKey, setParentKey] = useState(0);
 
@@ -31,6 +34,16 @@ const SkillAddForm = () => {
 
     const handleMasteryOnChange = (value) => {
         setFormData({ ...formData, mastery: value });
+    }
+
+    const handleExampleOnChange = (value) => {
+        setFormData({ ...formData, example: value });
+    }
+
+    const handleAddExample = () => {
+        const updatedExampleList = [...formData.exampleList, formData.example];
+        setFormData({ ...formData, exampleList: updatedExampleList, example: "" });
+        console.log("Example added: ", formData.example);
     }
 
     const handleSubmit = async (e) => {
@@ -55,6 +68,8 @@ const SkillAddForm = () => {
             description: "",
             parents: [],
             mastery: 1,
+            example: "",
+            exampleList: [],
         });
         setParentKey(parentKey => parentKey + 1);
 
@@ -108,6 +123,15 @@ const SkillAddForm = () => {
                         value={formData.mastery}
                     />
 
+                    <Divider />
+
+                    {/* Skill Example */}
+                    <SkillExample
+                        exampleList={formData.exampleList}
+                        onChange={handleExampleOnChange}
+                        onClick={handleAddExample}
+                        value={formData.example}
+                    />
                     <Divider />
 
                     {/* Submit Button */}
