@@ -41,6 +41,11 @@ const SkillAddForm = () => {
         setFormData({ ...formData, example: value });
     }
 
+    const handleExampleListOnChange = (value, index) => {
+        const updatedExampleList = [...formData.exampleList];
+        updatedExampleList[index] = value;
+        setFormData({ ...formData, exampleList: updatedExampleList });
+    }
     const handleAddExample = () => {
         if (formData.example.trim() === "") {
             return;
@@ -144,6 +149,7 @@ const SkillAddForm = () => {
                     />
                     <SkillExampleList
                         exampleList={formData.exampleList}
+                        onChange={handleExampleListOnChange}
                         onClick={handleRemoveExample}
                     />
                     <Divider />
