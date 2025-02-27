@@ -55,14 +55,42 @@ const Sidebar = () => {
                     </a>
 
                     <div className="block mb-1 mt-6 pb-1 text-center justify-self-center text-slate-500/70 w-3/4 border-b border-slate-600/50 mx-auto">
-                        Manage Examples
+                        Manage Sources
                     </div>
                     <a
-                        href="/skills/add"
+                        href="/sources"
                         className="block py-2 px-4 rounded hover:bg-sky-700 transition duration-300"
                     >
-                        <i className="fa-solid fa-user-check px-4"></i>
+                        <i className="fa-solid fa-building-circle-arrow-right px-4"></i>
+                        Sources
+                    </a>
+                    <a
+                        href="/sources/add"
+                        className="block py-2 px-4 rounded hover:bg-sky-700 transition duration-300"
+                    >
+                        <i className="fa-solid fa-plus px-4"></i>
+                        Add a Source
+                    </a>
+
+
+
+                    <div className="block mb-1 mt-6 pb-1 text-center justify-self-center text-slate-500/70 w-3/4 border-b border-slate-600/50 mx-auto">
+                        Manage Examples
+                    </div>
+
+                    <a
+                        href="/examples"
+                        className="block py-2 px-4 rounded hover:bg-sky-700 transition duration-300"
+                    >
+                        <i className="fa-solid fa-diagram-project px-4"></i>
                         Examples
+                    </a>
+                    <a
+                        href="/examples/add"
+                        className="block py-2 px-4 rounded hover:bg-sky-700 transition duration-300"
+                    >
+                        <i className="fa-solid fa-plus px-4"></i>
+                        Add an Example
                     </a>
                 </div>
                 <div className="mt-auto">
