@@ -399,7 +399,7 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/\", methods=[\"POST\"])",
+        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/<string:source_name>\", methods=[\"GET\"])",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -408,7 +408,16 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)",
+        "peekOfCode": "def get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/<string:source_name>\", methods=[\"GET\"])\ndef get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "get_source_by_name",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:\n        return jsonify()\n    return jsonify(source.to_json())\n# CREATING SOURCES\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -417,7 +426,7 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)\n    new_source = Source(\n        name=data.get(\"name\"),\n        description=data.get(\"description\"),\n        type=data.get(\"type\"),\n    )",
+        "peekOfCode": "def create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)\n    new_source = Source(\n        name=data.get(\"name\").strip().lower(),\n        description=data.get(\"description\"),\n        type=data.get(\"type\"),\n    )",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -426,7 +435,7 @@
         "kind": 5,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "sources_bp = Blueprint(\"sources\", __name__, url_prefix=\"/api/v1/sources\")\n@sources_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)",
+        "peekOfCode": "sources_bp = Blueprint(\"sources\", __name__, url_prefix=\"/api/v1/sources\")\n# FETCHING SOURCES\n@sources_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"",
         "detail": "app.routes.sources",
         "documentation": {}
     },
