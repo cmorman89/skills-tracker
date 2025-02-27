@@ -489,7 +489,16 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    type = db.Column(db.Text, nullable=True)\n    # One-to-many relationship with examples\n    examples = db.relationship(\"Example\", backref=\"source\", lazy=\"dynamic\")\nclass Example(db.Model, BaseModelMixin):",
+        "peekOfCode": "class Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    type_id = db.Column(db.Integer, db.ForeignKey(\"source_types.id\"), nullable=False)\n    # One-to-many relationship with examples\n    examples = db.relationship(\"Example\", backref=\"source\", lazy=\"dynamic\")\nclass SourceType(db.Model, BaseModelMixin):",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SourceType",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class SourceType(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source type.\"\"\"\n    __tablename__ = \"source_types\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    # One-to-many relationship with sources\n    sources = db.relationship(\"Source\", backref=\"type\", lazy=\"dynamic\")\nclass Example(db.Model, BaseModelMixin):\n    \"\"\"Database model for an example.\"\"\"",
         "detail": "app.models",
         "documentation": {}
     },
@@ -498,7 +507,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Example(db.Model, BaseModelMixin):\n    \"\"\"Database model for an example.\"\"\"\n    __tablename__ = \"examples\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    text = db.Column(db.Text, nullable=False)\n    description = db.Column(db.Text, nullable=True)\n    # Foreign key to the source\n    source_id = db.Column(db.Integer, db.ForeignKey(\"sources.id\"), nullable=False)\nclass ExampleSkill(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between examples and skills.\"\"\"",
+        "peekOfCode": "class Example(db.Model, BaseModelMixin):\n    \"\"\"Database model for an example.\"\"\"\n    __tablename__ = \"examples\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    text = db.Column(db.Text, nullable=False)\n    description = db.Column(db.Text, nullable=True)\n    source_id = db.Column(db.Integer, db.ForeignKey(\"sources.id\"), nullable=False)\nclass ExampleSkill(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between examples and skills.\"\"\"\n    __tablename__ = \"example_skill\"",
         "detail": "app.models",
         "documentation": {}
     },

@@ -8,7 +8,6 @@ relationships between different entities.
 from . import db
 
 
-
 class BaseModelMixin:
     """Base model for all database models."""
 
@@ -49,6 +48,7 @@ class BaseModelMixin:
 
 class Skill(db.Model, BaseModelMixin):
     """Database model for a skill."""
+
     __tablename__ = "skills"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
@@ -56,7 +56,6 @@ class Skill(db.Model, BaseModelMixin):
     mastery = db.Column(db.Integer, nullable=True)
     color = db.Column(db.Text, nullable=True)
     icon = db.Column(db.Text, nullable=True)
-    
 
     # Many-to-many relationship with keywords
     keywords = db.relationship(
@@ -82,6 +81,7 @@ class Skill(db.Model, BaseModelMixin):
 
 class Keyword(db.Model, BaseModelMixin):
     """Database model for a keyword."""
+
     __tablename__ = "keywords"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
@@ -89,6 +89,7 @@ class Keyword(db.Model, BaseModelMixin):
 
 class SkillKeyword(db.Model, BaseModelMixin):
     """Association table for the many-to-many relationship between skills and keywords."""
+
     __tablename__ = "skill_keyword"
     skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)
     keyword_id = db.Column(db.Integer, db.ForeignKey("keywords.id"), primary_key=True)
@@ -96,6 +97,7 @@ class SkillKeyword(db.Model, BaseModelMixin):
 
 class SkillRelationship(db.Model, BaseModelMixin):
     """Association table for the self-referential many-to-many relationship between skills."""
+
     __tablename__ = "skill_relationship"
     parent_skill_id = db.Column(
         db.Integer, db.ForeignKey("skills.id"), primary_key=True
@@ -105,28 +107,42 @@ class SkillRelationship(db.Model, BaseModelMixin):
 
 class Source(db.Model, BaseModelMixin):
     """Database model for a source."""
+
     __tablename__ = "sources"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
     description = db.Column(db.Text, nullable=True)
-    type = db.Column(db.Text, nullable=True)
-    
+    type_id = db.Column(db.Integer, db.ForeignKey("source_types.id"), nullable=False)
+
     # One-to-many relationship with examples
     examples = db.relationship("Example", backref="source", lazy="dynamic")
-    
+
+
+class SourceType(db.Model, BaseModelMixin):
+    """Database model for a source type."""
+
+    __tablename__ = "source_types"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False, unique=True)
+    description = db.Column(db.Text, nullable=True)
+
+    # One-to-many relationship with sources
+    sources = db.relationship("Source", backref="type", lazy="dynamic")
+
+
 class Example(db.Model, BaseModelMixin):
     """Database model for an example."""
+
     __tablename__ = "examples"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     text = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=True)
-    
-    # Foreign key to the source
     source_id = db.Column(db.Integer, db.ForeignKey("sources.id"), nullable=False)
 
-    
+
 class ExampleSkill(db.Model, BaseModelMixin):
     """Association table for the many-to-many relationship between examples and skills."""
+
     __tablename__ = "example_skill"
     example_id = db.Column(db.Integer, db.ForeignKey("examples.id"), primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)
