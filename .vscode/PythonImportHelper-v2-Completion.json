@@ -88,6 +88,38 @@
         "documentation": {}
     },
     {
+        "label": "SourceType",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Skill",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "SourceType",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -164,19 +196,12 @@
         "documentation": {}
     },
     {
-        "label": "db",
-        "importPath": "app.models",
-        "description": "app.models",
+        "label": "sys",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "app.models",
-        "documentation": {}
-    },
-    {
-        "label": "Skill",
-        "importPath": "app.models",
-        "description": "app.models",
-        "isExtraImport": true,
-        "detail": "app.models",
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
         "documentation": {}
     },
     {
@@ -399,7 +424,7 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/<string:source_name>\", methods=[\"GET\"])",
+        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/name/<string:source_name>\", methods=[\"GET\"])",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -408,7 +433,7 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/<string:source_name>\", methods=[\"GET\"])\ndef get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:",
+        "peekOfCode": "def get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/name/<string:source_name>\", methods=[\"GET\"])\ndef get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -417,7 +442,16 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:\n        return jsonify()\n    return jsonify(source.to_json())\n# CREATING SOURCES\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():",
+        "peekOfCode": "def get_source_by_name(source_name):\n    \"\"\"Get a source by name.\"\"\"\n    source_name = source_name.strip().lower()\n    source = Source.query.filter_by(name=source_name).first()\n    if not source:\n        return jsonify()\n    return jsonify(source.to_json())\n@sources_bp.route(\"/types\", methods=[\"GET\"])\ndef list_source_types():\n    \"\"\"List all source types.\"\"\"",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "list_source_types",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def list_source_types():\n    \"\"\"List all source types.\"\"\"\n    source_types = SourceType.query.all()\n    return jsonify([source_type.to_json() for source_type in source_types])\n# CREATING SOURCES\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -705,7 +739,25 @@
         "kind": 2,
         "importPath": "setup",
         "description": "setup",
-        "peekOfCode": "def setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()\n    print(\"Database setup complete.\")",
+        "peekOfCode": "def setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    # Connect to the database\n    print(\"Setting up the database...\")\n    engine = create_engine(DATABASE_URL)\n    db.metadata.bind = engine\n    # Create a session to interact with the database\n    print(\"Creating session...\")\n    Session = sessionmaker(bind=engine)\n    session = Session()",
+        "detail": "setup",
+        "documentation": {}
+    },
+    {
+        "label": "add_root_skill",
+        "kind": 2,
+        "importPath": "setup",
+        "description": "setup",
+        "peekOfCode": "def add_root_skill(session):\n    \"\"\"Adds the root skill to the database.\"\"\"\n    print(\"Adding root skill...\")\n    try:\n        root_skill = Skill(\n            id=1,\n            name=\"all skills\",\n            description=\"Root skill\",\n        )\n        session.add(root_skill)",
+        "detail": "setup",
+        "documentation": {}
+    },
+    {
+        "label": "add_source_types",
+        "kind": 2,
+        "importPath": "setup",
+        "description": "setup",
+        "peekOfCode": "def add_source_types(session):\n    \"\"\"Adds source types to the database.\"\"\"\n    print(\"Adding skill types...\")\n    try:\n        skill_types = [\n            SourceType(\n                name=\"Work\",\n                description=\"Any professional source such as a job or internship.\",\n            ),\n            SourceType(",
         "detail": "setup",
         "documentation": {}
     },
@@ -714,7 +766,7 @@
         "kind": 5,
         "importPath": "setup",
         "description": "setup",
-        "peekOfCode": "DATABASE_URL = \"sqlite:///skills.db\"\ndef setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    engine = create_engine(DATABASE_URL)\n    db.metadata.create_all(engine)\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    root_skill = Skill(id=1, name=\"all skills\", description=\"Root skill\",)\n    session.add(root_skill)\n    session.commit()",
+        "peekOfCode": "DATABASE_URL = \"sqlite:///skills.db\"\ndef setup_database():\n    \"\"\"Creates the database and tables based on models.py.\"\"\"\n    # Connect to the database\n    print(\"Setting up the database...\")\n    engine = create_engine(DATABASE_URL)\n    db.metadata.bind = engine\n    # Create a session to interact with the database\n    print(\"Creating session...\")\n    Session = sessionmaker(bind=engine)",
         "detail": "setup",
         "documentation": {}
     }

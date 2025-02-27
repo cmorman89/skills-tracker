@@ -7,6 +7,8 @@ import TextArea from "../../form_components/input/TextArea";
 const SourceAddForm = () => {
     const [msgType, setMsgType] = useState("");
     const [msg, setMsg] = useState("");
+    const [types, setTypes] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [nameUnique, setNameUnique] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -20,13 +22,31 @@ const SourceAddForm = () => {
         setFormData({ ...formData, [key]: value });
     }
 
+    useEffect(() => {
+        const fetchTypes = async () => {
+            try {
+                const response = await axios.get("http://127.0.1:5000/api/v1/sources/types");
+                const data = response.data;
+                console.log("Types: ", data);
+                setTypes(data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching types: ", error);
+                setMsgType("error");
+                setMsg("Error fetching types from the server");
+                setLoading(false);
+            }
+        };
+        fetchTypes();
+    }, []);
+
 
     useEffect(() => {
 
         const validateNameUnique = async (name) => {
             if (name !== "") {
                 try {
-                    const response = await axios.get(`http://127.0.0.1:5000/api/v1/sources/${name}`);
+                    const response = await axios.get(`http://127.0.0.1:5000/api/v1/sources/name/${name}`);
                     const data = response.data;
                     if (data) {
                         setNameUnique(false);
@@ -74,14 +94,9 @@ const SourceAddForm = () => {
             }
         } catch (error) {
             console.error("Error submitting source: ", error);
+        } finally {
+            resetForm();
         }
-
-        // Reset form data
-        setFormData({
-            name: "",
-            description: "",
-            type: "",
-        });
 
     }
 
@@ -117,14 +132,51 @@ const SourceAddForm = () => {
                             {!nameUnique && formData.name && <small className='text-orange-400 pl-0.5 mt-0.5 italic'>Error: Duplicate source name.</small>}
                         </div>
                         <div className="w-1/4">
-                            <TextInput
-                                label="Type"
-                                placeholder="Work, etc."
-                                id="type"
-                                name="type"
-                                value={formData.type}
-                                onChange={onChange} // Log the value to the console
-                            />
+                            <div className='flex flex-col flex-grow w-full'>
+                                <label htmlFor="type" className="block text-sm font-medium text-slate-300">
+                                    Source Type
+                                </label>
+                                <select
+                                    className="mt-1 block w-full p-2 border border-slate-600 rounded-md shadow-lg bg-slate-900/40"
+                                    id="type"
+                                    name="type"
+                                    value={formData.type}
+                                    onChange={(e) => onChange(e.target.name, e.target.value)}
+                                >
+
+                                    <option
+                                        className="text-slate-700"
+                                        value=""
+                                        disabled
+                                    >
+                                        Select Type
+                                    </option>
+                                    {
+                                        loading ?
+                                            console.log("Loading: ", loading, "Types", types)
+
+                                            :
+                                            console.log("Loading: ", loading, "Types", types)
+                                    }
+                                    {
+                                        loading ?
+                                            <option>Loading...</option>
+                                            :
+                                            (
+                                                types.map((type) => (
+                                                    <option
+                                                        className="text-slate-700"
+                                                        key={type.id}
+                                                        value={type.name}>
+                                                        {type.name}
+                                                    </option>
+                                                ))
+                                            )
+                                    }
+
+
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div className="mb-4">
