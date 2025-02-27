@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const TextInput = ({ label, id, name = id, placeholder, value, onChange }) => {
   return (
-    <div>
+    <div className='flex flex-col flex-grow w-full'>
       <label htmlFor={id} className="block text-sm font-medium text-slate-300">
         {label}
       </label>
@@ -15,7 +15,7 @@ const TextInput = ({ label, id, name = id, placeholder, value, onChange }) => {
         className="mt-1 block w-full p-2 border border-slate-600 rounded-md shadow-lg bg-slate-900/40"
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(name, e.target.value)} 
       />
     </div>
   );

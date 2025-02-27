@@ -21,7 +21,7 @@ const SkillAddForm = () => {
     });
     const [parentKey, setParentKey] = useState(0);
 
-    const handleNameOnChange = (value) => {
+    const handleNameOnChange = (key, value) => {
         setFormData({ ...formData, name: value });
     }
 
