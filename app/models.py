@@ -72,6 +72,12 @@ class Skill(db.Model, BaseModelMixin):
         secondaryjoin="Skill.id == SkillRelationship.parent_skill_id",
         backref="children",
     )
+    # Many-to-many relationship with examples
+    examples = db.relationship(
+        "Example",
+        secondary="example_skill",
+        backref=db.backref("skills", lazy="dynamic"),
+    )
 
 
 class Keyword(db.Model, BaseModelMixin):
@@ -95,3 +101,32 @@ class SkillRelationship(db.Model, BaseModelMixin):
         db.Integer, db.ForeignKey("skills.id"), primary_key=True
     )
     child_skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)
+
+
+class Source(db.Model, BaseModelMixin):
+    """Database model for a source."""
+    __tablename__ = "sources"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False, unique=True)
+    description = db.Column(db.Text, nullable=True)
+    type = db.Column(db.Text, nullable=True)
+    
+    # One-to-many relationship with examples
+    examples = db.relationship("Example", backref="source", lazy="dynamic")
+    
+class Example(db.Model, BaseModelMixin):
+    """Database model for an example."""
+    __tablename__ = "examples"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    
+    # Foreign key to the source
+    source_id = db.Column(db.Integer, db.ForeignKey("sources.id"), nullable=False)
+
+    
+class ExampleSkill(db.Model, BaseModelMixin):
+    """Association table for the many-to-many relationship between examples and skills."""
+    __tablename__ = "example_skill"
+    example_id = db.Column(db.Integer, db.ForeignKey("examples.id"), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)

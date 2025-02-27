@@ -40,6 +40,46 @@
         "documentation": {}
     },
     {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "current_app",
         "importPath": "flask",
         "description": "flask",
@@ -355,6 +395,42 @@
         "documentation": {}
     },
     {
+        "label": "list_all_sources",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/\", methods=[\"POST\"])",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "get_source",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "create_source",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)\n    new_source = Source(\n        name=data.get(\"name\"),\n        description=data.get(\"description\"),\n        type=data.get(\"type\"),\n    )",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "sources_bp",
+        "kind": 5,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "sources_bp = Blueprint(\"sources\", __name__, url_prefix=\"/api/v1/sources\")\n@sources_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
         "label": "BaseModelMixin",
         "kind": 6,
         "importPath": "app.models",
@@ -395,7 +471,34 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class SkillRelationship(db.Model, BaseModelMixin):\n    \"\"\"Association table for the self-referential many-to-many relationship between skills.\"\"\"\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True\n    )\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
+        "peekOfCode": "class SkillRelationship(db.Model, BaseModelMixin):\n    \"\"\"Association table for the self-referential many-to-many relationship between skills.\"\"\"\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True\n    )\n    child_skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\nclass Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Source",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    type = db.Column(db.Text, nullable=True)\n    # One-to-many relationship with examples\n    examples = db.relationship(\"Example\", backref=\"source\", lazy=\"dynamic\")\nclass Example(db.Model, BaseModelMixin):",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Example",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class Example(db.Model, BaseModelMixin):\n    \"\"\"Database model for an example.\"\"\"\n    __tablename__ = \"examples\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    text = db.Column(db.Text, nullable=False)\n    description = db.Column(db.Text, nullable=True)\n    # Foreign key to the source\n    source_id = db.Column(db.Integer, db.ForeignKey(\"sources.id\"), nullable=False)\nclass ExampleSkill(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between examples and skills.\"\"\"",
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleSkill",
+        "kind": 6,
+        "importPath": "app.models",
+        "description": "app.models",
+        "peekOfCode": "class ExampleSkill(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between examples and skills.\"\"\"\n    __tablename__ = \"example_skill\"\n    example_id = db.Column(db.Integer, db.ForeignKey(\"examples.id\"), primary_key=True)\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)",
         "detail": "app.models",
         "documentation": {}
     },
