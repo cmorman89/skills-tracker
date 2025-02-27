@@ -167,7 +167,8 @@ const SourceAddForm = () => {
                                                     <option
                                                         className="text-slate-700"
                                                         key={type.id}
-                                                        value={type.name}>
+                                                        value={type.id}
+                                                    >
                                                         {type.name}
                                                     </option>
                                                 ))

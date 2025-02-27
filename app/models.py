@@ -115,7 +115,7 @@ class Source(db.Model, BaseModelMixin):
     type_id = db.Column(db.Integer, db.ForeignKey("source_types.id"), nullable=False)
 
     # One-to-many relationship with examples
-    examples = db.relationship("Example", backref="source", lazy="dynamic")
+    examples = db.relationship("Example", backref="source")
 
 
 class SourceType(db.Model, BaseModelMixin):

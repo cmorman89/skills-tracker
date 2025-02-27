@@ -424,7 +424,16 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/name/<string:source_name>\", methods=[\"GET\"])",
+        "peekOfCode": "def list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/extended\", methods=[\"GET\"])\ndef list_all_sourcesP_with_relationshios():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json_with_relationships() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "list_all_sourcesP_with_relationshios",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def list_all_sourcesP_with_relationshios():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json_with_relationships() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"\n    source = Source.query.get_or_404(source_id)\n    return jsonify(source.to_json())\n@sources_bp.route(\"/name/<string:source_name>\", methods=[\"GET\"])",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -460,7 +469,7 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)\n    new_source = Source(\n        name=data.get(\"name\").strip().lower(),\n        description=data.get(\"description\"),\n        type=data.get(\"type\"),\n    )",
+        "peekOfCode": "def create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:\n        return Response(\"Invalid input\", status=400)\n    new_source = Source(\n        name=data.get(\"name\").strip().lower(),\n        description=data.get(\"description\"),\n        type_id=data.get(\"type\"),\n    )",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -469,7 +478,7 @@
         "kind": 5,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "sources_bp = Blueprint(\"sources\", __name__, url_prefix=\"/api/v1/sources\")\n# FETCHING SOURCES\n@sources_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/<int:source_id>\", methods=[\"GET\"])\ndef get_source(source_id):\n    \"\"\"Get a source by ID.\"\"\"",
+        "peekOfCode": "sources_bp = Blueprint(\"sources\", __name__, url_prefix=\"/api/v1/sources\")\n# FETCHING SOURCES\n@sources_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_sources():\n    \"\"\"List all sources.\"\"\"\n    sources = Source.query.all()\n    return jsonify([source.to_json() for source in sources])\n@sources_bp.route(\"/extended\", methods=[\"GET\"])\ndef list_all_sourcesP_with_relationshios():\n    \"\"\"List all sources.\"\"\"",
         "detail": "app.routes.sources",
         "documentation": {}
     },
@@ -523,7 +532,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    type_id = db.Column(db.Integer, db.ForeignKey(\"source_types.id\"), nullable=False)\n    # One-to-many relationship with examples\n    examples = db.relationship(\"Example\", backref=\"source\", lazy=\"dynamic\")\nclass SourceType(db.Model, BaseModelMixin):",
+        "peekOfCode": "class Source(db.Model, BaseModelMixin):\n    \"\"\"Database model for a source.\"\"\"\n    __tablename__ = \"sources\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    type_id = db.Column(db.Integer, db.ForeignKey(\"source_types.id\"), nullable=False)\n    # One-to-many relationship with examples\n    examples = db.relationship(\"Example\", backref=\"source\")\nclass SourceType(db.Model, BaseModelMixin):",
         "detail": "app.models",
         "documentation": {}
     },

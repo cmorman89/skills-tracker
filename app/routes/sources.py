@@ -15,6 +15,13 @@ def list_all_sources():
     return jsonify([source.to_json() for source in sources])
 
 
+@sources_bp.route("/extended", methods=["GET"])
+def list_all_sourcesP_with_relationshios():
+    """List all sources."""
+    sources = Source.query.all()
+    return jsonify([source.to_json_with_relationships() for source in sources])
+
+
 @sources_bp.route("/<int:source_id>", methods=["GET"])
 def get_source(source_id):
     """Get a source by ID."""
@@ -50,10 +57,13 @@ def create_source():
     new_source = Source(
         name=data.get("name").strip().lower(),
         description=data.get("description"),
-        type=data.get("type"),
+        type_id=data.get("type"),
     )
-
-    db.session.add(new_source)
-    db.session.commit()
+    try:
+        db.session.add(new_source)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
 
     return jsonify(new_source.to_json()), 201

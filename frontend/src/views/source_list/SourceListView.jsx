@@ -10,7 +10,7 @@ const SourceListView = () => {
         const fetchSources = async () => {
             try {
                 // Fetch all sources
-                const response = await axios.get("http://127.0.0.1:5000/api/v1/sources/");
+                const response = await axios.get("http://127.0.0.1:5000/api/v1/sources/extended");
                 // Filter out the root source
                 const data = response.data;
                 // Update the state
@@ -58,7 +58,7 @@ const SourceListView = () => {
                                         <td className="py-2 px-1 text-center table-cell">{source.id}</td>
                                         <td className="py-2 px-1 text-center table-cell">{source.name}</td>
                                         <td className="py-2 px-1 text-center table-cell">{source.description}</td>
-                                        <td className="py-2 px-1 text-center table-cell">{source.type}</td>
+                                        <td className="py-2 px-1 text-center table-cell">{source.type.name}</td>
                                         <td className="py-2 px-1 text-center table-cell"></td>
                                     </tr>
                                 ))
