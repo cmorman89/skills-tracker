@@ -25,7 +25,7 @@ const SkillAddForm = () => {
         setFormData({ ...formData, name: value });
     }
 
-    const handleDescriptionOnChange = (value) => {
+    const handleDescriptionOnChange = (key, value) => {
         setFormData({ ...formData, description: value });
     }
 

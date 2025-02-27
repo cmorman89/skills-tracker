@@ -11,7 +11,7 @@ const SkillDescriptionInput = ({ value, onChange }) => {
         name="skillDescription"
         placeholder="Enter a brief description of the skill (optional)."
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
       />
     </div>
   );
