@@ -73,7 +73,7 @@ const Sidebar = () => {
                     </a>
 
 
-
+{/* 
                     <div className="block mb-1 mt-6 pb-1 text-center justify-self-center text-slate-500/70 w-3/4 border-b border-slate-600/50 mx-auto">
                         Manage Examples
                     </div>
@@ -91,7 +91,7 @@ const Sidebar = () => {
                     >
                         <i className="fa-solid fa-plus px-4"></i>
                         Add an Example
-                    </a>
+                    </a> */}
                 </div>
                 <div className="mt-auto">
                     <div className="block mb-1 mt-4 pb-1 text-center justify-self-center text-slate-500/70 w-4/5 border-b border-slate-600/50 mx-auto">

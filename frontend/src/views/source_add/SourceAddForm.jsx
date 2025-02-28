@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios"; import Divider from "../../form_components/style/Divider";
 import TextInput from "../../form_components/input/TextInput";
 import TextArea from "../../form_components/input/TextArea";
+import SourceExample from "../../form_components/source_form/SourceExample";
+import SourceExampleList from "../../form_components/source_form/SourceExampleList";
 ;
 
 const SourceAddForm = () => {
@@ -14,6 +16,8 @@ const SourceAddForm = () => {
         name: "",
         description: "",
         type: "",
+        example: "",
+        exampleList: [],
     });
 
     const onChange = (key, value) => {
@@ -21,7 +25,29 @@ const SourceAddForm = () => {
         setMsg(`Key: ${key}, Value: ${value}`);
         setFormData({ ...formData, [key]: value });
     }
+    const handleExampleOnChange = (value) => {
+        setFormData({ ...formData, example: value });
+    }
 
+    const handleExampleListOnChange = (value, index) => {
+        const updatedExampleList = [...formData.exampleList];
+        updatedExampleList[index] = value;
+        setFormData({ ...formData, exampleList: updatedExampleList });
+    }
+    const handleAddExample = () => {
+        if (formData.example.trim() === "") {
+            return;
+        }
+        const updatedExampleList = [...formData.exampleList, formData.example];
+        setFormData({ ...formData, exampleList: updatedExampleList, example: "" });
+        console.log("Example added: ", formData.example);
+    }
+
+    const handleRemoveExample = (index) => {
+        const updatedExampleList = formData.exampleList.filter((_, i) => i !== index);
+        setFormData({ ...formData, exampleList: updatedExampleList });
+        return;
+    }
     useEffect(() => {
         const fetchTypes = async () => {
             try {
@@ -76,6 +102,8 @@ const SourceAddForm = () => {
             name: "",
             description: "",
             type: "",
+            example: "",
+            exampleList: [],
         });
     }
 
@@ -190,6 +218,20 @@ const SourceAddForm = () => {
                             onChange={onChange} // Log the value to the console
                         />
                     </div>
+                    <Divider />
+
+                    {/* Source Example */}
+                    <SourceExample
+                        exampleList={formData.exampleList}
+                        onChange={handleExampleOnChange}
+                        onClick={handleAddExample}
+                        value={formData.example}
+                    />
+                    <SourceExampleList
+                        exampleList={formData.exampleList}
+                        onChange={handleExampleListOnChange}
+                        onClick={handleRemoveExample}
+                    />
                     <Divider />
 
                     {/* Submit Button */}

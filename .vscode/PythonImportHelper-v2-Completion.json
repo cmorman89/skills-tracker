@@ -88,6 +88,14 @@
         "documentation": {}
     },
     {
+        "label": "Example",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
         "label": "SourceType",
         "importPath": "app.models",
         "description": "app.models",
@@ -460,7 +468,16 @@
         "kind": 2,
         "importPath": "app.routes.sources",
         "description": "app.routes.sources",
-        "peekOfCode": "def list_source_types():\n    \"\"\"List all source types.\"\"\"\n    source_types = SourceType.query.all()\n    return jsonify([source_type.to_json() for source_type in source_types])\n# CREATING SOURCES\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:",
+        "peekOfCode": "def list_source_types():\n    \"\"\"List all source types.\"\"\"\n    source_types = SourceType.query.all()\n    return jsonify([source_type.to_json() for source_type in source_types])\n@sources_bp.route(\"/examples\", methods=[\"GET\"])\ndef list_all_examples():\n    \"\"\"List all examples.\"\"\"\n    examples = Source.query.all()\n    return jsonify([example.to_json() for example in examples])\n# CREATING SOURCES",
+        "detail": "app.routes.sources",
+        "documentation": {}
+    },
+    {
+        "label": "list_all_examples",
+        "kind": 2,
+        "importPath": "app.routes.sources",
+        "description": "app.routes.sources",
+        "peekOfCode": "def list_all_examples():\n    \"\"\"List all examples.\"\"\"\n    examples = Source.query.all()\n    return jsonify([example.to_json() for example in examples])\n# CREATING SOURCES\n@sources_bp.route(\"/\", methods=[\"POST\"])\ndef create_source():\n    \"\"\"Create a new source.\"\"\"\n    data = request.get_json()\n    if not data:",
         "detail": "app.routes.sources",
         "documentation": {}
     },

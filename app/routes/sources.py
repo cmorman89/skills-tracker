@@ -1,6 +1,6 @@
 from flask import Blueprint, Response, jsonify, request, render_template
 
-from app.models import SourceType
+from app.models import Example, SourceType
 from ..models import Source, db
 
 # Define the blueprint for sources
@@ -46,6 +46,13 @@ def list_source_types():
     return jsonify([source_type.to_json() for source_type in source_types])
 
 
+@sources_bp.route("/examples", methods=["GET"])
+def list_all_examples():
+    """List all examples."""
+    examples = Source.query.all()
+    return jsonify([example.to_json() for example in examples])
+
+
 # CREATING SOURCES
 @sources_bp.route("/", methods=["POST"])
 def create_source():
@@ -65,5 +72,16 @@ def create_source():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
+    print("\n\n\n\n\nSOURCE ID: ", new_source.id, "\n\n\n\n\n")
+    if data.get("exampleList"):
+        # PRINT EXAMPLE LIST WITH YELLOW BACKGROUND
+        print("\033[43mExample List:\033[0m", data.get("exampleList"))
+        for example in data.get("exampleList"):
+            try:
+                new_example = Example(text=example, source_id=new_source.id)
+                db.session.add(new_example)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
 
     return jsonify(new_source.to_json()), 201

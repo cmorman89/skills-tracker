@@ -59,7 +59,19 @@ const SourceListView = () => {
                                         <td className="py-2 px-1 text-center table-cell">{source.name}</td>
                                         <td className="py-2 px-1 text-center table-cell">{source.description}</td>
                                         <td className="py-2 px-1 text-center table-cell">{source.type.name}</td>
-                                        <td className="py-2 px-1 text-center table-cell"></td>
+                                        <td className="py-2 px-1 items-center justify-items-center table-cell">
+                                            <ul className="list-disc">
+                                                {
+                                                    source.examples.map((example, key) =>
+                                                        <li
+                                                            key={key}
+                                                            className="text-slate-300/80 font-normal text-sm"
+                                                        >
+                                                            {example.text}
+                                                        </li>)
+                                                }
+                                            </ul>
+                                        </td>
                                     </tr>
                                 ))
                             )}
