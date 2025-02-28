@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import TextInput from '../input/TextInput';
@@ -16,30 +16,33 @@ const SkillNameInput = ({ value, onChange }) => {
     }
   };
 
-  const handleInputChange = async (e) => {
-    const newValue = e.target.value;
+  useEffect(() => {
 
-    // Simple validation example:
-    if (newValue.length > 50) {
-      setError('Skill name too long.');
-      return;
-    } else {
-      setError('');
-    }
-    try {
-      const result = await querySkillName(newValue.toLowerCase());
-
-      if (result !== null) {
-        setError('Skill name already exists.');
+    const checkNameUnique = async () => {
+      
+      if (value.length > 50) {
+        setError('Skill name too long.');
+        return;
       } else {
         setError('');
       }
-    } catch (error) {
-      console.error('Error fetching skill name: ', error);
-      setError('Error checking skill name.');
-    }
-    onChange(newValue);
-  };
+      try {
+        const result = await querySkillName(value.toLowerCase());
+
+        if (result !== null) {
+          setError('Skill name already exists.');
+        } else {
+          setError('');
+        }
+      } catch (error) {
+        console.error('Error fetching skill name: ', error);
+        setError('Error checking skill name.');
+      }
+    };
+
+    checkNameUnique();
+  }
+  , [value, onChange]);
 
 
   return (
@@ -50,7 +53,7 @@ const SkillNameInput = ({ value, onChange }) => {
         name="skillName"
         placeholder="Enter skill name"
         value={value}
-        onChange={handleInputChange}
+        onChange={onChange}
       />
       {error && <small className='text-orange-400'>{error}</small>}
     </div>

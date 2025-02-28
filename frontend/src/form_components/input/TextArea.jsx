@@ -17,7 +17,7 @@ const TextArea = ({ label, id, name, placeholder, value, onChange }) => {
         className="mt-1 block w-full p-2 border border-slate-600 rounded-md shadow-lg bg-slate-900/40"
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.name, e.target.value)}
         rows="4"
       ></textarea>
     </div>
