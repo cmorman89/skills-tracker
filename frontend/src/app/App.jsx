@@ -22,30 +22,18 @@ const App = () => {
 
     return (
         <Router>
-            <div className="flex min-h-screen px-8 py-12 gap-8">
+            <div className="flex min-h-screen ">
                 <Sidebar />
                 <div className="flex flex-col flex-grow">
                     <MessageContent
                         visible={messageVisible}
                         message={message}
                         type={messageType}
-                        onClose={() => setMessageVisible(false)}
+                        setMessageVisible={setMessageVisible}
                     />
                     <MainContent
-                        innerComponents={[
-                            <MessageContent
-                                key="MessagesContent"
-                                message={message}
-                                setMessageVisible={setMessageVisible}
-                                type={messageType}
-                                visible={messageVisible}
-                            />,
-                            <MessageTest key="1" createMessage={createMessage} />
-                        ]}
-                        setMessage={setMessage}
-                        setMessageType={setMessageType}
-                        setMessageVisible={setMessageVisible}
-
+                        pageTitle="Message Display Test"
+                        innerComponent={ <MessageTest createMessage={createMessage} />}
                     />
                 </div>
             </div>

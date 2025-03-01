@@ -1,27 +1,26 @@
 import PropTypes from 'prop-types';
 
-const MainContent = ({ innerComponents }) => {
+const MainContent = ({ innerComponent, pageTitle }) => {
 
 
     return (
 
-        <div className="flex flex-col flex-grow bg-fuchsia-300/15 rounded-xl shadow-2xl border border-fuchsia-700/60 p-4">
-
+        <div className="flex flex-col flex-grow bg-neutral-200 p-4">
+            <h1 className="pageTitle mb-4">{pageTitle}</h1>
             {
-                innerComponents.map((component, key) => (
-                    <div key={key} className="mb-4">
-                        {component}
-                    </div>
-                ))
+                <div className="mb-4">
+                    {innerComponent}
+                </div>
             }
         </div >
     )
 }
 
 MainContent.propTypes = {
-    innerComponents: PropTypes.array.isRequired,
-    setMessage: PropTypes.func.isRequired,
-    setMessageType: PropTypes.func.isRequired,
-    setMessageVisible: PropTypes.func.isRequired,
+    pageTitle: PropTypes.string,
+    innerComponents: PropTypes.object.isRequired,
+}
+MainContent.defaultProps = {
+    pageTitle: "Page Title",
 }
 export default MainContent;

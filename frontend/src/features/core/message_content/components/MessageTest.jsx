@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
+import Button from '../../../../components/input/button/Button';
 
 const MessageTest = ({ createMessage }) => {
     return (
 
         // Message Tests
-        <div className="flex gap-4">
-            <div onClick={() => createMessage("This is a test success message", "success")} className="flex-grow mb-2 cursor-pointer bg-blue-300/15 rounded-xl shadow-2xl border border-blue-700/60 p-4 text-blue-300">
-                Show Success Message
-            </div>
-            <div onClick={() => createMessage("This is a test error message", "error")} className="flex-grow mb-2 cursor-pointer bg-blue-300/15 rounded-xl shadow-2xl border border-blue-700/60 p-4 text-blue-300">
-                Show Error Message
-            </div>
-            <div onClick={() => createMessage("This is a test info message", "info")} className="flex-grow mb-2 cursor-pointer bg-blue-300/15 rounded-xl shadow-2xl border border-blue-700/60 p-4 text-blue-300">
-                Show Info Message
-            </div>
+        <div className="grid grid-cols-3 gap-4">
+
+            <Button text="Show Success Message" onClick={() => createMessage("This is a test success message", "success")} />
+            <Button text="Show Error Message" onClick={() => createMessage("This is a test error message", "error")} />
+            <Button text="Show Info Message" onClick={() => createMessage("This is a test info message", "info")} />
         </div>
     );
 }

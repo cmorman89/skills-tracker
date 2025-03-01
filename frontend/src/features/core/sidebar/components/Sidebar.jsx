@@ -18,7 +18,7 @@ const Sidebar = () => {
 
     return (
         // Create the main sidebar container
-        <div className={`${isCollapsed ? 'w-24' : 'w-56'} flex flex-col border border-fuchsia-700/60 bg-gradient-to-br from-purple-800/50 to-pink-800/40 py-8 text-neutral-300 shadow-xl rounded-xl ease-in-out duration-700`} >
+        <div className={`${isCollapsed ? 'w-24' : 'w-56'} flex flex-col bg-gradient-to-br from-purple-800 to-pink-800 py-8 text-neutral-300 shadow-xl ease-in-out duration-700`} >
             <div className="flex items-center justify-center">
                 <img
                     src="../logo.png"
