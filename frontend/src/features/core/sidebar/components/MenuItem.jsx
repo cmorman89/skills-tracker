@@ -11,7 +11,7 @@ const MenuItem = ({ collapsed, icon, label, url, onClick }) => {
 
     return (
         <div
-            className={`transition-all relative flex gap-2 cursor-pointer border border-transparent hover:border-pink-300/20 hover:bg-pink-500/20 hover:shadow-lg py-4 px-8 rounded ease-in-out duration-400`}
+            className={`transition-all relative flex gap-2 cursor-pointer border-t border-b border-transparent hover:border-pink-300/80 hover:bg-pink-500/50 hover:shadow-lg py-4 px-8 ease-in-out duration-400`}
             onClick={handleClick}
         >
             <div className="transition-all text-xl ease-in-out duration-400">

@@ -8,13 +8,13 @@ const Button = ({ text, onClick }) => {
             className="
             relative
             bg-fuchsia-700 hover:bg-fuchsia-600 
-            text-white
+            text-gray-100 font-semibold
             shadow-lg hover:shadow-2xl
-            translate-y-0 hover:-translate-y-1
-            font-bold 
+            translate-y-0 hover:-translate-y-1 
             p-4 
             rounded-xl
-            ease-in-out duration-400"
+            ease-in-out duration-400
+            cursor-pointer"
         >
             {text}
         </button>
