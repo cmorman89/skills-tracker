@@ -2,7 +2,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from "prop-types";
 
-const MessageContent = ({ message, onClose, type, visible }) => {
+const MessageContent = ({ message, setMessageVisible, type, visible }) => {
 
     return (
         <div
@@ -29,7 +29,7 @@ const MessageContent = ({ message, onClose, type, visible }) => {
 
             <FontAwesomeIcon
                 icon={faCircleXmark}
-                onClick={onClose}
+                onClick={() => setMessageVisible(false)}
                 className="cursor-pointer text-lg"
             />
 
@@ -38,7 +38,7 @@ const MessageContent = ({ message, onClose, type, visible }) => {
 }
 MessageContent.propTypes = {
     message: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
+    setMessageVisible: PropTypes.func.isRequired,
     type: PropTypes.oneOf(['info', 'error', 'success']),
     visible: PropTypes.bool
 }
