@@ -1,4 +1,4 @@
-import { faBuildingCircleArrowRight, faCaretDown, faCaretUp, faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faCaretDown, faCaretUp, faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { useEffect, useState } from "react";
 
@@ -26,18 +26,20 @@ const Sidebar = () => {
                     className={`${isCollapsed ? 'w-16 my-4' : 'w-32 my-6'} h-auto ease-in-out duration-700`}
                 />
             </div>
-            <div className="flex-grow bg-black/25">
+            <div className="flex flex-col flex-grow bg-black/25">
                 <MenuItem icon={faHome} label="Home" url="/" collapsed={isCollapsed} />
                 <MenuItem icon={faList} label="Skills" url="/" collapsed={isCollapsed} />
                 <MenuItem icon={faBuildingCircleArrowRight} label="Sources" url="/" collapsed={isCollapsed} />
                 <div
-                    className={`flex flex-col pl-4 overflow-hidden transition-all duration-500 ease-in-out ${isCollapsed ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"
-                        } origin-top ${isFullyCollapsed ? "h-0" : "h-auto"}`} // Apply h-0 only after animation
+                    className={`flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${isCollapsed ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"
+                        } origin-top ${isFullyCollapsed ? "h-0" : "h-auto"}`}
                 >
-                    <MenuItem icon={faPlus} label="Add Skill" url="/skills/add" collapsed={isCollapsed} />
-                    <MenuItem icon={faPlus} label="Add Source" url="/sources/add" collapsed={isCollapsed} />
+                    <MenuItem icon={faPlus} label="Add Skill" level={1} url="/skills/add" collapsed={isCollapsed} />
+                    <MenuItem icon={faPlus} label="Add Source" level={1}  url="/sources/add" collapsed={isCollapsed} />
                 </div>
-                <MenuItem icon={isCollapsed ? faCaretUp : faCaretDown} label="Collapse" collapsed={isCollapsed} onClick={() => setIsCollapsed(!isCollapsed)} />
+            <div className='flex flex-col mt-auto '>
+                <MenuItem icon={isCollapsed ? faAnglesRight : faAnglesLeft} label="Shrink Menu" collapsed={isCollapsed} onClick={() => setIsCollapsed(!isCollapsed)} />
+            </div>
             </div>
 
         </div>
