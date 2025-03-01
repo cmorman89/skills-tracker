@@ -1,5 +1,6 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import PropTypes from "prop-types";
 
 const MessageContent = ({ message, onClose, type, visible }) => {
 
@@ -8,7 +9,7 @@ const MessageContent = ({ message, onClose, type, visible }) => {
             className={`
                 flex items-center
                 rounded-xl shadow-2xl 
-                px-8
+                px-4
                 ease-in-out duration-200
                 ${visible ? 'h-16 py-2 border opacity-100 mb-8' : 'h-0 py-0 border-0 opacity-0 mb-0'} 
                 ${type === 'info' ?
@@ -27,12 +28,23 @@ const MessageContent = ({ message, onClose, type, visible }) => {
             </div>
 
             <FontAwesomeIcon
-                icon={faTimes}
+                icon={faCircleXmark}
                 onClick={onClose}
-                className="cursor-pointer r-0"
+                className="cursor-pointer text-lg"
             />
 
         </div>
     )
+}
+MessageContent.propTypes = {
+    message: PropTypes.string,
+    onClose: PropTypes.func.isRequired,
+    type: PropTypes.oneOf(['info', 'error', 'success']),
+    visible: PropTypes.bool
+}
+MessageContent.defaultProps = {
+    message: "",
+    type: 'info',
+    visible: false
 }
 export default MessageContent;

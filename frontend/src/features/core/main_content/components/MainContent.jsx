@@ -9,7 +9,7 @@ const MainContent = ({ innerComponents, setMessage, setMessageType, setMessageVi
     }
 
     return (
-        <div className="flex flex-col flex-grow bg-fuchsia-300/15 rounded-xl shadow-2xl border border-fuchsia-700/60 p-8">
+        <div className="flex flex-col flex-grow bg-fuchsia-300/15 rounded-xl shadow-2xl border border-fuchsia-700/60 p-4">
             <div className="flex gap-4">
                 <div onClick={() => createMessage("This is a test success message", "success")} className="flex-grow mb-2 cursor-pointer bg-blue-300/15 rounded-xl shadow-2xl border border-blue-700/60 p-4 text-blue-300">
                     Show Success Message
