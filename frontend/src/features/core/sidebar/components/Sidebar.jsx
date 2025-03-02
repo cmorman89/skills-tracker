@@ -1,6 +1,7 @@
 import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faCaretDown, faCaretUp, faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 const Sidebar = () => {
 
@@ -20,13 +21,15 @@ const Sidebar = () => {
         // Create the main sidebar container
         <div className={`${isCollapsed ? 'w-24' : 'w-56'} flex flex-col bg-gradient-to-br from-purple-800 to-pink-800 text-neutral-300 shadow-xl ease-in-out duration-700`} >
             <div className="flex items-center justify-center">
-                <img
+                {/* <img
                     src="../logo.png"
                     alt="SkillTrack Logo"
-                    className={`${isCollapsed ? 'w-16 my-4' : 'w-32 my-6'} h-auto ease-in-out duration-700`}
-                />
+                    className={`${isCollapsed ? 'w-16 my-4' : 'w-32 my-6'} h-auto ease-in-out duration-700 rotate`}
+                /> */}
+                <Logo isCollapsed={isCollapsed} isFullyCollapsed={isFullyCollapsed} />
             </div>
             <div className="flex flex-col flex-grow bg-black/25">
+
                 <MenuItem icon={faHome} label="Home" url="/" collapsed={isCollapsed} />
                 <MenuItem icon={faList} label="Skills" url="/" collapsed={isCollapsed} />
                 <MenuItem icon={faBuildingCircleArrowRight} label="Sources" url="/" collapsed={isCollapsed} />

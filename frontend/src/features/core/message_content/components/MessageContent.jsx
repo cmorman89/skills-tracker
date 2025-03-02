@@ -9,9 +9,9 @@ const MessageContent = ({ message, setMessageVisible, type, visible }) => {
             className={`
                 flex items-center
                 rounded-xl
-                px-4
+                px-4 mx-4
                 ease-in-out duration-200
-                ${visible ? 'h-16 py-2 border opacity-100 m-4' : 'h-0 py-0 border-0 opacity-0 m-0'} 
+                ${visible ? 'h-16 py-2 border opacity-100 my-4' : 'h-0 py-0 border-0 opacity-0 my-0'} 
                 ${type === 'info' ?
                     'bg-blue-300 border-blue-700 text-blue-900'
                     : type === 'error' ?
