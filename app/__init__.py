@@ -9,13 +9,6 @@ from flask_migrate import Migrate
 
 from config import Config
 
-# CORS Origins
-CORS_ORIGINS = [
-    "http://localhost:5174",
-    "http://localhost:5173",
-    "http://127.0.0.1:5174",
-    "http://127.0.0.1:5173"
-]
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -34,5 +27,5 @@ def create_app():
     from .routes import sources_bp
     app.register_blueprint(sources_bp, url_prefix="/api/v1/sources")
     # Enable CORS
-    CORS(app, origins=CORS_ORIGINS)
+    CORS(app)
     return app

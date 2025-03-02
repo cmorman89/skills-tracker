@@ -1,5 +1,5 @@
-import Input from "../../../components/input/form/Input";
-import InputLabel from "../../../components/input/form/InputLabel";
+import Input from "../../../../components/input/form/Input";
+import InputLabel from "../../../../components/input/form/InputLabel";
 import PropTypes from "prop-types";
 
 const SkillNameInput = ({ value, onChange }) => {
@@ -17,8 +17,8 @@ const SkillNameInput = ({ value, onChange }) => {
                 type="text"
                 value={value}
             />
-            <div>
-                <small className='font-bold text-red-600'>
+            <div className="mt-1 flex justify-center">
+                <small className='font-bold text-error'>
                     ⛔ <span className="italic">Skill name already taken. Please choose another.</span>
                 </small>
             </div>

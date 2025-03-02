@@ -6,7 +6,7 @@ html {
 }
 
 .pageTitle {
-    @apply text-3xl font-bold text-fuchsia-800 italic
+    @apply text-3xl font-bold text-pink-600 italic
 }
 
 .font-inter {
@@ -15,4 +15,47 @@ html {
 
 .font-geist {
     font-family: 'Geist', 'Inter', sans-serif;
+}
+.accent {
+    @apply text-pink-600;
+}
+
+.accent-light {
+    @apply text-pink-300;
+}
+
+.accent-dark {
+    @apply text-pink-900;
+}
+
+.success-gradient {
+    @apply bg-gradient-to-r from-green-300 to-teal-500
+}
+
+.accent-gradient {
+    @apply bg-gradient-to-r from-pink-300 to-rose-500
+}
+
+.info-gradient {
+    @apply bg-gradient-to-r from-blue-300 to-violet-400
+}
+
+.warning-gradient {
+    @apply bg-gradient-to-r from-yellow-300 to-amber-500
+}
+
+.neutral-gradient {
+    @apply bg-gradient-to-r from-gray-300 to-gray-500
+}
+
+.text-success {
+    @apply text-green-600
+}
+
+.text-error {
+    @apply text-red-600
+}
+
+.divider {
+    @apply border-t border-pink-400 my-4 
 }

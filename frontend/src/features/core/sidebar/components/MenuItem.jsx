@@ -13,7 +13,6 @@ const MenuItem = ({ collapsed, icon, label, level, onClick, url }) => {
 
     const getIndent = () => {
         const indent = level ? `left-${level * 4}` : ''; 
-        console.log(indent);
         return indent;
     }
 

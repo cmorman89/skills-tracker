@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Input from "../../../components/input/form/Input";
-import InputLabel from "../../../components/input/form/InputLabel";
-import Button from "../../../components/input/button/Button";
+import Input from "../../../../components/input/form/Input";
+import InputLabel from "../../../../components/input/form/InputLabel";
+import Button from "../../../../components/input/button/Button";
 import SkillNameInput from "./SkillNameInput";
+import axios from "axios";
 
 const AddSkillForm = ({ createMessage }) => {
 
@@ -26,14 +27,18 @@ const AddSkillForm = ({ createMessage }) => {
     }
     const resetFormData = () => {
         setFormData({ ...initialFormData });
+        console.log("Form data reset");
     }
     const handleSubmit = (e) => {
+        // Prevent submitting the form via the browser
         e.preventDefault();
-        console.log(formData);
 
-        // On Success
-        createMessage("Skill added successfully", "success");
-        resetFormData();
+        const success = submitForm(formData);
+
+        // Reset the form data if the form was submitted successfully
+        if (success) {
+            resetFormData();
+        }
     }
     const disableFormEnterKey = (event) => {
         if (event.key === "Enter") {
@@ -41,10 +46,38 @@ const AddSkillForm = ({ createMessage }) => {
             console.log("Enter key suppressed");
         }
     }
+
+    const submitForm = async (formData) => {
+        const cachedFormData = { ...formData };
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/api/v1/skills/", formData);
+            const responseData = response.data;
+            if (response.status == 200) {
+                createMessage("Skill added successfully", "success");
+                return true;
+            } else {
+                createMessage(responseData.error, "error");
+            }
+        } catch (error) {
+            if (error.response) {
+                // Bad request or other error
+                createMessage(error.response.data.error || "An unknown error occurred", "error");
+            } else {
+                // Network error or other issue
+                createMessage(error.message, "error");
+            }
+        }
+
+        setFormData(cachedFormData);
+        return false;
+
+    };
+
     return (
         <div>
             <form onKeyDown={disableFormEnterKey} onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 mx-8">
+                    <div className="divider"></div>
                     <SkillNameInput
                         value={formData.name}
                         onChange={updateFormData}
@@ -63,6 +96,9 @@ const AddSkillForm = ({ createMessage }) => {
                             value={formData.description}
                         />
                     </div>
+
+                    <div className="divider"></div>
+
                     <Button
                         label="Add Skill"
                         type="submit"

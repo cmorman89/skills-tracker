@@ -1,9 +1,16 @@
+import PropTypes from 'prop-types';
+
 const InputLabel = ({ label, name }) => {
     return (
-        <label htmlFor={name} className="font-semibold text-fuchsia-800">
+        <label htmlFor={name} className="font-semibold accent-dark">
             {label}
         </label>
     );
+}
+
+InputLabel.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
 }
 
 export default InputLabel;

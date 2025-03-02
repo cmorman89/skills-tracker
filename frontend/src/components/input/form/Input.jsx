@@ -12,8 +12,9 @@ const Input = ({ autoFocus = false, name, id = name, onChange, placeholder, type
                     bg-neutral-100
                     ring ring-pink-900 focus:ring-2 focus:ring-pink-600 outline-none
                     text-neutral-800 placeholder-neutral-400
-                    translate-y-0 focus:-translate-y-1
+                    translate-y-0 focus:-translate-y-1 hover:-translate-y-1
                     transition-all ease-in-out duration-700
+                    shadow-md hover:shadow-xl
                     p-2 mt-1 
                     rounded-xl
                 "

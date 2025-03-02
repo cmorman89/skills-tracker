@@ -4,7 +4,7 @@ import MainContent from "../features/core/main_content/components/MainContent";
 import MessageContent from "../features/core/message_content/components/MessageContent";
 import { useState } from "react";
 import MessageTest from "../features/core/message_content/components/MessageTest";
-import AddSkillForm from "../features/skills/add_skill_form/AddSkillForm";
+import AddSkillForm from "../features/skills/add_skill_form/components/AddSkillForm";
 
 
 const App = () => {

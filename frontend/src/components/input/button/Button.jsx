@@ -25,11 +25,13 @@ const Button = ({ classNameAddition, label, onClick, type }) => {
 }
 
 Button.propTypes = {
+    classNameAddition: PropTypes.string,
     label: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     type: PropTypes.string,
 }
 Button.defaultProps = {
+    classNameAddition: "",
     type: "button",
 }
 

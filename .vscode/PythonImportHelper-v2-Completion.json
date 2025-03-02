@@ -221,60 +221,6 @@
         "documentation": {}
     },
     {
-        "label": "list_all_skills",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_all_children",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)\ndef build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "build_skill_tree",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n@skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_skill_by_id",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_id(skill_id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if skill := get_skill(skill_id=skill_id):\n        skill = skill.to_json_with_relationships()\n    return jsonify(skill), 200\n@skills_bp.route(\"/name/<string:skill_name>\", methods=[\"GET\"])\ndef list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_skill_by_name",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_name(skill_name):\n    \"\"\"Get a skill by name.\"\"\"\n    if skill := get_skill(skill_name=skill_name):\n        skill = skill.to_json()\n    return jsonify(skill), 200\n@skills_bp.route(\"/tree\", methods=[\"GET\"])\ndef skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "skills_tree",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def skills_tree():\n    skills = Skill.query.all()\n    root_skills = [skill for skill in skills if not skill.parents]\n    skills_tree = [make_skill_tree(root_skill) for root_skill in root_skills]\n    return render_template(\"skills_tree.html\", skills=skills_tree)\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
         "label": "create_skill",
         "kind": 2,
         "importPath": "app.routes.skills",
@@ -284,92 +230,11 @@
         "documentation": {}
     },
     {
-        "label": "update_skill",
+        "label": "list_all_skills",
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def update_skill(skill_id):\n    \"\"\"Update a skill by ID\"\"\"\n    # Get the current skill\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    # Get the data from the request\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    name = data.get(\"name\")",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "delete_skill",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def delete_skill(skill_id):\n    \"\"\"Delete a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Remove the skill from any parent skills lists that reference it as a parent\n        if skill.children:\n            remove_skill_from_all_children(skill)\n        # Delete the skill\n        db.session.delete(skill)\n        db.session.commit()",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_children_skills",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_children_skills(skill_id):\n    \"\"\"List all children skills of a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Get all children skills\n        children = (\n            [child.to_json() for child in skill.children] if skill.children else []\n        )\n        return jsonify(children), 200\n    # If skill does not exist, return an error",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_parent_skills",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_parent_skills(skill_id):\n    \"\"\"List all parent skills of a skill by ID\"\"\"\n    # Check if skill exists\n    if skill := get_skill(skill_id=skill_id):\n        # Get all parent skills\n        parents = (\n            [parent.to_json() for parent in skill.parents] if skill.parents else []\n        )\n        return jsonify(parents), 200\n    # If skill does not exist, return an error",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "list_available_parents",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def list_available_parents(skill_id):\n    \"\"\"List all available parent skills of a skill by ID\"\"\"\n    # Make an array of all available parents\n    availableParents = [parent.id for parent in get_skill()]\n    # Sort the array\n    availableParents.sort()\n    # Track visited nodes\n    visited_nodes = set()\n    # Get the skill by ID\n    skill = get_skill(skill_id=skill_id)",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "add_parent_skill",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_skill(skill_id):\n    \"\"\"Add a parent skill to a skill by ID\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent skill ID\n    parents = request.json.get(\"parent_id\")\n    if isinstance(parents, list):\n        for parent in parents:\n            add_parent_to_child(child, parent)",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "add_parent_to_child",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def add_parent_to_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "remove_parent_skill",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def remove_parent_skill(skill_id):\n    \"\"\"Remove a parent skill from a skill by IDs\"\"\"\n    # Validate if child skill exists\n    if not (child := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Child skill not found\"}), 404\n    # Validate the parent ID\n    parent_id = request.json.get(\"parent_id\")\n    try:\n        parent_id = int(parent_id)\n        if parent_id <= 0:",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "add_child_skill",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def add_child_skill(skill_id):\n    \"\"\"Add a child skill to a skill by ID\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child skill ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "remove_child_skill",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def remove_child_skill(skill_id):\n    \"\"\"Remove a child skill from a skill by IDs\"\"\"\n    # Validate if parent skill exists\n    if not (parent := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Parent skill not found\"}), 404\n    # Validate the child ID\n    child_id = request.json.get(\"child_id\")\n    try:\n        child_id = int(child_id)\n        if child_id <= 0:",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n# @skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\n# def list_all_children(id):\n#     skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n#     if not skill:\n#         return {\"error\": \"Skill not found\"}, 404\n#     skill_tree = build_skill_tree(skill)\n#     return jsonify(skill_tree)",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -383,47 +248,11 @@
         "documentation": {}
     },
     {
-        "label": "remove_skill_from_all_children",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def remove_skill_from_all_children(parent_skill):\n    \"\"\"Remove a skill from all its children to prevent stale references.\"\"\"\n    # Check if skill has children\n    if parent_skill.children:\n        for child in parent_skill.children:\n            # Remove the parent from the child's parents list\n            child.parents.remove(parent_skill)\n        # Commit the changes to the database\n        db.session.commit()\n        return jsonify(",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "view_as_tree",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def view_as_tree(skill_id):\n    \"\"\"Recursively view a skill and its children as a text-based tree.\"\"\"\n    # Check if skill exists\n    if not (skill := get_skill(skill_id=skill_id)):\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    def recurse_tree(skill, indent=0, tree=\"\"):\n        \"\"\"Helper function to recursively build the skill tree.\"\"\"\n        # Add the skill to the tree\n        tree += \" \" * indent + f\"- {skill.name} ({skill.description})\\n\"\n        # Increase the indent for children",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "make_skill_tree",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def make_skill_tree(skill):\n    \"\"\"Convert a skill and its children into a tree structure.\"\"\"\n    # Initialize the tree with the skill itself\n    tree = {\n        \"id\": skill.id,\n        \"name\": skill.name.title(),\n        \"description\": skill.description,\n        \"children\": [],\n    }\n    # Recursively add children to the tree",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
-        "label": "creates_cycle",
-        "kind": 2,
-        "importPath": "app.routes.skills",
-        "description": "app.routes.skills",
-        "peekOfCode": "def creates_cycle(parent_skill, child_skill):\n    \"\"\"Check if adding a parent-child relationship creates a cycle.\"\"\"\n    # Track visited nodes\n    visited = set()\n    # Add the parent skill to the visited set to simulate the cycle check\n    visited.add(parent_skill.id)\n    def dfs(skill):\n        if skill.id in visited:\n            return True\n        visited.add(skill.id)",
-        "detail": "app.routes.skills",
-        "documentation": {}
-    },
-    {
         "label": "skills_bp",
         "kind": 5,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"GET\"])\ndef list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>/all_children\", methods=[\"GET\"])\ndef list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404",
+        "peekOfCode": "skills_bp = Blueprint(\"skills\", __name__, url_prefix=\"/api/v1/skills\")\n@skills_bp.route(\"/\", methods=[\"POST\"])\ndef create_skill():\n    \"\"\"Create a new skill.\"\"\"\n    # Check if data is provided\n    if not (data := request.json):\n        return jsonify({\"error\": \"No data provided\"}), 400\n    # Validate the skill name\n    if name := data.get(\"name\"):\n        if not isinstance(name, str):",
         "detail": "app.routes.skills",
         "documentation": {}
     },
