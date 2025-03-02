@@ -4,6 +4,7 @@ import MainContent from "../features/core/main_content/components/MainContent";
 import MessageContent from "../features/core/message_content/components/MessageContent";
 import { useState } from "react";
 import MessageTest from "../features/core/message_content/components/MessageTest";
+import AddSkillForm from "../features/skills/add_skill_form/AddSkillForm";
 
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
                     />
                     <MainContent
                         pageTitle="Message Display Test"
-                        innerComponent={ <MessageTest createMessage={createMessage} />}
+                        innerComponent={ <AddSkillForm createMessage={createMessage} /> }
                     />
                 </div>
             </div>
