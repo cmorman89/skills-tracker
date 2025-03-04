@@ -8,14 +8,6 @@
         "documentation": {}
     },
     {
-        "label": "Response",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
         "label": "jsonify",
         "importPath": "flask",
         "description": "flask",
@@ -25,14 +17,6 @@
     },
     {
         "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "render_template",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,

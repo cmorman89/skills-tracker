@@ -32,8 +32,8 @@ html {
     @apply bg-gradient-to-r from-green-300 to-teal-500
 }
 
-.accent-gradient {
-    @apply bg-gradient-to-r from-pink-300 to-rose-500
+.error-gradient {
+    @apply bg-gradient-to-r from-pink-300 to-rose-300
 }
 
 .info-gradient {

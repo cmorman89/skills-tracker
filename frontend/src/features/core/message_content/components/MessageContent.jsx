@@ -18,7 +18,7 @@ const MessageContent = ({ message, setMessageVisible, type, visible }) => {
                 ${type === 'info' ?
                     'info-gradient border-blue-700 text-blue-900'
                     : type === 'error' ?
-                        '  error-gradient border-red-700 text-red-900'
+                        'error-gradient border-red-700 text-red-900'
                         : type === 'success' ?
                             'success-gradient border-green-700 text-green-900'
                             :

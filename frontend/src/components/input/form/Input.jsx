@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Input = ({ autoFocus = false, name, id = name, onChange, placeholder, type, value }) => {
+const Input = ({ autoFocus = false, id, name, onChange, placeholder, type, value }) => {
     return (
         <div className="flex flex-col">
             <input
@@ -18,7 +18,7 @@ const Input = ({ autoFocus = false, name, id = name, onChange, placeholder, type
                     p-2 mt-1 
                     rounded-xl
                 "
-                id={name}
+                id={id || name}
                 name={name}
                 onChange={(e) => onChange(name, e.target.value)}
                 placeholder={placeholder}

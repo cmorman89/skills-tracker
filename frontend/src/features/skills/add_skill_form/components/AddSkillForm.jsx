@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Input from "../../../../components/input/form/Input";
 import InputLabel from "../../../../components/input/form/InputLabel";
@@ -88,7 +88,6 @@ const AddSkillForm = ({ createMessage }) => {
                             name="description"
                         />
                         <Input
-                            autoFocus={true}
                             name="description"
                             onChange={updateFormData}
                             placeholder="Ex. A popular programming language that is used to create interactive websites."

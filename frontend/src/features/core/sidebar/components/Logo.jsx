@@ -26,11 +26,11 @@ const Logo = ({ isCollapsed, isFullyCollapsed }) => {
                     </div>
                     <div
                         className={`
-                            font-semibold
+                            font-medium
                             -rotate-90 relative
                             ease-in-out duration-200 transition-all
-                            ${isCollapsed ? 'text-8xl' : ''}
-                            ${isCollapsed ? 'top-0 left-0' : 'top-0.5 left-1'}
+                            ${isCollapsed ? 'text-7xl' : 'text-6xl'}
+                            ${isCollapsed ? 'top-0 left-0' : 'top-1 left-1'}
                         `}
                     >
                         ill

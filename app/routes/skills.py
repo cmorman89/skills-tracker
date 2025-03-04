@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, jsonify, request, render_template
+from flask import Blueprint, jsonify, request
 from ..models import Skill, db
 
 # Define the blueprint for skills
