@@ -31,7 +31,7 @@ const Sidebar = () => {
             <div className="flex flex-col flex-grow bg-black/25">
 
                 <MenuItem icon={faHome} label="Home" url="/" collapsed={isCollapsed} />
-                <MenuItem icon={faList} label="Skills" url="/" collapsed={isCollapsed} />
+                <MenuItem icon={faList} label="Skills" url="/skills/table" collapsed={isCollapsed} />
                 <MenuItem icon={faBuildingCircleArrowRight} label="Sources" url="/" collapsed={isCollapsed} />
                 <div
                     className={`flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${isCollapsed ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"
