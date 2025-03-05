@@ -2,10 +2,29 @@ import { faPencil, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const SkillTable = () => {
+const SkillTable = ({ createMessage }) => {
     const [skillList, setSkillList] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
+    const deleteSkill = async (id, name) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:5000/api/v1/skills/${id}`);
+            const responseData = response.data;
+            if (response.status === 200) {
+                createMessage(`Removed skill ${name} from skill list.`, "success");
+                setSkillList(skillList.filter((item) => item.id !== id));
+            } else {
+                createMessage(responseData.error, "error");
+                console.error(responseData.error);
+            }
+        } catch (error) {
+            createMessage(error.message, "error");
+            console.error(error.message);
+        }
+    }
 
     useEffect(() => {
         const fetchSkills = async () => {
@@ -26,7 +45,7 @@ const SkillTable = () => {
         }
         fetchSkills();
 
-    }, []);
+    }, [skillList]);
 
     const range = Array.from({ length: 10 }, (_, i) => i + 1);
 
@@ -35,6 +54,7 @@ const SkillTable = () => {
             <table className="table-auto w-full">
                 <thead>
                     <tr>
+                        <th className="px-4 py-2 text-left">ID</th>
                         <th className="px-4 py-2 text-left">Skill Name</th>
                         <th className="px-4 py-2 text-left">Description</th>
                         <th className="px-4 py-2 text-right">Actions</th>
@@ -44,11 +64,16 @@ const SkillTable = () => {
                     {loading ? <tr><td colSpan={4}>Loading...</td></tr> :
                         skillList.map((item, i) => (
                             <tr key={i} className="border-t border-pink-600 bg-transparent hover:bg-pink-400/50 ease-in-out duration-300 my-12 py-12">
-                                <td className="px-4 py-6">{i}. {item.name.toUpperCase()}</td>
+                                <td className="px-4 py-6">{item.id}</td>
+                                <td className="px-4 py-6">{item.name.toUpperCase()}</td>
                                 <td className="px-4 py-6">{item.description}</td>
                                 <td className="px-4 py-6 text-right">
                                     <div className="flex justify-end gap-4 text-2xl">
-                                        <FontAwesomeIcon className="text-pink-900 hover:text-pink-700 ease-in-out duration-300" icon={faPencil} />
+                                        <FontAwesomeIcon
+                                            className="text-pink-900 hover:text-pink-700 ease-in-out duration-300"
+                                            icon={faPencil}
+                                            onClick={() => { navigate(`/skills/${item.id}/edit`) }}
+                                        />
                                         <FontAwesomeIcon className="text-pink-900 hover:text-pink-700 ease-in-out duration-300" icon={faXmark} />
                                     </div>
                                 </td>

@@ -4,14 +4,14 @@ import InputLabel from "../../../../components/input/form/InputLabel";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-const SkillNameInput = ({ value, onChange }) => {
+const SkillNameInput = ({ value, onChange, originalValue }) => {
     // State to store whether the skill name is already taken
     const [isNameTaken, setIsNameTaken] = useState(false);
 
     // Check if the skill name is already taken when the value changes
     useEffect(() => {
         const checkName = async () => {
-            if (value === "") {
+            if (value === "" || value === originalValue) {
                 setIsNameTaken(false);
                 return;
             }

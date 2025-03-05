@@ -218,7 +218,16 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/name/<string:name>\", methods=[\"GET\"])\ndef list_skill_by_name(name):\n    \"\"\"Get a skill by name.\"\"\"\n    if name and name.strip():\n        skill = get_skill(skill_name=name.strip().lower())\n        if skill:\n            return jsonify(skill.to_json()), 200",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>\", methods=[\"GET\"])\ndef list_skill_by_id(id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            return jsonify(skill.to_json()), 200",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_skill_by_id",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_skill_by_id(id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            return jsonify(skill.to_json()), 200\n        return jsonify({\"error\": \"Skill not found\"}), 404\n@skills_bp.route(\"/name/<string:name>\", methods=[\"GET\"])\ndef list_skill_by_name(name):\n    \"\"\"Get a skill by name.\"\"\"",
         "detail": "app.routes.skills",
         "documentation": {}
     },
