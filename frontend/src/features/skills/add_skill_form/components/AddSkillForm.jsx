@@ -5,6 +5,7 @@ import InputLabel from "../../../../components/input/form/InputLabel";
 import Button from "../../../../components/input/button/Button";
 import SkillNameInput from "./SkillNameInput";
 import axios from "axios";
+import TextArea from "../../../../components/input/form/TextArea";
 
 const AddSkillForm = ({ createMessage }) => {
 
@@ -87,11 +88,11 @@ const AddSkillForm = ({ createMessage }) => {
                             label="Description"
                             name="description"
                         />
-                        <Input
+                        <TextArea
                             name="description"
                             onChange={updateFormData}
                             placeholder="Ex. A popular programming language that is used to create interactive websites."
-                            type="text"
+                            rows="4"
                             value={formData.description}
                         />
                     </div>

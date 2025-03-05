@@ -51,6 +51,15 @@ def list_all_skills():
     """List all skills."""
     return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
 
+@skills_bp.route("/name/<string:name>", methods=["GET"])
+def list_skill_by_name(name):
+    """Get a skill by name."""
+    if name and name.strip():
+        skill = get_skill(skill_name=name.strip().lower())
+        if skill:
+            return jsonify(skill.to_json()), 200
+        return jsonify({"error": "Skill not found"}), 404
+
 
 # @skills_bp.route("/<int:id>/all_children", methods=["GET"])
 # def list_all_children(id):
