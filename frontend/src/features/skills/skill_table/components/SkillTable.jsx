@@ -1,12 +1,14 @@
+import PropTypes from "prop-types";
 import { faPencil, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SkillTable = ({ createMessage }) => {
     const [skillList, setSkillList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [update, setUpdate] = useState(false);
 
     const navigate = useNavigate();
     const deleteSkill = async (id, name) => {
@@ -15,7 +17,7 @@ const SkillTable = ({ createMessage }) => {
             const responseData = response.data;
             if (response.status === 200) {
                 createMessage(`Removed skill ${name} from skill list.`, "success");
-                setSkillList(skillList.filter((item) => item.id !== id));
+                setUpdate(!update);
             } else {
                 createMessage(responseData.error, "error");
                 console.error(responseData.error);
@@ -33,7 +35,7 @@ const SkillTable = ({ createMessage }) => {
                 const responseData = response.data;
                 console.log(responseData);
                 if (response.status === 200) {
-                    setSkillList(responseData);
+                    setSkillList(responseData.filter((item) => item.id !== 1));
                 } else {
                     console.error(responseData.error);
                 }
@@ -44,8 +46,8 @@ const SkillTable = ({ createMessage }) => {
             }
         }
         fetchSkills();
-
-    }, [skillList]);
+        console.log("Fetching skills");
+    }, [update]);
 
     const range = Array.from({ length: 10 }, (_, i) => i + 1);
 
@@ -74,7 +76,11 @@ const SkillTable = ({ createMessage }) => {
                                             icon={faPencil}
                                             onClick={() => { navigate(`/skills/${item.id}/edit`) }}
                                         />
-                                        <FontAwesomeIcon className="text-pink-900 hover:text-pink-700 ease-in-out duration-300" icon={faXmark} />
+                                        <FontAwesomeIcon
+                                            className="text-pink-900 hover:text-pink-700 ease-in-out duration-300"
+                                            icon={faXmark}
+                                            onClick={() => deleteSkill(item.id, item.name)}
+                                        />
                                     </div>
                                 </td>
                             </tr>
@@ -83,6 +89,10 @@ const SkillTable = ({ createMessage }) => {
             </table >
         </div >
     )
+}
+
+SkillTable.propTypes = {
+    createMessage: PropTypes.func.isRequired,
 }
 
 export default SkillTable;

@@ -69,6 +69,21 @@ def list_skill_by_name(name):
             return jsonify(skill.to_json()), 200
         return jsonify({"error": "Skill not found"}), 404
 
+@skills_bp.route("/<int:id>", methods=["DELETE"])
+def delete_skill(id):
+    """Delete a skill by ID"""
+    if id:
+        skill = get_skill(skill_id=id)
+        if skill:
+            try:
+                db.session.delete(skill)
+                db.session.commit()
+                return jsonify({"message": "Skill deleted successfully"}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 400
+        return jsonify({"error": "Skill not found"}), 404
+    return jsonify({"error": "Skill ID is required"}), 400
 
 # @skills_bp.route("/<int:id>/all_children", methods=["GET"])
 # def list_all_children(id):

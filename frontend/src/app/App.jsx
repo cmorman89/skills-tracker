@@ -33,7 +33,7 @@ const App = () => {
                         setMessageVisible={setMessageVisible}
                     />
                     <Routes>
-                        <Route path="/skills/table" element={<MainContent pageTitle="Skills Table" innerComponent={<SkillTable />} />} />
+                        <Route path="/skills/table" element={<MainContent pageTitle="Skills Table" innerComponent={<SkillTable createMessage={createMessage}/>} />} />
                         <Route path="/skills/add" element={<MainContent pageTitle="Add a Skill" innerComponent={<AddSkillForm createMessage={createMessage} />} />} />
                         <Route path="/skills/:skill_id/edit/" element={<MainContent pageTitle="Edit Skill" innerComponent={<AddSkillForm createMessage={createMessage} />} />} />
                     </Routes>
