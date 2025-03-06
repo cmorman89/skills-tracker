@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SkillActionButton from "./SkillActionButton";
 
 const SkillTable = ({ createMessage }) => {
     const [skillList, setSkillList] = useState([]);
@@ -49,8 +50,6 @@ const SkillTable = ({ createMessage }) => {
         console.log("Fetching skills");
     }, [update]);
 
-    const range = Array.from({ length: 10 }, (_, i) => i + 1);
-
     return (
         <div>
             <table className="table-auto w-full">
@@ -71,16 +70,15 @@ const SkillTable = ({ createMessage }) => {
                                 <td className="px-4 py-6">{item.description}</td>
                                 <td className="px-4 py-6 text-right">
                                     <div className="flex justify-end gap-4 text-2xl">
-                                        <FontAwesomeIcon
-                                            className="text-pink-900 hover:text-pink-700 ease-in-out duration-300"
+                                        <SkillActionButton
                                             icon={faPencil}
                                             onClick={() => { navigate(`/skills/${item.id}/edit`) }}
                                         />
-                                        <FontAwesomeIcon
-                                            className="text-pink-900 hover:text-pink-700 ease-in-out duration-300"
+                                        <SkillActionButton
                                             icon={faXmark}
                                             onClick={() => deleteSkill(item.id, item.name)}
                                         />
+
                                     </div>
                                 </td>
                             </tr>
