@@ -21,7 +21,12 @@ const Input = ({ autoFocus = false, inErrorState, id, name, onChange, placeholde
                 `}
                 id={id || name}
                 name={name}
-                onChange={(e) => onChange(name, e.target.value)}
+                onChange={
+                    name ?
+                        (e) => onChange(name, e.target.value)
+                        : (e) => onChange(e.target.value)
+                }
+                 
                 placeholder={placeholder}
                 type={type}
                 value={value}

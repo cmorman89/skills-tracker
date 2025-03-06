@@ -6,6 +6,7 @@ import SkillNameInput from "./SkillNameInput";
 import axios from "axios";
 import TextArea from "../../../../components/input/form/TextArea";
 import { useParams } from "react-router-dom";
+import SkillParentSelection from "./SkillParentSelection";
 
 const SkillForm = ({ createMessage }) => {
     // Get the skill_id from the URL params if it exists
@@ -130,8 +131,14 @@ const SkillForm = ({ createMessage }) => {
 
                     <div className="divider"></div>
 
+                    <SkillParentSelection
+                        onChange={updateFormData}
+                        value={formData.parents}
+                    />
+
+                    <div className="divider"></div>
                     <Button
-                        label="Add Skill"
+                        label={isEditing ? "Edit Skill" : "Add Skill"}
                         type="submit"
                     />
                 </div>
