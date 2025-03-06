@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../../../components/input/form/Input";
 import InputLabel from "../../../../components/input/form/InputLabel";
 import PropTypes from "prop-types";
@@ -22,7 +22,7 @@ const SkillNameInput = ({ value, onChange, originalValue }) => {
                 } else {
                     setIsNameTaken(false);
                 }
-            } catch (error) {
+            } catch {
                 setIsNameTaken(false);
             }
         }
@@ -55,8 +55,11 @@ const SkillNameInput = ({ value, onChange, originalValue }) => {
 }
 
 SkillNameInput.propTypes = {
-    value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    originalValue: PropTypes.string,
+    value: PropTypes.string.isRequired,
 }
-
+SkillNameInput.defaultProps = {
+    originalValue: "",
+}
 export default SkillNameInput;

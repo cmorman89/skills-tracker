@@ -1,8 +1,9 @@
-from flask import Blueprint, jsonify, request, Flask
+from flask import Blueprint, jsonify, request
 from ..models import Skill, db
 
 # Define the blueprint for skills
 skills_bp = Blueprint("skills", __name__, url_prefix="/api/v1/skills")
+
 
 @skills_bp.route("/", methods=["POST"])
 def create_skill():
@@ -38,18 +39,22 @@ def create_skill():
     try:
         db.session.add(new_skill)
         db.session.commit()
-        return jsonify({"success":f"You've added the new skill {str(new_skill.name).capitalize()}"}, 200)
+        return jsonify(
+            {
+                "success": f"You've added the new skill {str(new_skill.name).capitalize()}"
+            },
+            200,
+        )
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"An error occurred: {str(e)}"}), 400
-    
-    
-    
-    
+
+
 @skills_bp.route("/", methods=["GET"])
 def list_all_skills():
     """List all skills."""
     return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
+
 
 @skills_bp.route("/<int:id>", methods=["GET"])
 def list_skill_by_id(id):
@@ -60,6 +65,7 @@ def list_skill_by_id(id):
             return jsonify(skill.to_json()), 200
         return jsonify({"error": "Skill not found"}), 404
 
+
 @skills_bp.route("/name/<string:name>", methods=["GET"])
 def list_skill_by_name(name):
     """Get a skill by name."""
@@ -69,21 +75,22 @@ def list_skill_by_name(name):
             return jsonify(skill.to_json()), 200
         return jsonify({"error": "Skill not found"}), 404
 
+
 @skills_bp.route("/<int:id>", methods=["OPTIONS", "PUT"])
 def update_skill(id):
     if request.method == "OPTIONS":
         return "", 204
-    
+
     # Check if an id is provided
     if id:
         skill = get_skill(skill_id=id)
-        
+
         if skill:
             # Check if data is provided
             if not (data := request.json):
                 return jsonify({"error": "No data provided"}), 400
             # Check if the skill name is provided
-            if (name := data.get("name")):
+            if name := data.get("name"):
                 # Validate the skill name
                 name = validate_skill_name(name, skill.name)
                 # A tuple represents an error response
@@ -91,14 +98,14 @@ def update_skill(id):
                     return name
                 # Otherwise, update the skill name
                 skill.name = name
-                
+
             # Check if the description is provided
             if description := data.get("description"):
                 # Validate the skill description
                 description = validate_skill_description(description)
                 # Update the skill description
                 skill.description = description
-            
+
             # Commit the changes to the database
             try:
                 db.session.commit()
@@ -108,6 +115,7 @@ def update_skill(id):
                 return jsonify({"error": f"An error occurred: {str(e)}"}), 400
         return jsonify({"error": "Skill not found"}), 404
     return jsonify({"error": "Skill ID is required"}), 400
+
 
 def validate_skill_name(name, original_name=None):
     """Validate and standardize the skill name."""
@@ -131,6 +139,7 @@ def validate_skill_name(name, original_name=None):
     else:
         return jsonify({"error": "Skill name is required"}), 400
 
+
 def validate_skill_description(description):
     """Validate and standardize the skill description."""
     if description:
@@ -142,6 +151,7 @@ def validate_skill_description(description):
             description = None
         return description
     return None
+
 
 @skills_bp.route("/<int:id>", methods=["DELETE"])
 def delete_skill(id):
@@ -158,6 +168,7 @@ def delete_skill(id):
                 return jsonify({"error": f"An error occurred: {str(e)}"}), 400
         return jsonify({"error": "Skill not found"}), 404
     return jsonify({"error": "Skill ID is required"}), 400
+
 
 # @skills_bp.route("/<int:id>/all_children", methods=["GET"])
 # def list_all_children(id):
@@ -247,12 +258,12 @@ def delete_skill(id):
 #             return jsonify({"error": "Mastery level must be an integer"}), 400
 #     else:
 #         mastery = 1
-    
+
 #     # Add the new skill to the database
 #     skill = Skill(name=name, description=description, mastery=mastery)
 #     db.session.add(skill)
 #     db.session.commit()
-    
+
 #     # Get the new skill from the database to add parents
 #     skill = get_skill(skill_id=skill.id)
 #     # Add the skill to the root skill if no parents are provided

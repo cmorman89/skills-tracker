@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Input from "../../../../components/input/form/Input";
 import InputLabel from "../../../../components/input/form/InputLabel";
 import Button from "../../../../components/input/button/Button";
 import SkillNameInput from "./SkillNameInput";
