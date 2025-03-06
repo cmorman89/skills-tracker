@@ -24,6 +24,14 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Blueprint",
         "importPath": "flask",
         "description": "flask",
@@ -236,7 +244,34 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_skill_by_name(name):\n    \"\"\"Get a skill by name.\"\"\"\n    if name and name.strip():\n        skill = get_skill(skill_name=name.strip().lower())\n        if skill:\n            return jsonify(skill.to_json()), 200\n        return jsonify({\"error\": \"Skill not found\"}), 404\n@skills_bp.route(\"/<int:id>\", methods=[\"DELETE\"])\ndef delete_skill(id):\n    \"\"\"Delete a skill by ID\"\"\"",
+        "peekOfCode": "def list_skill_by_name(name):\n    \"\"\"Get a skill by name.\"\"\"\n    if name and name.strip():\n        skill = get_skill(skill_name=name.strip().lower())\n        if skill:\n            return jsonify(skill.to_json()), 200\n        return jsonify({\"error\": \"Skill not found\"}), 404\n@skills_bp.route(\"/<int:id>\", methods=[\"OPTIONS\", \"PUT\"])\ndef update_skill(id):\n    if request.method == \"OPTIONS\":",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "update_skill",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def update_skill(id):\n    if request.method == \"OPTIONS\":\n        return \"\", 204\n    # Check if an id is provided\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            # Check if data is provided\n            if not (data := request.json):\n                return jsonify({\"error\": \"No data provided\"}), 400",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "validate_skill_name",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def validate_skill_name(name, original_name=None):\n    \"\"\"Validate and standardize the skill name.\"\"\"\n    # Allow the new name to be the same as the original name\n    if original_name and name == original_name:\n        return name.strip().lower()\n    # If a name is provided\n    if name:\n        # Check if it is a string\n        if not isinstance(name, str):\n            return jsonify({\"error\": \"Skill name must be a string\"}), 400",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "validate_skill_description",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def validate_skill_description(description):\n    \"\"\"Validate and standardize the skill description.\"\"\"\n    if description:\n        if isinstance(description, str):\n            description = description.strip()\n            if description == \"\":\n                description = None\n        else:\n            description = None\n        return description",
         "detail": "app.routes.skills",
         "documentation": {}
     },

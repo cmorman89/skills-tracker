@@ -13,6 +13,7 @@ from config import Config
 db = SQLAlchemy()
 migrate = Migrate()
 
+
 def create_app():
     # Create Flask app
     app = Flask(__name__)
@@ -23,9 +24,16 @@ def create_app():
     migrate.init_app(app, db)
     # Register Blueprints
     from .routes import skills_bp
+
     app.register_blueprint(skills_bp, url_prefix="/api/v1/skills")
     from .routes import sources_bp
+
     app.register_blueprint(sources_bp, url_prefix="/api/v1/sources")
     # Enable CORS
-    CORS(app)
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": "*"}},
+        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    )
+
     return app

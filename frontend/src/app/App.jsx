@@ -3,7 +3,7 @@ import Sidebar from "../features/core/sidebar/components/Sidebar";
 import MainContent from "../features/core/main_content/components/MainContent";
 import MessageContent from "../features/core/message_content/components/MessageContent";
 import { useState } from "react";
-import AddSkillForm from "../features/skills/add_skill_form/components/AddSkillForm";
+import SkillForm from "../features/skills/skill_form/components/SkillForm";
 import SkillTable from "../features/skills/skill_table/components/SkillTable";
 
 
@@ -33,9 +33,9 @@ const App = () => {
                         setMessageVisible={setMessageVisible}
                     />
                     <Routes>
-                        <Route path="/skills/table" element={<MainContent pageTitle="Skills Table" innerComponent={<SkillTable createMessage={createMessage}/>} />} />
-                        <Route path="/skills/add" element={<MainContent pageTitle="Add a Skill" innerComponent={<AddSkillForm createMessage={createMessage} />} />} />
-                        <Route path="/skills/:skill_id/edit/" element={<MainContent pageTitle="Edit Skill" innerComponent={<AddSkillForm createMessage={createMessage} />} />} />
+                        <Route path="/skills/table" element={<MainContent pageTitle="Skills Table" innerComponent={<SkillTable createMessage={createMessage} />} />} />
+                        <Route path="/skills/add" element={<MainContent pageTitle="Add a Skill" innerComponent={<SkillForm createMessage={createMessage} />} />} />
+                        <Route path="/skills/:skill_id/edit/" element={<MainContent pageTitle="Edit Skill" innerComponent={<SkillForm createMessage={createMessage} />} />} />
                     </Routes>
                 </div>
             </div>

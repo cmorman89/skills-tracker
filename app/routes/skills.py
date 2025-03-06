@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Flask
 from ..models import Skill, db
 
 # Define the blueprint for skills
@@ -68,6 +68,80 @@ def list_skill_by_name(name):
         if skill:
             return jsonify(skill.to_json()), 200
         return jsonify({"error": "Skill not found"}), 404
+
+@skills_bp.route("/<int:id>", methods=["OPTIONS", "PUT"])
+def update_skill(id):
+    if request.method == "OPTIONS":
+        return "", 204
+    
+    # Check if an id is provided
+    if id:
+        skill = get_skill(skill_id=id)
+        
+        if skill:
+            # Check if data is provided
+            if not (data := request.json):
+                return jsonify({"error": "No data provided"}), 400
+            # Check if the skill name is provided
+            if (name := data.get("name")):
+                # Validate the skill name
+                name = validate_skill_name(name, skill.name)
+                # A tuple represents an error response
+                if isinstance(name, tuple):
+                    return name
+                # Otherwise, update the skill name
+                skill.name = name
+                
+            # Check if the description is provided
+            if description := data.get("description"):
+                # Validate the skill description
+                description = validate_skill_description(description)
+                # Update the skill description
+                skill.description = description
+            
+            # Commit the changes to the database
+            try:
+                db.session.commit()
+                return jsonify(skill.to_json()), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 400
+        return jsonify({"error": "Skill not found"}), 404
+    return jsonify({"error": "Skill ID is required"}), 400
+
+def validate_skill_name(name, original_name=None):
+    """Validate and standardize the skill name."""
+    # Allow the new name to be the same as the original name
+    if original_name and name == original_name:
+        return name.strip().lower()
+    # If a name is provided
+    if name:
+        # Check if it is a string
+        if not isinstance(name, str):
+            return jsonify({"error": "Skill name must be a string"}), 400
+        # Check if it is not empty
+        if not (name := name.strip().lower()):
+            return jsonify({"error": "Skill name cannot be empty"}), 400
+        # Check for duplicate skill name
+        if Skill.query.filter_by(name=name).first():
+            return jsonify({"error": "Skill name already exists"}), 400
+        # Return the name if it passes all checks
+        return name.strip().lower()
+    # Return an error if no name is provided
+    else:
+        return jsonify({"error": "Skill name is required"}), 400
+
+def validate_skill_description(description):
+    """Validate and standardize the skill description."""
+    if description:
+        if isinstance(description, str):
+            description = description.strip()
+            if description == "":
+                description = None
+        else:
+            description = None
+        return description
+    return None
 
 @skills_bp.route("/<int:id>", methods=["DELETE"])
 def delete_skill(id):

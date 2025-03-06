@@ -8,11 +8,11 @@ import axios from "axios";
 import TextArea from "../../../../components/input/form/TextArea";
 import { useParams } from "react-router-dom";
 
-const AddSkillForm = ({ createMessage }) => {
+const SkillForm = ({ createMessage }) => {
     // Get the skill_id from the URL params if it exists
     const { skill_id } = useParams();
-    
-    
+
+
     // Define the keys and initial values for the form data
     const initialFormData = {
         name: "",
@@ -65,7 +65,7 @@ const AddSkillForm = ({ createMessage }) => {
         e.preventDefault();
         const success = submitForm(formData);
         // Reset the form data if the form was submitted successfully
-        if (success) {
+        if (success && !isEditing) {
             resetFormData();
         }
     }
@@ -78,13 +78,14 @@ const AddSkillForm = ({ createMessage }) => {
     }
     // Submit the form data to the API
     const submitForm = async (formData) => {
-        const API_URL = skill_id ? `http://127.0.0.1:5000/api/v1/skills/${skill_id}/` : "http://127.0.0,1:5000/api/v1/skills/";
+        const API_URL = skill_id ? `http://127.0.0.1:5000/api/v1/skills/${skill_id}` : "http://127.0.0.1:5000/api/v1/skills/";
         const cachedFormData = { ...formData };
         try {
-            const response = await axios.post(API_URL, formData);
-            const responseData = response.data;
+            const response = isEditing ? await axios.put(API_URL, formData) : await axios.post(API_URL, formData);
+            const responseData = await response.data;
             if (response.status == 200) {
-                createMessage("Skill added successfully", "success");
+                const msg = isEditing ? "Skill updated successfully" : "Skill added successfully";
+                createMessage(msg, "success");
                 return true;
             } else {
                 createMessage(responseData.error, "error");
@@ -140,8 +141,8 @@ const AddSkillForm = ({ createMessage }) => {
     );
 }
 
-AddSkillForm.propTypes = {
+SkillForm.propTypes = {
     createMessage: PropTypes.func.isRequired,
 }
 
-export default AddSkillForm;
+export default SkillForm;
