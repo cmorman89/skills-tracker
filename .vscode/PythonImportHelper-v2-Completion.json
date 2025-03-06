@@ -218,7 +218,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])\n@skills_bp.route(\"/<int:id>\", methods=[\"GET\"])\ndef list_skill_by_id(id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            return jsonify(skill.to_json()), 200",
+        "peekOfCode": "def list_all_skills():\n    \"\"\"List all skills.\"\"\"\n    return jsonify([skill.to_json_with_relationships() for skill in get_skill() if skill.id != 1])\n@skills_bp.route(\"/<int:id>\", methods=[\"GET\"])\ndef list_skill_by_id(id):\n    \"\"\"Get a skill by ID.\"\"\"\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            return jsonify(skill.to_json()), 200",
         "detail": "app.routes.skills",
         "documentation": {}
     },
@@ -277,11 +277,38 @@
         "documentation": {}
     },
     {
+        "label": "list_parent_skills",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_parent_skills(id):\n    \"\"\"List all parent skills of a skill by ID\"\"\"\n    if id:\n        skill = get_skill(skill_id=id)\n        if skill:\n            parents = [parent.to_json() for parent in skill.parents if skill.id != 1] if skill.parents else []\n            return jsonify(parents), 200\n        return jsonify({\"error\": \"Skill not found\"}), 404\n    return jsonify({\"error\": \"Skill ID is required\"}), 400\n@skills_bp.route(\"/<int:id>/possible_parents\", methods=[\"GET\"])",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "list_available_parents",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_available_parents(id):\n    \"\"\"List all available parent skills of a skill by ID\"\"\"\n    # Make an array of all available parents\n    availableParents = [parent.id for parent in get_skill()]\n    # Sort the array\n    availableParents.sort()\n    # Track visited nodes\n    visited_nodes = set()\n    # Get the skill by ID\n    skill = get_skill(skill_id=id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "get_skill",
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
         "peekOfCode": "def get_skill(skill_id=None, skill_name=None):\n    \"\"\"Get all skills or a specific skill by ID or name.\"\"\"\n    # Return an error if both skill_id and skill_name are provided\n    if skill_id and skill_name:\n        return jsonify(\n            {\"error\": \"Please provide either a skill ID or a skill name, not both\"}\n        ), 400\n    # Get skill by ID if provided\n    elif skill_id:\n        return Skill.query.get(skill_id)",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "creates_cycle",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def creates_cycle(parent_skill, child_skill):\n    \"\"\"Check if adding a parent-child relationship creates a cycle.\"\"\"\n    # Track visited nodes\n    visited = set()\n    # Add the parent skill to the visited set to simulate the cycle check\n    visited.add(parent_skill.id)\n    def dfs(skill):\n        if skill.id in visited:\n            return True\n        visited.add(skill.id)",
         "detail": "app.routes.skills",
         "documentation": {}
     },

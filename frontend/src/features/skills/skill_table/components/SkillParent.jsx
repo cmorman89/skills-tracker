@@ -8,14 +8,14 @@ const SkillParent = ({ dummy, icon, onClick, text }) => {
                 items-center justify-center
                 p-3
                 rounded-full
-                border border-cyan-500
+                border border-fuchsia-400
                 bg-gradient-to-br
-                from-cyan-300 to-cyan-500
+                from-fuchsia-300 to-pink-300
                 ${dummy ? 'hover:cursor-default' : 'hover:cursor-pointer'}
                 shadow-md hover:shadow-xl
                 translate-y-0 hover:-translate-y-1
                 transition-transform duration-500 ease-in-out
-                text-cyan-950/80 text-sm font-bold
+                text-fuchsia-950/80 text-sm font-bold
             `}
             onClick={onClick}
         >

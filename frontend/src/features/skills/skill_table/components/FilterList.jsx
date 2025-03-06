@@ -9,10 +9,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
     const [filteredList, setFilteredList] = useState([list]);
 
     const filterList = (filterValue) => {
-        console.log(filterValue);
-        const new_list = list.filter((item) => item.name.toLowerCase().includes(filterValue.toLowerCase()));
-        console.log(new_list);
-        return new_list;
+        return list.filter((item) => item.name.toLowerCase().includes(filterValue.toLowerCase()));
     }
 
     useEffect(() => {

@@ -12,7 +12,6 @@ const SkillForm = ({ createMessage }) => {
     // Get the skill_id from the URL params if it exists
     const { skill_id } = useParams();
 
-
     // Define the keys and initial values for the form data
     const initialFormData = {
         name: "",
@@ -22,10 +21,10 @@ const SkillForm = ({ createMessage }) => {
         example: "",
         exampleList: [],
     }
+    // Define the state variables
     const [isEditing, setIsEditing] = useState(false);
     const [originalSkillData, setOriginalSkillData] = useState({});
     const [formData, setFormData] = useState({ ...initialFormData });
-    // Store the form data in the state
     // Fetch the skill data if we are editing a skill
     useEffect(() => {
         if (skill_id) {
@@ -48,6 +47,9 @@ const SkillForm = ({ createMessage }) => {
         }
     }, []);
 
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     // Form functions
     // Update a key/value pair
@@ -132,7 +134,9 @@ const SkillForm = ({ createMessage }) => {
                     <div className="divider"></div>
 
                     <SkillParentSelection
+                        name="parents"
                         onChange={updateFormData}
+                        skill_id={skill_id ? skill_id : null}
                         value={formData.parents}
                     />
 

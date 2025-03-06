@@ -53,7 +53,7 @@ def create_skill():
 @skills_bp.route("/", methods=["GET"])
 def list_all_skills():
     """List all skills."""
-    return jsonify([skill.to_json_with_relationships() for skill in get_skill()])
+    return jsonify([skill.to_json_with_relationships() for skill in get_skill() if skill.id != 1])
 
 
 @skills_bp.route("/<int:id>", methods=["GET"])
@@ -168,6 +168,65 @@ def delete_skill(id):
                 return jsonify({"error": f"An error occurred: {str(e)}"}), 400
         return jsonify({"error": "Skill not found"}), 404
     return jsonify({"error": "Skill ID is required"}), 400
+
+@skills_bp.route("/<int:id>/parents", methods=["GET"])
+def list_parent_skills(id):
+    """List all parent skills of a skill by ID"""
+    if id:
+        skill = get_skill(skill_id=id)
+        if skill:
+            parents = [parent.to_json() for parent in skill.parents if skill.id != 1] if skill.parents else []
+            return jsonify(parents), 200
+        return jsonify({"error": "Skill not found"}), 404
+    return jsonify({"error": "Skill ID is required"}), 400
+
+@skills_bp.route("/<int:id>/possible_parents", methods=["GET"])
+def list_available_parents(id):
+    """List all available parent skills of a skill by ID"""
+
+    # Make an array of all available parents
+    availableParents = [parent.id for parent in get_skill()]
+
+    # Sort the array
+    availableParents.sort()
+
+    # Track visited nodes
+    visited_nodes = set()
+
+    # Get the skill by ID
+    skill = get_skill(skill_id=id)
+
+    # Recursively visit all parents of the skill and remove them from the availableParents array
+    def remove_parents(skill):
+        visited_nodes.add(skill.id)
+        for parent in skill.parents:
+            if parent.id in availableParents:
+                availableParents.remove(parent.id)
+                remove_parents(parent)
+
+    # Recursively visit all children of the skill and remove them from the availableParents array
+    def remove_children(skill):
+        visited_nodes.add(skill.id)
+        for child in skill.children:
+            if child.id in availableParents:
+                availableParents.remove(child.id)
+                remove_children(child)
+
+    # Remove ineligible parents
+    if id in availableParents:
+        availableParents.remove(id)
+    remove_parents(skill)
+    remove_children(skill)
+
+    # Get the available parent skills
+    availParentSkills = []
+    for parent_id in availableParents:
+        if skill := get_skill(skill_id=parent_id):
+            availParentSkills.append(skill.to_json())
+
+    # Remove the root skill from the list of available parents
+    availParentSkills = [skill for skill in availParentSkills if skill["id"] != 1]
+    return jsonify(availParentSkills), 200
 
 
 # @skills_bp.route("/<int:id>/all_children", methods=["GET"])
@@ -371,53 +430,6 @@ def delete_skill(id):
 
 #     # If skill does not exist, return an error
 #     return jsonify({"error": "Skill not found"}), 404
-
-
-# @skills_bp.route("<int:skill_id>/available_parents", methods=["GET"])
-# def list_available_parents(skill_id):
-#     """List all available parent skills of a skill by ID"""
-
-#     # Make an array of all available parents
-#     availableParents = [parent.id for parent in get_skill()]
-
-#     # Sort the array
-#     availableParents.sort()
-
-#     # Track visited nodes
-#     visited_nodes = set()
-
-#     # Get the skill by ID
-#     skill = get_skill(skill_id=skill_id)
-
-#     # Recursively visit all parents of the skill and remove them from the availableParents array
-#     def remove_parents(skill):
-#         visited_nodes.add(skill.id)
-#         for parent in skill.parents:
-#             if parent.id in availableParents:
-#                 availableParents.remove(parent.id)
-#                 remove_parents(parent)
-
-#     # Recursively visit all children of the skill and remove them from the availableParents array
-#     def remove_children(skill):
-#         visited_nodes.add(skill.id)
-#         for child in skill.children:
-#             if child.id in availableParents:
-#                 availableParents.remove(child.id)
-#                 remove_children(child)
-
-#     # Remove ineligible parents
-#     if skill_id in availableParents:
-#         availableParents.remove(skill_id)
-#     remove_parents(skill)
-#     remove_children(skill)
-
-#     # Get the available parent skills
-#     availParentSkills = []
-#     for parent_id in availableParents:
-#         if skill := get_skill(skill_id=parent_id):
-#             availParentSkills.append(skill.to_json())
-
-#     return jsonify(availParentSkills), 200
 
 
 # @skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
@@ -655,22 +667,22 @@ def get_skill(skill_id=None, skill_name=None):
 #     return tree
 
 
-# def creates_cycle(parent_skill, child_skill):
-#     """Check if adding a parent-child relationship creates a cycle."""
+def creates_cycle(parent_skill, child_skill):
+    """Check if adding a parent-child relationship creates a cycle."""
 
-#     # Track visited nodes
-#     visited = set()
+    # Track visited nodes
+    visited = set()
 
-#     # Add the parent skill to the visited set to simulate the cycle check
-#     visited.add(parent_skill.id)
+    # Add the parent skill to the visited set to simulate the cycle check
+    visited.add(parent_skill.id)
 
-#     def dfs(skill):
-#         if skill.id in visited:
-#             return True
-#         visited.add(skill.id)
-#         for parent in skill.parents:
-#             if dfs(parent):
-#                 return True
-#         return False
+    def dfs(skill):
+        if skill.id in visited:
+            return True
+        visited.add(skill.id)
+        for parent in skill.parents:
+            if dfs(parent):
+                return True
+        return False
 
-#     return dfs(child_skill)
+    return dfs(child_skill)
