@@ -18,7 +18,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
     useEffect(() => {
         setFilteredList(filterList(filterValue));
     }
-    , [filterValue]);
+    , [filterValue, list]);
         
     return (
         <div>
@@ -46,6 +46,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
                         ))
                         :
                         <SkillParent
+                            dummy={true}
                             icon={faBan}
                             onClick={() => {}}
                             text="No items found."

@@ -1,10 +1,9 @@
-import { faBan, faFolder, faCircle, faCircleArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-const SkillParent = ({ icon, onClick, text }) => {
+const SkillParent = ({ dummy, icon, onClick, text }) => {
     return (
         <div
-            className="
+            className={`
                 flex
                 items-center justify-center
                 p-3
@@ -12,12 +11,12 @@ const SkillParent = ({ icon, onClick, text }) => {
                 border border-cyan-500
                 bg-gradient-to-br
                 from-cyan-300 to-cyan-500
-                hover:cursor-pointer
+                ${dummy ? 'hover:cursor-default' : 'hover:cursor-pointer'}
                 shadow-md hover:shadow-xl
                 translate-y-0 hover:-translate-y-1
                 transition-transform duration-500 ease-in-out
                 text-cyan-950/80 text-sm font-bold
-            "
+            `}
             onClick={onClick}
         >
             {
@@ -32,9 +31,12 @@ const SkillParent = ({ icon, onClick, text }) => {
 }
 
 SkillParent.propTypes = {
+    dummy: PropTypes.bool,
     icon: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired
 }
-
+SkillParent.defaultProps = {
+    dummy: false
+}
 export default SkillParent;

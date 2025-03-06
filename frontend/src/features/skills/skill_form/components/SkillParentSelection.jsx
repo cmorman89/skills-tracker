@@ -4,11 +4,43 @@ import FilterList from "../../skill_table/components/FilterList";
 import { useState } from "react";
 
 const skillParentSelection = ({ onChange, value }) => {
-    const dummyList = [{name: "one", "icon": {faCircle}}, {name: "two"}, {name: "three"}];
-    const [currentParents, setCurrentParents] = useState([...dummyList]);
-    const [possibleParents, setPossibleParents] = useState([]);
+    const dummyList = [
+        { name: "one" },
+        { name: "two" },
+        { name: "three" },
+        { name: "four" },
+        { name: "five" },
+        { name: "six" },
+        { name: "seven" },
+        { name: "eight" },
+        { name: "nine" },
+        { name: "ten" },
+        { name: "eleven" },
+        { name: "twelve" },
+        { name: "thirteen" },
+        { name: "fourteen" },
+        { name: "fifteen" },
+        { name: "sixteen" },
+        { name: "seventeen" },
+        { name: "eighteen" },
+        { name: "nineteen" },
+        { name: "twenty" },
+    ];
+    const [currentParents, setCurrentParents] = useState([]);
+    const [possibleParents, setPossibleParents] = useState([...dummyList]);
     const [currentParentFilter, setCurrentParentFilter] = useState("");
     const [possibleParentFilter, setPossibleParentFilter] = useState("");
+
+    const handleAddParent = (parent) => {
+        setCurrentParents((prevPossibleParents) => [...prevPossibleParents, parent]);
+        setPossibleParents((prevCurrentParents) => prevCurrentParents.filter((item) => item.name !== parent.name));
+    };
+
+
+    const handleRemoveParent = (parent) => {
+        setPossibleParents((prevPossibleParents) => [...prevPossibleParents, parent]);
+        setCurrentParents((prevCurrentParents) => prevCurrentParents.filter((item) => item.name !== parent.name));
+    };
 
     return (
         <div className="flex flex-col">
@@ -17,9 +49,10 @@ const skillParentSelection = ({ onChange, value }) => {
                 name="currentParents"
             />
             <FilterList 
-                list={currentParents}
-                onChange={setCurrentParentFilter}
-                filterValue={currentParentFilter}
+                list={possibleParents}
+                onChange={setPossibleParentFilter}
+                onClick={handleAddParent}
+                filterValue={possibleParentFilter}
             />
 
             <InputLabel
@@ -27,9 +60,10 @@ const skillParentSelection = ({ onChange, value }) => {
                 name="possibleParents"
             />
             <FilterList 
-                list={possibleParents}
-                onChange={setPossibleParentFilter}
-                filterValue={possibleParentFilter}
+                list={currentParents}
+                onChange={setCurrentParentFilter}
+                onClick={handleRemoveParent}
+                filterValue={currentParentFilter}
             />
         </div>
     )
