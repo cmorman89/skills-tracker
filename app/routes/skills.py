@@ -489,8 +489,6 @@ def add_parent_skill(skill_id):
     # Validate if child skill exists
     if not (child := get_skill(skill_id=skill_id)):
         return jsonify({"error": "Child skill not found"}), 404
-
-    existing
     # Validate the parent skill ID
     parents = request.json.get("parent_id")
 

@@ -1,16 +1,17 @@
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import InputLabel from "../../../../components/input/form/InputLabel";
 import FilterList from "../../skill_table/components/FilterList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
-const skillParentSelection = ({ name, onChange, skill_id, value }) => {
+const SkillParentSelection = ({ name, onChange, skill_id }) => {
 
     const [currentParents, setCurrentParents] = useState([]);
     const [possibleParents, setPossibleParents] = useState([]);
     const [currentParentFilter, setCurrentParentFilter] = useState("");
     const [possibleParentFilter, setPossibleParentFilter] = useState("");
     
+    // Fetch the current and possible parents for the skill
     useEffect(() => {
         const fetchCurrentParents = async () => {
             if (skill_id) {
@@ -32,8 +33,10 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
         const fetchAvailableParents = async () => {
             try {
                 const response = skill_id ?
+                    // Get the possible parents for the skill if we are editing
                     await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/possible_parents`)
                     :
+                    // Or get all the skills if we are creating a new skill
                     await axios.get(`http://127.0.0.1:5000/api/v1/skills/`);
                 
                 const responseData = response.data;
@@ -53,10 +56,12 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
 
     }, [skill_id]);
 
+    // Update the form data when the current parents change
     useEffect(() => {
         onChange(name, currentParents);
     }, [currentParents]);
 
+    // Add a parent to the current parents
     const handleAddParent = (parent) => {
         setCurrentParents((prevCurrentParents) => 
             [...prevCurrentParents, parent].sort((a, b) => a.name.localeCompare(b.name))
@@ -66,6 +71,7 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
         );
     };
 
+    // Remove a parent from the current parents
     const handleRemoveParent = (parent) => {
         setPossibleParents((prevPossibleParents) => 
             [...prevPossibleParents, parent].sort((a, b) => a.name.localeCompare(b.name))
@@ -103,4 +109,14 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
     )
 }  
 
-export default skillParentSelection;
+SkillParentSelection.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    skill_id: PropTypes.number
+}
+
+SkillParentSelection.defaultProps = {
+    skill_id: null
+}
+
+export default SkillParentSelection;
