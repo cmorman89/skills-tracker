@@ -1,7 +1,8 @@
-import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faCaretDown, faCaretUp, faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faHexagonNodes, faHome, faList, faPlus, faTableList } from "@fortawesome/free-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
+import MenuGroup from "./MenuGroup";
 
 const Sidebar = () => {
 
@@ -29,17 +30,25 @@ const Sidebar = () => {
                 <Logo isCollapsed={isCollapsed} isFullyCollapsed={isFullyCollapsed} />
             </div>
             <div className="flex flex-col flex-grow bg-black/25">
-
+                {/* Home */}
                 <MenuItem icon={faHome} label="Home" url="/" collapsed={isCollapsed} />
-                <MenuItem icon={faList} label="Skills" url="/skills/table" collapsed={isCollapsed} />
+                {/* Skills */}
+                <MenuGroup isCollapsed={isCollapsed} isFullyCollapsed={isFullyCollapsed}
+                    parent={<MenuItem icon={faList} label="Skills" url="/skills/table" collapsed={isCollapsed} />}
+                >
+                    <MenuItem icon={faTableList} label="View Table" level={1} url="/skills/table" collapsed={isCollapsed} />
+                    <MenuItem icon={faHexagonNodes} label="View Tree" level={1} url="/skills/tree" collapsed={isCollapsed} />
+                    <MenuItem icon={faPlus} label="Add New Skill" level={1} url="/skills/add" collapsed={isCollapsed} />
+                </MenuGroup>
+                {/* Sources */}
                 <MenuItem icon={faBuildingCircleArrowRight} label="Sources" url="/" collapsed={isCollapsed} />
                 <div
                     className={`flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${isCollapsed ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"
                         } origin-top ${isFullyCollapsed ? "h-0" : "h-auto"}`}
                 >
-                    <MenuItem icon={faPlus} label="Add Skill" level={1} url="/skills/add" collapsed={isCollapsed} />
                     <MenuItem icon={faPlus} label="Add Source" level={1}  url="/sources/add" collapsed={isCollapsed} />
                 </div>
+            {/* Bottom Menu */}
             <div className='flex flex-col mt-auto '>
                 <MenuItem icon={isCollapsed ? faAnglesRight : faAnglesLeft} label="Shrink Menu" collapsed={isCollapsed} onClick={() => setIsCollapsed(!isCollapsed)} />
             </div>
