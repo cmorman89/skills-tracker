@@ -39,6 +39,16 @@ def create_skill():
     try:
         db.session.add(new_skill)
         db.session.commit()
+        # Check if parents are provided
+        # Get the new skill from the database to add parents
+        skill = get_skill(skill_id=new_skill.id)
+        # Add the skill to the root skill if no parents are provided
+        if parents := data.get("parents"):
+            for parent_id in parents:
+                add_parent_to_child(skill, parent_id)
+        else:
+            root_skill = get_skill(skill_id=1)
+            parents = [root_skill]
         return jsonify(
             {
                 "success": f"You've added the new skill {str(new_skill.name).capitalize()}"
@@ -53,7 +63,9 @@ def create_skill():
 @skills_bp.route("/", methods=["GET"])
 def list_all_skills():
     """List all skills."""
-    return jsonify([skill.to_json_with_relationships() for skill in get_skill() if skill.id != 1])
+    return jsonify(
+        [skill.to_json_with_relationships() for skill in get_skill() if skill.id != 1]
+    )
 
 
 @skills_bp.route("/<int:id>", methods=["GET"])
@@ -106,6 +118,30 @@ def update_skill(id):
                 # Update the skill description
                 skill.description = description
 
+            # Check if parents are provided
+            if request_parents := data.get("parents"):
+                # Get the current parents
+                current_parents = skill.parents
+                # If no current parents, add all parents in the request
+                if not current_parents:
+                    for parent in request_parents:
+                        print(f"Adding parent {parent['id']}")
+                        add_parent_to_child(skill, parent["id"])
+                else:
+                    # Go through each current parent and remove it if not in the request
+                    for parent in current_parents:
+                        if parent not in request_parents:
+                            skill.parents.remove(parent)
+                    # Go through each parent in the request and add it if not already a parent
+                    for parent in request_parents:
+                        if parent not in current_parents:
+                            # Safety check to prevent cyclic relationships
+                            add_parent_to_child(skill, parent["id"])
+                            
+            # If no parents are provided, add the root skill as the parent
+            else:
+                add_parent_to_child(skill, 1)
+                
             # Commit the changes to the database
             try:
                 db.session.commit()
@@ -169,16 +205,22 @@ def delete_skill(id):
         return jsonify({"error": "Skill not found"}), 404
     return jsonify({"error": "Skill ID is required"}), 400
 
+
 @skills_bp.route("/<int:id>/parents", methods=["GET"])
 def list_parent_skills(id):
     """List all parent skills of a skill by ID"""
     if id:
         skill = get_skill(skill_id=id)
         if skill:
-            parents = [parent.to_json() for parent in skill.parents if skill.id != 1] if skill.parents else []
+            parents = (
+                [parent.to_json() for parent in skill.parents if skill.id != 1]
+                if skill.parents
+                else []
+            )
             return jsonify(parents), 200
         return jsonify({"error": "Skill not found"}), 404
     return jsonify({"error": "Skill ID is required"}), 400
+
 
 @skills_bp.route("/<int:id>/possible_parents", methods=["GET"])
 def list_available_parents(id):
@@ -432,56 +474,57 @@ def list_available_parents(id):
 #     return jsonify({"error": "Skill not found"}), 404
 
 
-# @skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
-# def add_parent_skill(skill_id):
-#     """Add a parent skill to a skill by ID"""
+@skills_bp.route("/<int:skill_id>/parents", methods=["POST"])
+def add_parent_skill(skill_id):
+    """Add a parent skill to a skill by ID"""
 
-#     # Validate if child skill exists
-#     if not (child := get_skill(skill_id=skill_id)):
-#         return jsonify({"error": "Child skill not found"}), 404
+    # Validate if child skill exists
+    if not (child := get_skill(skill_id=skill_id)):
+        return jsonify({"error": "Child skill not found"}), 404
 
-#     # Validate the parent skill ID
-#     parents = request.json.get("parent_id")
+    existing
+    # Validate the parent skill ID
+    parents = request.json.get("parent_id")
 
-#     if isinstance(parents, list):
-#         for parent in parents:
-#             add_parent_to_child(child, parent)
-#     else:
-#         add_parent_to_child(child, parents)
+    if isinstance(parents, list):
+        for parent in parents:
+            add_parent_to_child(child, parent)
+    else:
+        add_parent_to_child(child, parents)
 
-#     return jsonify({"message": "Parent skill added to list successfully"}), 200
+    return jsonify({"message": "Parent skill added to list successfully"}), 200
 
 
-# def add_parent_to_child(child, parent_id):
-#     try:
-#         if isinstance(parent_id, dict):
-#             parent_id = parent_id.get("id")
-#         else:
-#             parent_id = int(parent_id)
-#         if parent_id <= 0:
-#             raise ValueError
-#     except ValueError:
-#         return jsonify({"error": "Invalid parent ID"}), 400
+def add_parent_to_child(child, parent_id):
+    try:
+        if isinstance(parent_id, dict):
+            parent_id = parent_id.get("id")
+        else:
+            parent_id = int(parent_id)
+        if parent_id <= 0:
+            raise ValueError
+    except ValueError:
+        return jsonify({"error": "Invalid parent ID"}), 400
 
-#     # Prevent self-referencing parent-child relationship
-#     if parent_id == child.id:
-#         return jsonify({"error": "Skill cannot be its own parent"}), 400
+    # Prevent self-referencing parent-child relationship
+    if parent_id == child.id:
+        return jsonify({"error": "Skill cannot be its own parent"}), 400
 
-#     # Check if the parent skill exists
-#     if not (parent := get_skill(skill_id=parent_id)):
-#         return jsonify({"error": "Parent skill not found"}), 404
+    # Check if the parent skill exists
+    if not (parent := get_skill(skill_id=parent_id)):
+        return jsonify({"error": "Parent skill not found"}), 404
 
-#     # Check if the parent skill is already a parent of the child skill
-#     if parent in child.parents:
-#         return jsonify({"error": "Parent skill already exists in list"}), 400
+    # Check if the parent skill is already a parent of the child skill
+    if parent in child.parents:
+        return jsonify({"error": "Parent skill already exists in list"}), 400
 
-#     # Prevent cyclic relationships
-#     if creates_cycle(parent_skill=parent, child_skill=child):
-#         return jsonify({"error": "Adding this parent skill creates a cycle"}), 400
+    # Prevent cyclic relationships
+    if creates_cycle(parent_skill=parent, child_skill=child):
+        return jsonify({"error": "Adding this parent skill creates a cycle"}), 400
 
-#     # Add the parent skill to the child skill
-#     child.parents.append(parent)
-#     db.session.commit()
+    # Add the parent skill to the child skill
+    child.parents.append(parent)
+    db.session.commit()
 
 
 # @skills_bp.route("/<int:skill_id>/parents", methods=["DELETE"])

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SkillActionButton from "./SkillActionButton";
+import SkillParent from "./SkillParent";
 
 const SkillTable = ({ createMessage }) => {
     const [skillList, setSkillList] = useState([]);
@@ -58,6 +59,7 @@ const SkillTable = ({ createMessage }) => {
                         <th className="px-4 py-2 text-left">ID</th>
                         <th className="px-4 py-2 text-left">Skill Name</th>
                         <th className="px-4 py-2 text-left">Description</th>
+                        <th className="px-4 py-2 text-center">Parents</th>
                         <th className="px-4 py-2 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -68,6 +70,9 @@ const SkillTable = ({ createMessage }) => {
                                 <td className="px-4 py-6">{item.id}</td>
                                 <td className="px-4 py-6">{item.name.toUpperCase()}</td>
                                 <td className="px-4 py-6">{item.description}</td>
+                                <td className="px-4 py-6 text-center">
+                                    {item.parents.map((parent, i) => (<SkillParent key={i} text={parent.name} />))}
+                                </td>
                                 <td className="px-4 py-6 text-right">
                                     <div className="flex justify-end gap-4 text-2xl">
                                         <SkillActionButton
