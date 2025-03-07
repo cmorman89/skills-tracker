@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const MainContent = ({ innerComponent, pageTitle }) => {
+const MainContent = ({ children, pageTitle }) => {
 
 
     return (
@@ -9,7 +9,7 @@ const MainContent = ({ innerComponent, pageTitle }) => {
             <h1 className="pageTitle mb-4">{pageTitle}</h1>
             {
                 <div className="mb-4">
-                    {innerComponent}
+                    {children}
                 </div>
             }
         </div >
@@ -17,8 +17,8 @@ const MainContent = ({ innerComponent, pageTitle }) => {
 }
 
 MainContent.propTypes = {
+    children: PropTypes.node.isRequired,
     pageTitle: PropTypes.string,
-    innerComponent: PropTypes.object.isRequired,
 }
 MainContent.defaultProps = {
     pageTitle: "Page Title",

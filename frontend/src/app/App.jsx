@@ -5,6 +5,7 @@ import MessageContent from "../features/core/message_content/components/MessageC
 import { useState } from "react";
 import SkillForm from "../features/skills/skill_form/components/SkillForm";
 import SkillTable from "../features/skills/skill_table/components/SkillTable";
+import SkillTree from "../features/skills/skill_tree/components/SkillTree";
 
 
 const App = () => {
@@ -33,9 +34,26 @@ const App = () => {
                         setMessageVisible={setMessageVisible}
                     />
                     <Routes>
-                        <Route path="/skills/table" element={<MainContent pageTitle="Skills Table" innerComponent={<SkillTable createMessage={createMessage} />} />} />
-                        <Route path="/skills/add" element={<MainContent pageTitle="Add a Skill" innerComponent={<SkillForm createMessage={createMessage} />} />} />
-                        <Route path="/skills/:skill_id/edit/" element={<MainContent pageTitle="Edit Skill" innerComponent={<SkillForm createMessage={createMessage} />} />} />
+                        <Route path="/skills/table" element={
+                            <MainContent pageTitle="Skills Table">
+                                <SkillTable createMessage={createMessage} />
+                            </MainContent>
+                        } />
+                        <Route path="/skills/tree" element={
+                            <MainContent pageTitle="Skills Tree">
+                                <SkillTree createMessage={createMessage} />
+                            </MainContent>
+                        } />
+                        <Route path="/skills/add" element={
+                            <MainContent pageTitle="Add a Skill">
+                                <SkillForm createMessage={createMessage} />
+                            </MainContent>
+                        } />
+                        <Route path="/skills/:skill_id/edit/" element={
+                            <MainContent pageTitle="Edit Skill">
+                                <SkillForm createMessage={createMessage} />
+                            </MainContent>
+                        } />
                     </Routes>
                 </div>
             </div>
