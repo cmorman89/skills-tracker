@@ -18,7 +18,8 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
                     const response = await axios.get(`http://127.0.0.1:5000/api/v1/skills/${skill_id}/parents`);
                     const responseData = response.data;
                     if (response.status === 200) {
-                        setCurrentParents(responseData);
+                        // Remove root skill from the list of possible parents
+                        setCurrentParents(responseData.filter((item) => item.id !== 1));
                     } else {
                         console.log(responseData.error);
                     }
@@ -37,7 +38,8 @@ const skillParentSelection = ({ name, onChange, skill_id, value }) => {
                 
                 const responseData = response.data;
                 if (response.status === 200) {
-                    setPossibleParents(responseData);
+                    // Remove the root skill from the list of possible parents
+                    setPossibleParents(responseData.filter((item) => item.id !== 1));
                 } else {
                     console.log(responseData.error);
                 }

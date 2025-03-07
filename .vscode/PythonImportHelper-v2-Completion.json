@@ -313,6 +313,15 @@
         "documentation": {}
     },
     {
+        "label": "remove_parent_from_child",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def remove_parent_from_child(child, parent_id):\n    try:\n        if isinstance(parent_id, dict):\n            parent_id = parent_id.get(\"id\")\n        else:\n            parent_id = int(parent_id)\n        if parent_id <= 0:\n            raise ValueError\n    except ValueError:\n        return jsonify({\"error\": \"Invalid parent ID\"}), 400",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "get_skill",
         "kind": 2,
         "importPath": "app.routes.skills",

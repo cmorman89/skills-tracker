@@ -47,10 +47,6 @@ const SkillForm = ({ createMessage }) => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
-
     // Form functions
     // Update a key/value pair
     const updateFormData = (key, value) => {
