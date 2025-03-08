@@ -19,6 +19,9 @@ const App = () => {
             setMessage(message);
             setMessageType(type);
             setMessageVisible(true);
+            setTimeout(() => {
+                setMessageVisible(false);
+            }, 3000);
         }
     }
 
