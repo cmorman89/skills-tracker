@@ -2,16 +2,17 @@ import PropTypes from "prop-types";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SkillNode from "./SkillNode";
+import { useNavigate } from "react-router-dom";
 
 
 const SkillTreeManager = ({ skillList, handleDelete }) => {
+    const navigate = useNavigate();
     if (!skillList) return null;
     const root_node = skillList?.root || { name: "Unknown" };
     const child_nodes = skillList?.children || [];
     const toUpperFirst = (s) => {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
-
     return (
         <div className="flex flex-col">
             {/* Root Node */}
@@ -46,6 +47,7 @@ const SkillTreeManager = ({ skillList, handleDelete }) => {
                                 <div className="flex flex-grow items-center">
                                     <SkillNode
                                         text={toUpperFirst(skill.root.name)}
+                                        onClick={() => { navigate(`/skills/${skill.root.id}/edit`) }}
                                     />
                                     <a href="#" onClick={() => handleDelete(skill.root.id)}>
                                         <FontAwesomeIcon

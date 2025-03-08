@@ -65,7 +65,12 @@ const SkillTable = ({ createMessage }) => {
                     {loading ? <tr><td colSpan={4}>Loading...</td></tr> :
                         skillList.map((item, i) => (
                             <tr key={i} className="border-t border-pink-600 bg-transparent hover:bg-pink-400/50 ease-in-out duration-300 my-12 py-12">
-                                <td className="px-4 py-6 flex"><SkillNode text={item.name.toUpperCase()} /></td>
+                                <td className="px-4 py-6 flex">
+                                    <SkillNode
+                                        text={item.name.toUpperCase()} 
+                                        onClick={() => { navigate(`/skills/${item.id}/edit`) }}
+                                        />
+                                </td>
                                 <td className="px-4 py-6">{item.description}</td>
                                 <td className="px-4 py-6 text-center">
                                     <ul className="list-disc list-inside">

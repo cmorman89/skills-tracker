@@ -1,4 +1,4 @@
-import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faHexagonNodes, faHome, faList, faPlus, faTableList } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesLeft, faAnglesRight, faBuildingCircleArrowRight, faChartDiagram, faHome, faList, faPlus, faTableList } from "@fortawesome/free-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     parent={<MenuItem icon={faList} label="Skills" url="/skills/table" collapsed={isCollapsed} />}
                 >
                     <MenuItem icon={faTableList} label="View Table" level={1} url="/skills/table" collapsed={isCollapsed} />
-                    <MenuItem icon={faHexagonNodes} label="View Tree" level={1} url="/skills/tree" collapsed={isCollapsed} />
+                    <MenuItem icon={faChartDiagram} label="View Tree" level={1} url="/skills/tree" collapsed={isCollapsed} />
                     <MenuItem icon={faPlus} label="Add New Skill" level={1} url="/skills/add" collapsed={isCollapsed} />
                 </MenuGroup>
                 {/* Sources */}

@@ -1,6 +1,5 @@
 import Input from "../../../../components/input/form/Input";
 import PropTypes from "prop-types";
-import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import SkillNode from "../../skill_tree/components/SkillNode";
 
@@ -44,7 +43,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
                         :
                         <SkillNode
                             dummy={true}
-                            icon={faBan}
+                            icon={'faBan'}
                             onClick={() => {}}
                             text="No items found."
                         />
