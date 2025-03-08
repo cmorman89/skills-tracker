@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SkillActionButton from "./SkillActionButton";
 import SkillParent from "./SkillParent";
+import SkillNode from "../../skill_tree/components/SkillNode";
 
 const SkillTable = ({ createMessage }) => {
     const [skillList, setSkillList] = useState([]);
@@ -55,7 +56,6 @@ const SkillTable = ({ createMessage }) => {
             <table className="table-auto w-full">
                 <thead>
                     <tr>
-                        <th className="px-4 py-2 text-left">ID</th>
                         <th className="px-4 py-2 text-left">Skill Name</th>
                         <th className="px-4 py-2 text-left">Description</th>
                         <th className="px-4 py-2 text-center">Parents</th>
@@ -66,13 +66,15 @@ const SkillTable = ({ createMessage }) => {
                     {loading ? <tr><td colSpan={4}>Loading...</td></tr> :
                         skillList.map((item, i) => (
                             <tr key={i} className="border-t border-pink-600 bg-transparent hover:bg-pink-400/50 ease-in-out duration-300 my-12 py-12">
-                                <td className="px-4 py-6">{item.id}</td>
-                                <td className="px-4 py-6">{item.name.toUpperCase()}</td>
+                                <td className="px-4 py-6 flex"><SkillNode text={item.name.toUpperCase()} /></td>
                                 <td className="px-4 py-6">{item.description}</td>
                                 <td className="px-4 py-6 text-center">
-                                    {item.parents.map((parent, i) => (<SkillParent key={i} text={parent.name} />))}
+                                    <ul className="list-disc list-inside">
+                                    {item.parents.map((parent, i) => (
+                                        <li key={i}>{parent.name} </li>))}
+                                    </ul>
                                 </td>
-                                <td className="px-4 py-6 text-right">
+                                <td className="px-4 py-6 text-right list">
                                     <div className="flex justify-end gap-4 text-2xl">
                                         <SkillActionButton
                                             icon={faPencil}
