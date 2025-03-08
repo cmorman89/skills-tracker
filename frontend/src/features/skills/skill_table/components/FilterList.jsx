@@ -1,8 +1,8 @@
 import Input from "../../../../components/input/form/Input";
 import PropTypes from "prop-types";
-import SkillParent from "./SkillParent";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import SkillNode from "../../skill_tree/components/SkillNode";
 
 const FilterList = ({ list, onChange, onClick, filterValue }) => {
     
@@ -34,7 +34,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
                 {
                     (Array.isArray(filteredList) && filteredList.length > 0) ? 
                         filteredList.map((item, i) => (
-                            <SkillParent
+                            <SkillNode
                                 key={i}
                                 icon={item.icon}
                                 onClick={() => onClick(item)}
@@ -42,7 +42,7 @@ const FilterList = ({ list, onChange, onClick, filterValue }) => {
                                 />
                         ))
                         :
-                        <SkillParent
+                        <SkillNode
                             dummy={true}
                             icon={faBan}
                             onClick={() => {}}

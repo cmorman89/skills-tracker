@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SkillActionButton from "./SkillActionButton";
-import SkillParent from "./SkillParent";
 import SkillNode from "../../skill_tree/components/SkillNode";
 
 const SkillTable = ({ createMessage }) => {

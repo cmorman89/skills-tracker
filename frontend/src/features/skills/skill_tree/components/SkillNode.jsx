@@ -2,13 +2,18 @@ import { faChessKing } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
-const SkillNode = ({ text }) => {
+const SkillNode = ({ category, onClick, text }) => {
+
+    const toUpperFirst = (s) => {
+        if (!s) return "";
+        if (typeof s !== "string") return s;
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
     return (
         <div
-            className="
-                flex
-                m-2
-                "
+            className="flex m-2 cursor-pointer"
+            onClick={onClick}
         >
             <div
                 className="
@@ -33,9 +38,11 @@ const SkillNode = ({ text }) => {
                 </div>
                 <div className="flex flex-col">
                     <div>
-                        {text}
+                        {toUpperFirst(text)}
                     </div>
-                    <div className="font-normal text-sm text-pink-800/70">Category</div>
+                    <div className="font-normal text-xs text-pink-800/60 italic">
+                        {category ? toUpperFirst(category) : "No Category"}
+                    </div>
                 </div>
             </div>
         </div>
