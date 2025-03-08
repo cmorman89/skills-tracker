@@ -295,6 +295,24 @@
         "documentation": {}
     },
     {
+        "label": "list_all_children",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def list_all_children(id):\n    skill = get_skill(skill_id=id)  # Fetch the root skill from the database\n    if not skill:\n        return {\"error\": \"Skill not found\"}, 404\n    skill_tree = build_skill_tree(skill)\n    return jsonify(skill_tree)\ndef build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
+        "label": "build_skill_tree",
+        "kind": 2,
+        "importPath": "app.routes.skills",
+        "description": "app.routes.skills",
+        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
+        "detail": "app.routes.skills",
+        "documentation": {}
+    },
+    {
         "label": "add_parent_skill",
         "kind": 2,
         "importPath": "app.routes.skills",
