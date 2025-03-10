@@ -6,6 +6,7 @@ import { useState } from "react";
 import SkillForm from "../features/skills/skill_form/components/SkillForm";
 import SkillTable from "../features/skills/skill_table/components/SkillTable";
 import SkillTree from "../features/skills/skill_tree/components/SkillTree";
+import LandingContent from "../features/landing/LandingContent";
 
 
 const App = () => {
@@ -37,6 +38,11 @@ const App = () => {
                         setMessageVisible={setMessageVisible}
                     />
                     <Routes>
+                        <Route path="/" element={
+                            <MainContent pageTitle="Landing Page">
+                                <LandingContent createMessage={createMessage} />
+                            </MainContent>
+                        } />
                         <Route path="/skills/table" element={
                             <MainContent pageTitle="Skills Table">
                                 <SkillTable createMessage={createMessage} />

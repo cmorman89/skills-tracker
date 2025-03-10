@@ -9,7 +9,7 @@ const Input = ({ autoFocus = false, inErrorState, id, name, onChange, placeholde
                 aria-haspopup='false'
                 autoFocus={autoFocus}
                 className={`
-                    ${inErrorState ? 'error-gradient' : 'bg-neutral-100'}
+                    ${inErrorState ? 'gradient-error' : 'bg-neutral-100'}
                     ring ring-pink-900 focus:ring-2 focus:ring-pink-600 outline-none
                     ${inErrorState ? 'text-error italic' : 'text-neutral-800'}
                     text-neutral-800 placeholder-neutral-400

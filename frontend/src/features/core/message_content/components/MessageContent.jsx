@@ -16,13 +16,13 @@ const MessageContent = ({ message, setMessageVisible, type, visible }) => {
                 bg-gradient-to-r
                 ${visible ? 'h-16 py-2 border opacity-100 my-4' : 'h-0 py-0 border-0 opacity-0 my-0'} 
                 ${type === 'info' ?
-                    'info-gradient border-blue-700 text-blue-900'
+                    'gradient-info border-blue-700 text-blue-900'
                     : type === 'error' ?
-                        'error-gradient border-red-700 text-red-900'
+                        'gradient-error border-red-700 text-red-900'
                         : type === 'success' ?
-                            'success-gradient border-green-700 text-green-900'
+                            'gradient-success border-green-700 text-green-900'
                             :
-                            'neutral-gradient border-blue-700 text-blue-900'
+                            'gradient-disabled border-blue-700 text-blue-900'
                 }
                 `}
         >
