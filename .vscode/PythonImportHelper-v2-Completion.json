@@ -88,6 +88,14 @@
         "documentation": {}
     },
     {
+        "label": "Category",
+        "importPath": "app.models",
+        "description": "app.models",
+        "isExtraImport": true,
+        "detail": "app.models",
+        "documentation": {}
+    },
+    {
         "label": "db",
         "importPath": "app.models",
         "description": "app.models",
@@ -452,25 +460,16 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    # Many-to-many relationship with keywords",
+        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    category_id = db.Column(db.Integer, db.ForeignKey(\"categories.id\"), nullable=True)",
         "detail": "app.models",
         "documentation": {}
     },
     {
-        "label": "Keyword",
+        "label": "Category",
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Keyword(db.Model, BaseModelMixin):\n    \"\"\"Database model for a keyword.\"\"\"\n    __tablename__ = \"keywords\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\nclass SkillKeyword(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between skills and keywords.\"\"\"\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)",
-        "detail": "app.models",
-        "documentation": {}
-    },
-    {
-        "label": "SkillKeyword",
-        "kind": 6,
-        "importPath": "app.models",
-        "description": "app.models",
-        "peekOfCode": "class SkillKeyword(db.Model, BaseModelMixin):\n    \"\"\"Association table for the many-to-many relationship between skills and keywords.\"\"\"\n    __tablename__ = \"skill_keyword\"\n    skill_id = db.Column(db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True)\n    keyword_id = db.Column(db.Integer, db.ForeignKey(\"keywords.id\"), primary_key=True)\nclass SkillRelationship(db.Model, BaseModelMixin):\n    \"\"\"Association table for the self-referential many-to-many relationship between skills.\"\"\"\n    __tablename__ = \"skill_relationship\"\n    parent_skill_id = db.Column(\n        db.Integer, db.ForeignKey(\"skills.id\"), primary_key=True",
+        "peekOfCode": "class Category(db.Model, BaseModelMixin):\n    \"\"\"Database model for a keyword.\"\"\"\n    __tablename__ = \"categories\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    # One-to-Many relationship with Skills\n    skills = db.relationship(\n        \"Skill\", back_populates=\"category\", cascade=\"all, delete-orphan\"",
         "detail": "app.models",
         "documentation": {}
     },
@@ -723,6 +722,15 @@
         "importPath": "setup",
         "description": "setup",
         "peekOfCode": "def add_source_types(session):\n    \"\"\"Adds source types to the database.\"\"\"\n    print(\"Adding skill types...\")\n    try:\n        skill_types = [\n            SourceType(\n                name=\"Work\",\n                description=\"Any professional source such as a job or internship.\",\n            ),\n            SourceType(",
+        "detail": "setup",
+        "documentation": {}
+    },
+    {
+        "label": "add_skill_categories",
+        "kind": 2,
+        "importPath": "setup",
+        "description": "setup",
+        "peekOfCode": "def add_skill_categories(session):\n    \"\"\"Adds skill categories to the database.\"\"\"\n    print(\"Adding skill categories...\")\n    try:\n        skill_categories = [\n            Category(\n                name=\"Software Development\",\n                description=\"Programming languages, application development, and coding best practices.\",\n                icon=\"faCode\",\n            ),",
         "detail": "setup",
         "documentation": {}
     },

@@ -2,7 +2,7 @@
 
 import sys
 
-from app.models import db, Skill, SourceType
+from app.models import Category, db, Skill, SourceType
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -37,6 +37,7 @@ def setup_database():
     # Complete setup tasks
     add_root_skill(session)
     add_source_types(session)
+    add_skill_categories(session)
 
     # Close the session and complete setup
     session.close()
@@ -96,6 +97,115 @@ def add_source_types(session):
         print("Skill types added.")
     except Exception as e:
         print(f"Error adding skill types: {e}")
+        session.rollback()
+        print("Rolling back changes.")
+
+def add_skill_categories(session):
+    """Adds skill categories to the database."""
+    print("Adding skill categories...")
+    try:
+        skill_categories = [
+            Category(
+                name="Software Development",
+                description="Programming languages, application development, and coding best practices.",
+                icon="faCode",
+            ),
+            Category(
+                name="Data Analysis & Machine Learning",
+                description="Statistical analysis, data mining, machine learning techniques, and algorithm development.",
+                icon="faMagnifyingGlassChart",
+            ),
+            Category(
+                name="Graphic & Visual Design",
+                description="Digital illustration, photo editing, and layout design for print and digital media.",
+                icon="faPenFancy",
+            ),
+            Category(
+                name="Communication & Writing",
+                description="Professional writing, content creation, copywriting, and public speaking skills.",
+                icon="faComments",
+            ),
+            Category(
+                name="Leadership & Team Management",
+                description="Managing teams, project oversight, strategic planning, and effective delegation.",
+                icon="faUserTie",
+            ),
+            Category(
+                name="Marketing & Advertising",
+                description="Market research, digital marketing strategies, branding, and advertising campaigns.",
+                icon="faRectangleAd",
+            ),
+            Category(
+                name="Financial & Accounting Skills",
+                description="Budgeting, financial analysis, bookkeeping, and investment planning.",
+                icon="faCoins",
+            ),
+            Category(
+                name="Customer Support & Relations",
+                description="Client interaction, technical support, conflict resolution, and customer service excellence.",
+                icon="faHeadset",
+            ),
+            Category(
+                name="Administrative & Office Management",
+                description="Scheduling, organizational tasks, record keeping, and workflow management.",
+                icon="faPersonChalkboard",
+            ),
+            Category(
+                name="Human Resources & Talent Management",
+                description="Recruitment, employee relations, performance management, and HR policy implementation.",
+                icon="faPeopleGroup",
+            ),
+            Category(
+                name="Legal & Regulatory Compliance",
+                description="Legal research, contract law, regulatory standards, and risk mitigation.",
+                icon="faScaleBalanced",
+            ),
+            Category(
+                name="Teaching & Training",
+                description="Instructional design, curriculum development, tutoring, and educational methodologies.",
+                icon="faChalkboardUser",
+            ),
+            Category(
+                name="Scientific Research & Innovation",
+                description="Research methodology, experimental design, innovation processes, and academic inquiry.",
+                icon="faFlaskVial",
+            ),
+            Category(
+                name="Engineering & Technical Trades",
+                description="Mechanical, electrical, and civil engineering, along with hands-on technical trades.",
+                icon="faRulerCombined",
+            ),
+            Category(
+                name="Craftsmanship & Artisan Skills",
+                description="Traditional and bespoke crafts like woodworking, metalworking, ceramics, and artisanal techniques.",
+                icon="faHammer",
+            ),
+            Category(
+                name="Physical Fitness & Wellness",
+                description="Personal training, nutrition, mental health practices, and wellness coaching.",
+                icon="faDumbbell",
+            ),
+            Category(
+                name="Interpersonal & Social Skills",
+                description="Empathy, active listening, negotiation, and relationship building in social and professional settings.",
+                icon="faPeopleArrows",
+            ),
+            Category(
+                name="Critical Thinking & Problem Solving",
+                description="Logical reasoning, analytical thinking, troubleshooting, and decision-making processes.",
+                icon="faBrain",
+            ),
+            Category(
+                name="Entrepreneurship & Business Strategy",
+                description="Startup development, business planning, market analysis, and strategic growth initiatives.",
+                icon="faLightBulb",
+            ),
+        ]
+        session.add_all(skill_categories)
+        session.commit()
+        print("Skill categories added.")
+    except Exception as e:
+        print(f"Error adding skill categories: {e}")
         session.rollback()
         print("Rolling back changes.")
 

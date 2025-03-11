@@ -56,13 +56,11 @@ class Skill(db.Model, BaseModelMixin):
     mastery = db.Column(db.Integer, nullable=True)
     color = db.Column(db.Text, nullable=True)
     icon = db.Column(db.Text, nullable=True)
+    category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=True)
 
-    # Many-to-many relationship with keywords
-    keywords = db.relationship(
-        "Keyword",
-        secondary="skill_keyword",
-        backref=db.backref("skills", lazy="dynamic"),
-    )
+    # One-to-many relationship with categories
+    category = db.relationship("Category", back_populates="skills")
+
     # Self-referential many-to-many relationship for parent-child skills
     parents = db.relationship(
         "Skill",
@@ -71,6 +69,7 @@ class Skill(db.Model, BaseModelMixin):
         secondaryjoin="Skill.id == SkillRelationship.parent_skill_id",
         backref="children",
     )
+
     # Many-to-many relationship with examples
     examples = db.relationship(
         "Example",
@@ -79,20 +78,19 @@ class Skill(db.Model, BaseModelMixin):
     )
 
 
-class Keyword(db.Model, BaseModelMixin):
+class Category(db.Model, BaseModelMixin):
     """Database model for a keyword."""
 
-    __tablename__ = "keywords"
+    __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False, unique=True)
+    description = db.Column(db.Text, nullable=True)
+    icon = db.Column(db.Text, nullable=True)
 
-
-class SkillKeyword(db.Model, BaseModelMixin):
-    """Association table for the many-to-many relationship between skills and keywords."""
-
-    __tablename__ = "skill_keyword"
-    skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), primary_key=True)
-    keyword_id = db.Column(db.Integer, db.ForeignKey("keywords.id"), primary_key=True)
+    # One-to-Many relationship with Skills
+    skills = db.relationship(
+        "Skill", back_populates="category", cascade="all, delete-orphan"
+    )
 
 
 class SkillRelationship(db.Model, BaseModelMixin):
