@@ -144,6 +144,14 @@
         "documentation": {}
     },
     {
+        "label": "hybrid_property",
+        "importPath": "sqlalchemy.ext.hybrid",
+        "description": "sqlalchemy.ext.hybrid",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.hybrid",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -358,7 +366,7 @@
         "kind": 2,
         "importPath": "app.routes.skills",
         "description": "app.routes.skills",
-        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
+        "peekOfCode": "def build_skill_tree(skill):\n    \"\"\"\n    Recursively builds a nested dictionary structure for the skill hierarchy.\n    \"\"\"\n    skill_tree = {\"root\": skill.to_json_with_relationships(), \"children\": []}\n    if skill.children:  # Assuming skill.children is an iterable of child Skill objects\n        for child in skill.children:\n            skill_tree[\"children\"].append(build_skill_tree(child))\n    return skill_tree\n# @skills_bp.route(\"/<int:skill_id>\", methods=[\"GET\"])",
         "detail": "app.routes.skills",
         "documentation": {}
     },

@@ -314,7 +314,7 @@ def build_skill_tree(skill):
     """
     Recursively builds a nested dictionary structure for the skill hierarchy.
     """
-    skill_tree = {"root": skill.to_json(), "children": []}
+    skill_tree = {"root": skill.to_json_with_relationships(), "children": []}
 
     if skill.children:  # Assuming skill.children is an iterable of child Skill objects
         for child in skill.children:

@@ -4,7 +4,7 @@ SQLAlchemy Models Module
 This module contains the SQLAlchemy models for the application, which define the database schema and
 relationships between different entities.
 """
-
+from sqlalchemy.ext.hybrid import hybrid_property
 from . import db
 
 
@@ -75,6 +75,7 @@ class Skill(db.Model, BaseModelMixin):
         secondary="example_skill",
         backref=db.backref("skills", lazy="dynamic"),
     )
+
 
 
 class Category(db.Model, BaseModelMixin):
