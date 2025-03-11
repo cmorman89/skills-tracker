@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 const SkillParent = ({ dummy, icon, onClick, text }) => {
-    return (
-        <div
-            className={`
+  return (
+    <div
+      className={`
                 flex
                 items-center justify-center
                 p-3
@@ -11,32 +11,27 @@ const SkillParent = ({ dummy, icon, onClick, text }) => {
                 border border-fuchsia-400
                 bg-gradient-to-br
                 from-fuchsia-300 to-pink-300
-                ${dummy ? 'hover:cursor-default' : 'hover:cursor-pointer'}
+                ${dummy ? "hover:cursor-default" : "hover:cursor-pointer"}
                 shadow-md hover:shadow-xl
                 translate-y-0 hover:-translate-y-1
                 transition-transform duration-500 ease-in-out
                 text-fuchsia-950/80 text-sm font-bold
             `}
-            onClick={onClick}
-        >
-            {
-                icon ?
-                    <FontAwesomeIcon icon={icon} className="mr-2" />
-                    :
-                    ""
-            }
-            {text}
-        </div>
-    );
-}
+      onClick={onClick}
+    >
+      {icon ? <FontAwesomeIcon icon={icon} className="mr-2" /> : ""}
+      {text}
+    </div>
+  );
+};
 
 SkillParent.propTypes = {
-    dummy: PropTypes.bool,
-    icon: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired,
-    text: PropTypes.string.isRequired
-}
+  dummy: PropTypes.bool,
+  icon: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+};
 SkillParent.defaultProps = {
-    dummy: false
-}
+  dummy: false,
+};
 export default SkillParent;

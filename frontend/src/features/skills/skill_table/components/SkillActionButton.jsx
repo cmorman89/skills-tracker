@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
 const SkillActionButton = ({ icon, onClick }) => {
-    return (
-        <div
-            className="
+  return (
+    <div
+      className="
             flex justify-center items-center 
             w-10 h-10
             text-lg
@@ -16,16 +16,16 @@ const SkillActionButton = ({ icon, onClick }) => {
             transition-transform duration-500 ease-in-out
             hover:cursor-pointer
             "
-            onClick={onClick}
-        >
-            <FontAwesomeIcon icon={icon} />
-        </div>
-    )
-}
+      onClick={onClick}
+    >
+      <FontAwesomeIcon icon={icon} />
+    </div>
+  );
+};
 
 SkillActionButton.propTypes = {
-    icon: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
-}
+  icon: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
-export default SkillActionButton;   
+export default SkillActionButton;
