@@ -27,6 +27,7 @@ const Input = ({
                     shadow-md hover:shadow-xl
                     p-2 mt-1 
                     rounded-xl
+                    overflow-hidden
                 `}
         id={id || name}
         name={name}

@@ -22,7 +22,7 @@ html {
 }
 
 .accent-light {
-  @apply text-pink-300;
+  @apply text-pink-100;
 }
 
 .accent-dark {

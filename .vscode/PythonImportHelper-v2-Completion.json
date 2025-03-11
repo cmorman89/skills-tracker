@@ -32,6 +32,30 @@
         "documentation": {}
     },
     {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Response",
         "importPath": "flask",
         "description": "flask",
@@ -210,6 +234,24 @@
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
         "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "get_categories",
+        "kind": 2,
+        "importPath": "app.routes.categories",
+        "description": "app.routes.categories",
+        "peekOfCode": "def get_categories():\n    \"\"\"Get all categories.\"\"\"\n    categories = Category.query.all()\n    return jsonify([category.to_json() for category in categories])",
+        "detail": "app.routes.categories",
+        "documentation": {}
+    },
+    {
+        "label": "categories_bp",
+        "kind": 5,
+        "importPath": "app.routes.categories",
+        "description": "app.routes.categories",
+        "peekOfCode": "categories_bp = Blueprint(\"cateogires\", __name__, url_prefix=\"/api/v1/categories\")\n@categories_bp.route(\"/\", methods=[\"GET\"])\ndef get_categories():\n    \"\"\"Get all categories.\"\"\"\n    categories = Category.query.all()\n    return jsonify([category.to_json() for category in categories])",
+        "detail": "app.routes.categories",
         "documentation": {}
     },
     {
@@ -460,7 +502,7 @@
         "kind": 6,
         "importPath": "app.models",
         "description": "app.models",
-        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    icon = db.Column(db.Text, nullable=True)\n    category_id = db.Column(db.Integer, db.ForeignKey(\"categories.id\"), nullable=True)",
+        "peekOfCode": "class Skill(db.Model, BaseModelMixin):\n    \"\"\"Database model for a skill.\"\"\"\n    __tablename__ = \"skills\"\n    id = db.Column(db.Integer, primary_key=True, autoincrement=True)\n    name = db.Column(db.Text, nullable=False, unique=True)\n    description = db.Column(db.Text, nullable=True)\n    mastery = db.Column(db.Integer, nullable=True)\n    color = db.Column(db.Text, nullable=True)\n    category_id = db.Column(db.Integer, db.ForeignKey(\"categories.id\"), nullable=True)\n    # One-to-many relationship with categories",
         "detail": "app.models",
         "documentation": {}
     },

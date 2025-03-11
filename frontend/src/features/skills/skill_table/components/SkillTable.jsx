@@ -81,6 +81,8 @@ const SkillTable = ({ createMessage }) => {
               >
                 <td className="px-4 py-6 flex">
                   <SkillNode
+                    category={item.category ? item.category.name : "No Category"}
+                    icon={item.category ? item.category.icon : "faList"}
                     text={item.name.toUpperCase()}
                     onClick={() => {
                       navigate(`/skills/${item.id}/edit`);

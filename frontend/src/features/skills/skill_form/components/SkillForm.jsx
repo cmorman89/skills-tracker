@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import SkillParentSelection from "./SkillParentSelection";
 import CardBlock from "../../../../components/block/CardBlock";
 import TitleText from "../../../../components/text/TitleText";
+import Divider from "../../../../components/text/Divider";
+import SkillCategorySelection from "./SkillCategorySelection";
 
 const SkillForm = ({ createMessage }) => {
   // Get the skill_id from the URL params if it exists
@@ -17,11 +19,12 @@ const SkillForm = ({ createMessage }) => {
   // Define the keys and initial values for the form data
   const initialFormData = {
     name: "",
+    category_id: "",
     description: "",
-    parents: [],
-    mastery: 1,
     example: "",
     exampleList: [],
+    mastery: 1,
+    parents: [],
   };
   // Define the state variables
   const [isEditing, setIsEditing] = useState(false);
@@ -55,6 +58,7 @@ const SkillForm = ({ createMessage }) => {
   // Update a key/value pair
   const updateFormData = (key, value) => {
     setFormData({ ...formData, [key]: value });
+    console.log(`Form data updated ${key}: ${value}`);
   };
   // Clear the form data
   const resetFormData = () => {
@@ -123,24 +127,34 @@ const SkillForm = ({ createMessage }) => {
         onSubmit={handleSubmit}
         className="flex flex-col w-full gap-4 mx-8"
       >
-        <SkillNameInput
-          onChange={updateFormData}
-          originalValue={originalSkillData.name}
-          value={formData.name}
-        />
-        <div className="flex flex-col">
-          <InputLabel label="Description" name="description" />
-          <TextArea
-            name="description"
-            onChange={updateFormData}
-            placeholder="Ex. A popular programming language that is used to create interactive websites."
-            rows="4"
-            value={formData.description}
-          />
+        <div className="flex gap-4">
+          <div className="flex flex-col w-4/5">
+            <SkillNameInput
+              onChange={updateFormData}
+              originalValue={originalSkillData.name}
+              value={formData.name}
+            />
+            <div className="flex flex-col">
+              <InputLabel label="Description" name="description" />
+              <TextArea
+                name="description"
+                onChange={updateFormData}
+                placeholder="Ex. A popular programming language that is used to create interactive websites."
+                rows="5"
+                value={formData.description}
+              />
+            </div>
+          </div>
+          <div className="flex ">
+            <SkillCategorySelection
+              onChange={updateFormData}
+              value={formData.category}
+            />
+
+          </div>
         </div>
 
-        <div className="divider"></div>
-
+        <Divider />
         <SkillParentSelection
           name="parents"
           onChange={updateFormData}

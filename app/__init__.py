@@ -24,11 +24,13 @@ def create_app():
     migrate.init_app(app, db)
     # Register Blueprints
     from .routes import skills_bp
-
     app.register_blueprint(skills_bp, url_prefix="/api/v1/skills")
-    from .routes import sources_bp
 
+    from .routes import sources_bp
     app.register_blueprint(sources_bp, url_prefix="/api/v1/sources")
+
+    from .routes import categories_bp
+    app.register_blueprint(categories_bp, url_prefix="/api/v1/categories")
     # Enable CORS
     CORS(
         app,

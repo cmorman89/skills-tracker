@@ -55,7 +55,6 @@ class Skill(db.Model, BaseModelMixin):
     description = db.Column(db.Text, nullable=True)
     mastery = db.Column(db.Integer, nullable=True)
     color = db.Column(db.Text, nullable=True)
-    icon = db.Column(db.Text, nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=True)
 
     # One-to-many relationship with categories

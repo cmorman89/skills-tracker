@@ -35,7 +35,18 @@ def create_skill():
         else:
             description = None
 
-    new_skill = Skill(name=name, description=description)
+    # Check if category is provided
+    if category_id := data.get("category"):
+        try:
+            category_id = int(category_id)
+            if category_id <= 0:
+                raise ValueError
+        except ValueError:
+            return jsonify({"error": "Invalid category ID"}), 400
+    else:
+        category_id = None
+        
+    new_skill = Skill(name=name, description=description, category_id=category_id)
     try:
         db.session.add(new_skill)
         db.session.commit()
@@ -116,7 +127,18 @@ def update_skill(id):
                 description = validate_skill_description(description)
                 # Update the skill description
                 skill.description = description
-
+            # Check if category is provided
+            if category_id := data.get("category"):
+                try:
+                    category_id = int(category_id)
+                    if category_id <= 0:
+                        raise ValueError
+                except ValueError:
+                    return jsonify({"error": "Invalid category ID"}), 400
+            else:
+                category_id = None
+            skill.category_id = category_id
+                
             # Check if parents are provided
             if request_parents := data.get("parents"):
                 print("Parents provided")
