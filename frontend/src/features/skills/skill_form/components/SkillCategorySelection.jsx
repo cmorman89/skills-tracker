@@ -12,6 +12,17 @@ const SkillCategorySelection = ({ onChange, value }) => {
   const [iconComponent, setIconComponent] = useState(solidIcons["faList"]);
 
   useEffect(() => {
+    const sortCategories = (categories) => {
+      return categories.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    };
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
@@ -19,7 +30,7 @@ const SkillCategorySelection = ({ onChange, value }) => {
         );
         const responseData = response.data;
         if (response.status === 200) {
-          setCategoryOptions(responseData);
+          setCategoryOptions(sortCategories(responseData));
         } else {
           console.error(responseData.error);
         }

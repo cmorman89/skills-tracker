@@ -12,11 +12,19 @@ const SkillTreeManager = ({ skillList, handleDelete }) => {
   const toUpperFirst = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
+  console.log("SkillTreeManager", skillList);
   return (
     <div className="flex flex-col">
       {/* Root Node */}
       <div className="flex">
-        <SkillNode text={toUpperFirst(root_node.name)} />
+        <SkillNode
+          category={root_node.category ? root_node.category.name : "No Category"}
+          icon={root_node.category ? root_node.category.icon : "faList"}
+          text={toUpperFirst(root_node.name)}
+          onClick={() => {
+            root_node.id !== 1 && navigate(`/skills/${root_node.id}/edit`);
+          }}
+        />
       </div>
 
       {/* For Each Child Node */}
@@ -39,6 +47,14 @@ const SkillTreeManager = ({ skillList, handleDelete }) => {
             ) : (
               <div className="flex flex-grow items-center">
                 <SkillNode
+                  category={
+                    skill.root.category
+                      ? skill.root.category.name
+                      : "No Category"
+                  }
+                  icon={
+                    skill.root.category ? skill.root.category.icon : "faList"
+                  }
                   text={toUpperFirst(skill.root.name)}
                   onClick={() => {
                     navigate(`/skills/${skill.root.id}/edit`);
