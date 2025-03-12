@@ -11,6 +11,7 @@ import CardBlock from "../../../../components/block/CardBlock";
 import TitleText from "../../../../components/text/TitleText";
 import Divider from "../../../../components/text/Divider";
 import SkillCategorySelection from "./SkillCategorySelection";
+import BodyBlock from "../../../../components/block/BodyBlock";
 
 const SkillForm = ({ createMessage }) => {
   // Get the skill_id from the URL params if it exists
@@ -123,52 +124,53 @@ const SkillForm = ({ createMessage }) => {
   return (
     <CardBlock>
       <TitleText text={isEditing ? "Edit Skill" : "Add Skill"} />
-      <form
-        onKeyDown={disableFormEnterKey}
-        onSubmit={handleSubmit}
-        className="flex flex-col w-full gap-4 mx-8"
-      >
-        <div className="flex gap-4">
-          <div className="flex flex-col w-4/5">
-            <SkillNameInput
-              onChange={updateFormData}
-              originalValue={originalSkillData.name}
-              value={formData.name}
-            />
-            <div className="flex flex-col">
-              <InputLabel label="Description" name="description" />
-              <TextArea
-                name="description"
+      <BodyBlock>
+        <form
+          onKeyDown={disableFormEnterKey}
+          onSubmit={handleSubmit}
+          className="flex flex-col w-full gap-4 mx-8"
+        >
+          <div className="flex gap-4">
+            <div className="flex flex-col w-4/5">
+              <SkillNameInput
                 onChange={updateFormData}
-                placeholder="Ex. A popular programming language that is used to create interactive websites."
-                rows="5"
-                value={formData.description}
+                originalValue={originalSkillData.name}
+                value={formData.name}
+              />
+              <div className="flex flex-col">
+                <InputLabel label="Description" name="description" />
+                <TextArea
+                  name="description"
+                  onChange={updateFormData}
+                  placeholder="Ex. A popular programming language that is used to create interactive websites."
+                  rows="5"
+                  value={formData.description}
+                />
+              </div>
+            </div>
+            <div className="flex ">
+              <SkillCategorySelection
+                onChange={updateFormData}
+                value={formData.category_id}
               />
             </div>
           </div>
-          <div className="flex ">
-            <SkillCategorySelection
-              onChange={updateFormData}
-              value={formData.category_id}
-            />
 
-          </div>
-        </div>
+          <Divider />
+          <SkillParentSelection
+            name="parents"
+            onChange={updateFormData}
+            skill_id={skill_id ? skill_id : null}
+            value={formData.parents}
+          />
 
-        <Divider />
-        <SkillParentSelection
-          name="parents"
-          onChange={updateFormData}
-          skill_id={skill_id ? skill_id : null}
-          value={formData.parents}
-        />
-
-        <div className="divider"></div>
-        <Button
-          label={isEditing ? "Save Changes" : "Create New Skill"}
-          type="submit"
-        />
-      </form>
+          <div className="divider"></div>
+          <Button
+            label={isEditing ? "Save Changes" : "Create New Skill"}
+            type="submit"
+          />
+        </form>
+      </BodyBlock>
     </CardBlock>
   );
 };

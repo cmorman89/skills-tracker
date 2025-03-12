@@ -72,12 +72,22 @@ const SkillTree = () => {
   return (
     <CardBlock>
       <TitleText text="Skill Tree" />
-      <SkillTreeManager
-        handleDelete={handleDelete}
-        skillList={
-          loading ? [`Loading for skill ID# ${skill_id}...`] : skillList
-        }
-      />
+      <div
+        className="
+            flex flex-col items-center justify-center
+            rounded-2xl shadow-inner
+            w-full h-full p-4
+            border border-pink-100
+            bg-slate-100/50
+            "
+      >
+        <SkillTreeManager
+          handleDelete={handleDelete}
+          skillList={
+            loading ? [`Loading for skill ID# ${skill_id}...`] : skillList
+          }
+        />
+      </div>
     </CardBlock>
   );
 };

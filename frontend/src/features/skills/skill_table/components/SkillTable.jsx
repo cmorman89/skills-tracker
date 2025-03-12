@@ -7,6 +7,7 @@ import SkillActionButton from "./SkillActionButton";
 import SkillNode from "../../skill_tree/components/SkillNode";
 import CardBlock from "../../../../components/block/CardBlock";
 import TitleText from "../../../../components/text/TitleText";
+import BodyBlock from "../../../../components/block/BodyBlock";
 
 const SkillTable = ({ createMessage }) => {
   const [skillList, setSkillList] = useState([]);
@@ -59,63 +60,67 @@ const SkillTable = ({ createMessage }) => {
   return (
     <CardBlock>
       <TitleText text="Skills Table" />
-      <table className="table-auto w-full text-sm">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 text-left ">Skill Name</th>
-            <th className="px-4 py-2 text-left ">Description</th>
-            <th className="px-4 py-2 text-center ">Parents</th>
-            <th className="px-4 py-2 text-right ">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
+      <BodyBlock>
+        <table className="table-auto w-full text-sm">
+          <thead>
             <tr>
-              <td colSpan={4}>Loading...</td>
+              <th className="px-4 py-2 text-left ">Skill Name</th>
+              <th className="px-4 py-2 text-left ">Description</th>
+              <th className="px-4 py-2 text-center ">Parents</th>
+              <th className="px-4 py-2 text-right ">Actions</th>
             </tr>
-          ) : (
-            skillList.map((item, i) => (
-              <tr
-                key={i}
-                className="border-t border-pink-600 bg-transparent hover:bg-pink-400/50 ease-in-out duration-300 my-12 py-12"
-              >
-                <td className="px-4 py-6 flex">
-                  <SkillNode
-                    category={item.category ? item.category.name : "No Category"}
-                    icon={item.category ? item.category.icon : "faList"}
-                    text={item.name.toUpperCase()}
-                    onClick={() => {
-                      navigate(`/skills/${item.id}/edit`);
-                    }}
-                  />
-                </td>
-                <td className="px-4 py-6">{item.description}</td>
-                <td className="px-4 py-6 text-center">
-                  <ul className="list-disc list-inside">
-                    {item.parents.map((parent, i) => (
-                      <li key={i}>{parent.name} </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className="px-4 py-6 text-right list">
-                  <div className="flex justify-end gap-4 text-2xl">
-                    <SkillActionButton
-                      icon={faPencil}
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={4}>Loading...</td>
+              </tr>
+            ) : (
+              skillList.map((item, i) => (
+                <tr
+                  key={i}
+                  className="border-t border-pink-600 bg-transparent hover:bg-slate-200/50 ease-in-out duration-300 my-12 py-12"
+                >
+                  <td className="px-4 py-6 flex">
+                    <SkillNode
+                      category={
+                        item.category ? item.category.name : "No Category"
+                      }
+                      icon={item.category ? item.category.icon : "faList"}
+                      text={item.name.toUpperCase()}
                       onClick={() => {
                         navigate(`/skills/${item.id}/edit`);
                       }}
                     />
-                    <SkillActionButton
-                      icon={faXmark}
-                      onClick={() => deleteSkill(item.id, item.name)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+                  </td>
+                  <td className="px-4 py-6">{item.description}</td>
+                  <td className="px-4 py-6 text-center">
+                    <ul className="list-disc list-inside">
+                      {item.parents.map((parent, i) => (
+                        <li key={i}>{parent.name} </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td className="px-4 py-6 text-right list">
+                    <div className="flex justify-end gap-4 text-2xl">
+                      <SkillActionButton
+                        icon={faPencil}
+                        onClick={() => {
+                          navigate(`/skills/${item.id}/edit`);
+                        }}
+                      />
+                      <SkillActionButton
+                        icon={faXmark}
+                        onClick={() => deleteSkill(item.id, item.name)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </BodyBlock>
     </CardBlock>
   );
 };

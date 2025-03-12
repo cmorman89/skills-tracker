@@ -75,16 +75,16 @@ const SkillCategorySelection = ({ onChange, value }) => {
           name="category"
           id="category"
           className={`
-                    bg-neutral-100/50
-                    ring ring-pink-900 focus:ring-2 focus:ring-pink-200 outline-none
-                    text-neutral-800
-                    placeholder-neutral-400
-                    translate-y-0 focus:-translate-y-1 hover:-translate-y-1
-                    transition-all ease-in-out duration-700
-                    shadow-md hover:shadow-xl
-                    p-2 mt-1
-                    rounded-xl h-10
-                    overflow-hidden 
+            bg-neutral-100/50
+            ring ring-pink-900 focus:ring-2 focus:ring-pink-200 outline-none
+            text-neutral-800
+            placeholder-neutral-400
+            translate-y-0 focus:-translate-y-1 hover:-translate-y-1
+            transition-all ease-in-out duration-700
+            shadow-md hover:shadow-xl
+            p-2 mt-1
+            rounded-xl h-10
+            overflow-hidden 
                 `}
           value={value}
           onChange={(e) => (

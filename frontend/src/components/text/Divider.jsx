@@ -7,8 +7,8 @@ const Divider = ({ fade = "none" }) => {
                 my-4 h-px
                 ${
                   fade === "none"
-                    ? "bg-pink-700"
-                    : "bg-gradient-to-" + fade + " from-pink-700 to-transparent"
+                    ? "bg-pink-400"
+                    : "bg-gradient-to-" + fade + " from-pink-400 to-transparent"
                 }
             `}
     ></div>
