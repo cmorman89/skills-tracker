@@ -40,12 +40,13 @@ const SkillCategorySelection = ({ onChange, value }) => {
         setLoading(false);
       }
     };
+
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    if (!loading && categoryOptions[value]) {
-      const icon = categoryOptions[value - 1].icon;
+    if (!loading && value !== 0 && categoryOptions[value]) {
+      const icon = categoryOptions.filter((cat) => cat.id == value)[0].icon;
       setIconComponent(solidIcons[icon]);
     } else {
       setIconComponent(solidIcons["faList"]);
@@ -69,14 +70,14 @@ const SkillCategorySelection = ({ onChange, value }) => {
             Category
           </InputLabel>
         </div>
+
         <select
           name="category"
           id="category"
           className={`
                     bg-neutral-100/50
-                    ring ring-pink-900 focus:ring-2 focus:ring-pink-600 outline-none
-                    
-                    ${value == "" ? "text-neutral-400" : "text-neutral-800"}
+                    ring ring-pink-900 focus:ring-2 focus:ring-pink-200 outline-none
+                    text-neutral-800
                     placeholder-neutral-400
                     translate-y-0 focus:-translate-y-1 hover:-translate-y-1
                     transition-all ease-in-out duration-700
@@ -86,18 +87,16 @@ const SkillCategorySelection = ({ onChange, value }) => {
                     overflow-hidden 
                 `}
           value={value}
-          onChange={(e) => onChange("category", e.target.value)}
+          onChange={(e) => (
+            onChange("category_id", e.target.value), console.log(value)
+          )}
         >
           <option value="">No category</option>
-          {loading ? (
-            <option value="">Loading...</option>
-          ) : (
-            categoryOptions.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))
-          )}
+          {categoryOptions.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
       </div>
     </div>

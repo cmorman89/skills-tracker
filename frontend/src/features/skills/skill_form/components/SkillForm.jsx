@@ -41,6 +41,7 @@ const SkillForm = ({ createMessage }) => {
           );
           const responseData = response.data;
           if (response.status === 200) {
+            console.log(responseData);
             setFormData({ ...responseData });
             setOriginalSkillData({ ...responseData });
           } else {
@@ -148,7 +149,7 @@ const SkillForm = ({ createMessage }) => {
           <div className="flex ">
             <SkillCategorySelection
               onChange={updateFormData}
-              value={formData.category}
+              value={formData.category_id}
             />
 
           </div>
