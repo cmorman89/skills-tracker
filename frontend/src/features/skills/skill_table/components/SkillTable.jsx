@@ -81,7 +81,7 @@ const SkillTable = ({ createMessage }) => {
                   key={i}
                   className="border-t border-pink-600 bg-transparent hover:bg-slate-200/50 ease-in-out duration-300 my-12 py-12"
                 >
-                  <td className="px-4 py-6 flex">
+                  <td className="px-4 py-2 flex">
                     <SkillNode
                       category={
                         item.category ? item.category.name : "No Category"
