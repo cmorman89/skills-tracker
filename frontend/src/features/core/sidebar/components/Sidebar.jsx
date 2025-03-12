@@ -29,9 +29,16 @@ const Sidebar = () => {
   return (
     // Create the main sidebar container
     <div
-      className={`${
-        isCollapsed ? "w-24" : "w-56"
-      } flex flex-col bg-gradient-to-b from-pink-600 to-purple-600 text-neutral-300 shadow-xl ease-in-out duration-700`}
+      className={
+        `${isCollapsed ? "w-24" : "w-56"}
+        flex flex-col flex-none relative z-10
+        bg-gradient-to-b from-pink-600 to-purple-600
+        text-neutral-300
+        shadow-xl
+        rounded-r-3xl
+        ease-in-out duration-700
+        overflow-hidden
+        `}
     >
       <div className="flex items-center justify-center">
         {/* <img

@@ -6,7 +6,7 @@ const Logo = ({ isCollapsed, isFullyCollapsed }) => {
       className={`
                 flex items-center justify-center
                 ease-in-out duration-700
-                ${isCollapsed ? "w-16 my-4" : "w-32 my-6"}
+                ${isCollapsed ? "w-16 my-4 ml-0" : "w-32 my-6 -ml-4"}
             `}
     >
       <div className="flex flex-col text-5xl items-center">
